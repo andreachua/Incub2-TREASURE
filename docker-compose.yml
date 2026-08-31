@@ -1,0 +1,22 @@
+# Postgres + pgvector for the Stage 2 document store.
+# Start with:  docker-compose up -d
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: assets-pgvector
+    environment:
+      POSTGRES_DB: assets
+      POSTGRES_USER: assets
+      POSTGRES_PASSWORD: assets
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U assets -d assets"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:

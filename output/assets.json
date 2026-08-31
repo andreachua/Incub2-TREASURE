@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Dell Latitude 5540 Laptop",
+    "description": "14in business laptop, Intel Core i7-1355U, 16GB RAM, 512GB SSD, Windows 11 Pro",
+    "category": "Laptops & Notebooks",
+    "quantity": 2.0,
+    "price": 1299.0
+  },
+  {
+    "name": "Dell UltraSharp U2723QE 27in",
+    "description": "27in 4K UHD IPS Black monitor with USB-C hub",
+    "category": "Monitors & Displays",
+    "quantity": 2.0,
+    "price": 579.0
+  },
+  {
+    "name": "Logitech MX Master 3S Mouse",
+    "description": "Wireless performance mouse, 8K DPI",
+    "category": "Peripherals & Accessories",
+    "quantity": 3.0,
+    "price": 99.0
+  },
+  {
+    "name": "WD22 TB4 Thunderbolt Dock",
+    "description": "Thunderbolt 4 docking station, 130W, dual 4K support",
+    "category": "Peripherals & Accessories",
+    "quantity": 2.0,
+    "price": 299.0
+  }
+]

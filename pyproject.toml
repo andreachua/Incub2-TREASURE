@@ -1,0 +1,23 @@
+[project]
+name = "asset-pipeline"
+version = "0.1.0"
+description = "3-stage asset management extraction pipeline (receipt -> categorize -> JSON)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.40",
+    "langchain>=0.3",
+    "langchain-openai>=0.2",
+    "deepagents>=0.0.1",
+    "psycopg[binary]>=3.2",
+    "pgvector>=0.3",
+    "pdf2image>=1.17",
+    "pillow>=10.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+    "sentence-transformers>=3.0",
+]
+
+[tool.uv]
+package = false

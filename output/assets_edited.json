@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Cisco Catalyst 9200 Switch",
+    "description": "48-port PoE+ managed network switch, 4x10G uplinks",
+    "category": "Network Infrastructure",
+    "quantity": 2.0,
+    "price": 3499.0
+  },
+  {
+    "name": "Ubiquiti UniFi U6-Pro AP",
+    "description": "WiFi 6 dual-band ceiling access point",
+    "category": "Network Infrastructure",
+    "quantity": 8.0,
+    "price": 159.0
+  },
+  {
+    "name": "APC Smart-UPS 1500VA",
+    "description": "Line-interactive rackmount UPS, 1500VA/1000W",
+    "category": "Power & UPS",
+    "quantity": 2.0,
+    "price": 649.0
+  },
+  {
+    "name": "Synology DS923+ NAS",
+    "description": "4-bay network attached storage, AMD Ryzen, 4GB ECC",
+    "category": "Servers & Storage",
+    "quantity": 1.0,
+    "price": 599.0
+  }
+]
