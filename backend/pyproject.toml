@@ -16,6 +16,17 @@ dependencies = [
     "pyyaml>=6.0",
     "pydantic>=2.7",
     "python-dotenv>=1.0",
+    "redis>=8.1.0",
+    "fastapi>=0.141.1",
+    "uvicorn[standard]>=0.52.4",
+    "python-multipart>=0.0.32",
+    "ddgs>=9.16.0",
+]
+
+[project.optional-dependencies]
+# Optional local-embeddings path (pgvector shortlist). Pulls torch, so it is not
+# installed by default / in the container. Enable with: uv sync --extra embeddings
+embeddings = [
     "sentence-transformers>=3.0",
 ]
 

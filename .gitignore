@@ -11,3 +11,6 @@ wheels/
 
 # local env
 .env
+data/
+.vscode/
+*.txt

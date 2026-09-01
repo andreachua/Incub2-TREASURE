@@ -1,0 +1,71 @@
+# Asset categorisation taxonomy (from categories.txt).
+# Project purchases are classified into a `group` (Assets / Inventories / Expenses)
+# and a specific `category`. The agent must choose one `name` exactly as written.
+# EDIT THIS FILE to change the taxonomy — no code change required.
+categories:
+  # ----------------------------- Assets ---------------------------------
+  - name: "Personal Computers, Software & Peripherals"
+    group: "Assets"
+    code: "a"
+    description: >-
+      End-user computing assets: desktop PCs, laptops, operating systems,
+      office productivity software, printers, scanners.
+  - name: "Host Computers & Peripherals"
+    group: "Assets"
+    code: "b"
+    description: "Host/server hardware, e.g. servers, UPS."
+  - name: "Network Infrastructure & Equipment"
+    group: "Assets"
+    code: "c"
+    description: "Assets relating to IT networks, e.g. routers, switches."
+  - name: "Application Software (In-house Developed)"
+    group: "Assets"
+    code: "d"
+    description: >-
+      In-house developed software. Includes DSTA and contract manpower cost for
+      system design, development, configuration, installation and testing, and
+      other in-house development costs (prototype, air ticket, conference,
+      professional service, training, consultancy, technical reports) that form
+      part of the asset value.
+  - name: "System Software (COTS)"
+    group: "Assets"
+    code: "e"
+    description: "Commercial off-the-shelf software, e.g. Oracle, SAP."
+  - name: "Communications Equipment"
+    group: "Assets"
+    code: "f"
+    description: >-
+      Radio, handphone, phone system, intercom system, and other
+      communications-related peripherals.
+  - name: "Office Equipment"
+    group: "Assets"
+    code: "g"
+    description: >-
+      Furniture/equipment purchased for furnishing purposes: partition/screen,
+      table, chair, visualiser, ceiling/table light, whiteboard, LCD/plasma board.
+  - name: "Technology Equipment"
+    group: "Assets"
+    code: "h"
+    description: >-
+      Tools, machinery, systems and components in technological areas including
+      automation, robotics (e.g. robot dogs), unmanned equipment (e.g. drones,
+      jet skis), and augmented/virtual/extended reality.
+  # --------------------------- Inventories ------------------------------
+  - name: "Inventory / Consumable Materials"
+    group: "Inventories"
+    code: "i"
+    description: >-
+      Materials used or consumed directly in project activities and used as part
+      of a larger system (e.g. wheels, server batteries, cartridges). Not an end
+      item — not usable by itself.
+  # ----------------------------- Expenses -------------------------------
+  - name: "Expenses (Non-capital)"
+    group: "Expenses"
+    code: "j"
+    description: >-
+      Non-capital items that do not create an asset: consumables and expendable
+      items, feasibility studies, renewal of software licences, administrative
+      handling fees, minor renovation costs (e.g. installation of power points /
+      network ports for servers), and project management fees (e.g. DSTA and
+      contract manpower fees) — except in-house application software (see
+      category "Application Software (In-house Developed)").

@@ -1,0 +1,6 @@
+# EHAB asset categorisation taxonomy.
+# PLACEHOLDER — the ehab categories will be provided later. Fill in the same
+# structure as categories.oxn.yaml: each entry has name, group, code, description.
+# Until this is populated, jobs with system="ehab" will run the pipeline but have
+# no categories to assign.
+categories: []

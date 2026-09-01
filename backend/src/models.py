@@ -45,11 +45,17 @@ class RawLineItem(BaseModel):
 
 
 class AssetRecord(BaseModel):
-    """A categorized asset record — the Stage 3 output shape."""
+    """A categorized asset record — the Stage 3 output shape.
+
+    ``group`` is the top-level classification (Assets / Inventories / Expenses)
+    derived from the chosen ``category``.
+    """
 
     name: str
     description: str = ""
     category: str
+    group: str = ""
+    reasoning: str = ""  # why this category/group was chosen
     quantity: float = 1.0
     price: float = 0.0
 
@@ -58,14 +64,20 @@ class AssetRecord(BaseModel):
     def _numbers(cls, v: object) -> float:
         return _coerce_number(v)
 
-    @field_validator("name", "description", "category", mode="before")
+    @field_validator("name", "description", "category", "group", "reasoning", mode="before")
     @classmethod
     def _strings(cls, v: object) -> str:
         return "" if v is None else str(v).strip()
 
 
 class Category(BaseModel):
-    """A single allowed category loaded from config/categories.yaml."""
+    """A single allowed category loaded from config/categories.yaml.
+
+    ``group`` is one of Assets / Inventories / Expenses; ``code`` is the policy
+    reference letter (a-j) from categories.txt.
+    """
 
     name: str
+    group: str = ""
+    code: str = ""
     description: str = ""

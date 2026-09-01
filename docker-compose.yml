@@ -1,5 +1,22 @@
-# Postgres + pgvector for the Stage 2 document store.
-# Start with:  docker-compose up -d
+# Full stack: Postgres+pgvector, Redis, the FastAPI API server, and the pipeline
+# consumer. The API and pipeline share one image (built from ./backend); the API
+# is the image entrypoint, the pipeline overrides it.
+# Start with:  docker compose up -d --build   (Compose v2)
+
+# Shared config for the two backend services (both talk to db + redis by service
+# name). LLM_* resolve from the repo .env / shell, with sensible defaults.
+x-backend-env: &backend-env
+  LLM_BASE_URL: ${LLM_BASE_URL:-http://192.168.100.1:5000/v1}
+  LLM_API_KEY: ${LLM_API_KEY:-not-needed}
+  LLM_MODEL: ${LLM_MODEL:-Qwen3.8-27B}
+  POSTGRES_HOST: db
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: assets
+  POSTGRES_USER: assets
+  POSTGRES_PASSWORD: assets
+  REDIS_URL: redis://redis:6379/0
+  REDIS_JOB_QUEUE: object-categorization
+
 services:
   db:
     image: pgvector/pgvector:pg16
@@ -8,8 +25,8 @@ services:
       POSTGRES_DB: assets
       POSTGRES_USER: assets
       POSTGRES_PASSWORD: assets
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -17,6 +34,61 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: assets-redis
+    expose:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # FastAPI upload server — entrypoint is the API server (from the Dockerfile).
+  api:
+    build: ./backend
+    image: asset-backend:latest
+    container_name: assets-api
+    environment: *backend-env
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Pipeline consumer — same image, entrypoint overridden to run the Stage 1
+  # consumer that reads the "object-categorization" queue.
+  pipeline:
+    build: ./backend
+    image: asset-backend:latest
+    container_name: assets-pipeline
+    environment: *backend-env
+    entrypoint: ["uv", "run", "python", "-m", "src.stage1_extractor"]
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # One-off loader for the data/sow + data/po documents (tables sow, po).
+  # Run with:  docker compose run --rm loader
+  loader:
+    build: ./backend
+    image: asset-backend:latest
+    profiles: ["tools"]           # not started by `docker compose up`
+    environment:
+      <<: *backend-env
+      DATA_DIR: /data
+    volumes:
+      - ./data:/data:ro
+    entrypoint: ["uv", "run", "python", "scripts/load_documents.py"]
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   pgdata:
