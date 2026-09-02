@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="f44a1894-e9fe-49c3-a63d-35503b04691e"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>/* ============================================================
+   PRIZM 4.0 — colors and type
+   ------------------------------------------------------------
+   Single-file CSS distribution of PRIZM's tokens, suitable for
+   plain HTML files (no Tailwind, no Next.js). Lifted from the
+   upstream PRIZM repo and merged:
+
+     styles/tokens/baseline.css        (raw OKLCH palettes)
+     styles/tokens/c3-light.css        (C3 light semantics)
+     styles/tokens/c3-dark.css         (C3 dark semantics)
+     styles/tokens/enterprise-light.css
+     styles/tokens/enterprise-dark.css
+     styles/fonts.css                  (the @font-face block below)
+
+   Apply a theme by setting two data attributes on <html>:
+
+     <html data-zone="c3"          data-mode="dark">   — operator default
+     <html data-zone="c3"          data-mode="light">  — daylight / briefing
+     <html data-zone="enterprise"  data-mode="light">  — overall default
+     <html data-zone="enterprise"  data-mode="dark">
+
+   :root falls back to enterprise-light.
+
+   Fonts are self-hosted from fonts/ — air-gap safe.
+   ============================================================ */
+
+
+/* ============================================================
+   @FONT-FACE — self-hosted, air-gap safe
+   ------------------------------------------------------------
+   Inter (18pt optical size) is registered as the "Inter" family
+   across all nine weights + italic counterparts. The 18pt cut
+   is tuned for ≤20px UI text; PRIZM's headings cap at 60px so
+   18pt is acceptable site-wide. To swap in the 28pt cut for
+   hero-scale headings, register an "Inter Display" family and
+   apply selectively (see fonts/README.md for the recipe).
+
+   JetBrains Mono is registered across eight weights + italics.
+   ============================================================ */
+
+/* Inter — roman */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100; font-display: swap; src: url("a1208756-83da-4341-88b3-e2539749eb12") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 200; font-display: swap; src: url("f97c9d37-6a59-45bb-b669-16e10aac00af") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300; font-display: swap; src: url("cdc91240-6eb0-40e3-aeac-8bd22aa87157") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("a140bad6-972d-47f7-81ef-e21a8b21dc75") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("7b972d1a-c411-4d5a-ae03-9800ac332f9f") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("2d0f5296-dac1-42f5-b842-e8b74152d1a3") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("4055f645-3ae7-49b7-9dcc-3722f4b93f98") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 800; font-display: swap; src: url("8d6fd80b-7b54-4ae2-aae9-25f619d35976") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 900; font-display: swap; src: url("eedd63e1-52f2-4337-931a-564af86a3926") format("truetype"); }
+
+/* Inter — italic */
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 100; font-display: swap; src: url("296a2a1c-b0b7-4a01-9f57-e0aece163f1a") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 200; font-display: swap; src: url("aad7fdac-fa07-41c0-8ee3-7a3948788641") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 300; font-display: swap; src: url("e7364abb-6431-425a-b2b4-f90c00a6ec8a") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 400; font-display: swap; src: url("c41684c1-ef56-407a-b1a4-699d22c09d35") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 500; font-display: swap; src: url("6b0df26f-899a-4403-9555-a3ef44badcdb") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 600; font-display: swap; src: url("d8d70dbc-90c8-449b-a426-57ec9253aa19") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 700; font-display: swap; src: url("4d7867d9-32eb-4f7e-aad4-32795007b750") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 800; font-display: swap; src: url("6c3b13b9-4209-449b-9373-af89ef5bd237") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 900; font-display: swap; src: url("86b1e3c4-024c-4931-b37f-0455ec49435b") format("truetype"); }
+
+/* Inter Display — 28pt cut for hero text (≥36px). Opt-in via font-family. */
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 400; font-display: swap; src: url("2b593c57-0289-450d-a5f5-37b752d86ff2") format("truetype"); }
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 500; font-display: swap; src: url("941712e2-a0c3-443f-b9a6-85f70ee97b7c") format("truetype"); }
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 600; font-display: swap; src: url("dbcfa20e-0231-4084-b0e9-1e8caa6649f4") format("truetype"); }
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 700; font-display: swap; src: url("c0269217-cf3b-45c3-996e-9948fa0c995c") format("truetype"); }
+
+/* JetBrains Mono — roman */
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100; font-display: swap; src: url("02d09c04-a6fa-4ace-b2b2-c082de19ed3c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 200; font-display: swap; src: url("17d21630-2f0e-4065-9775-153717be580c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 300; font-display: swap; src: url("fd346336-aea9-459a-8186-c1ab8c48159c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("c67a9ce8-3502-4b74-960b-c6f25152db44") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("7123d9f0-1433-426f-92fc-4391e096b54c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("c051d963-feff-491f-a8ba-bfeada882f4e") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("6bb17509-99bf-4376-af3a-d516b2618e40") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 800; font-display: swap; src: url("fa8fab0e-de70-4e7b-926e-5194a51b3799") format("truetype"); }
+
+/* JetBrains Mono — italic */
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 100; font-display: swap; src: url("fd0ce279-6c39-4061-8875-6c2f5b2ffa8d") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 200; font-display: swap; src: url("37a48641-97d7-4713-8648-12a81aced751") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 300; font-display: swap; src: url("b91f339f-0312-485e-9b70-9b2cd30da2ff") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 400; font-display: swap; src: url("e2e5778b-fa6b-4d29-86b6-5f12cbeae5af") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 500; font-display: swap; src: url("9733100b-3dfb-4089-b36a-caebe025170f") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 600; font-display: swap; src: url("7599030f-ac83-42c1-a933-080bf0712767") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 700; font-display: swap; src: url("1b3d0112-e77a-4351-9e7c-b866d0a53158") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 800; font-display: swap; src: url("3bd11e98-1a32-4421-a521-2c3fc88ba85d") format("truetype"); }
+
+
+/* ============================================================
+   BASELINE — raw OKLCH palettes
+   ============================================================ */
+
+:root {
+  /* Neutral scale (slate) */
+  --prizm-slate-50:  oklch(98.5% 0.002 247.84);
+  --prizm-slate-100: oklch(96.8% 0.007 247.9);
+  --prizm-slate-200: oklch(92.9% 0.013 255.51);
+  --prizm-slate-300: oklch(86.9% 0.022 252.89);
+  --prizm-slate-400: oklch(70.4% 0.04  256.79);
+  --prizm-slate-500: oklch(55.4% 0.046 257.42);
+  --prizm-slate-600: oklch(44.6% 0.043 257.28);
+  --prizm-slate-700: oklch(37.2% 0.044 257.29);
+  --prizm-slate-800: oklch(27.9% 0.041 260.03);
+  --prizm-slate-900: oklch(20.8% 0.042 265.75);
+  --prizm-slate-950: oklch(12.9% 0.042 264.7);
+
+  /* Accent — cyan (C3 product family) */
+  --prizm-cyan-50:  oklch(98.4% 0.019 200.87);
+  --prizm-cyan-100: oklch(95.7% 0.045 203.18);
+  --prizm-cyan-200: oklch(91.7% 0.08  205.04);
+  --prizm-cyan-300: oklch(86.5% 0.127 207.08);
+  --prizm-cyan-400: oklch(78.9% 0.154 211.53);
+  --prizm-cyan-500: oklch(71.5% 0.143 215.22);
+  --prizm-cyan-600: oklch(60.9% 0.126 221.72);
+  --prizm-cyan-700: oklch(52.0% 0.105 223.13);
+  --prizm-cyan-800: oklch(45.0% 0.085 224.28);
+  --prizm-cyan-900: oklch(39.8% 0.07  227.39);
+  --prizm-cyan-950: oklch(30.2% 0.056 229.69);
+
+  /* Accent — blue (Enterprise product family) */
+  --prizm-blue-50:  oklch(97.0% 0.014 254.6);
+  --prizm-blue-100: oklch(93.2% 0.032 255.59);
+  --prizm-blue-200: oklch(88.2% 0.059 254.1);
+  --prizm-blue-300: oklch(80.9% 0.105 251.81);
+  --prizm-blue-400: oklch(70.7% 0.165 254.62);
+  --prizm-blue-500: oklch(62.3% 0.214 259.81);
+  --prizm-blue-600: oklch(54.6% 0.245 262.88);
+  --prizm-blue-700: oklch(48.8% 0.243 264.38);
+  --prizm-blue-800: oklch(42.4% 0.199 265.64);
+  --prizm-blue-900: oklch(37.9% 0.146 265.52);
+  --prizm-blue-950: oklch(28.2% 0.091 267.93);
+
+  /* Semantic non-neutral hues — 500 / 600 / 700 steps.
+     Light themes prefer 700 for text/edge; dark themes prefer 500. */
+  --prizm-red-500:   oklch(63.7% 0.237 25.33);
+  --prizm-red-600:   oklch(57.7% 0.245 27.32);
+  --prizm-red-700:   oklch(50.5% 0.213 27.52);
+  --prizm-green-500: oklch(72.3% 0.219 149.58);
+  --prizm-green-600: oklch(62.7% 0.194 149.21);
+  --prizm-green-700: oklch(52.7% 0.154 150.07);
+  --prizm-amber-500: oklch(76.9% 0.188 70.08);
+  --prizm-amber-600: oklch(66.6% 0.179 58.32);
+  --prizm-amber-700: oklch(55.5% 0.163 49.0);
+  --prizm-sky-500:   oklch(68.5% 0.169 237.32);
+  --prizm-sky-600:   oklch(58.8% 0.158 241.97);
+  --prizm-sky-700:   oklch(50.0% 0.134 242.75);
+
+  /* Radii — xs through xl */
+  --prizm-radius-xs: 0.125rem;  /*  2px */
+  --prizm-radius-sm: 0.25rem;   /*  4px */
+  --prizm-radius-md: 0.375rem;  /*  6px */
+  --prizm-radius-lg: 0.5rem;    /*  8px */
+  --prizm-radius-xl: 0.75rem;   /* 12px */
+
+  /* Shadows — sm/md/lg, tuned to read on light and dark surfaces */
+  --prizm-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --prizm-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --prizm-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ------------------------------------------------------------
+   Two families. Inter is the system sans (UI, body, headings);
+   JetBrains Mono is the monospace (code, kbd, tabular numerics
+   in tickers, time labels, callsigns). There is no display or
+   serif family — PRIZM is intentionally one-sans.
+
+   Sizes follow Tailwind's default scale; PRIZM doesn't introduce
+   its own. Headings reach 4xl (text-4xl, 2.25rem) on landing
+   pages — anything larger is one-off and inline.
+   ============================================================ */
+
+:root {
+  --prizm-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --prizm-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (rem, Tailwind default — unmodified) */
+  --prizm-text-xs:   0.75rem;    /* 12px / 16px — metadata, badges, kbd, code annotations */
+  --prizm-text-sm:   0.875rem;   /* 14px / 20px — secondary text, table cells, form labels */
+  --prizm-text-base: 1rem;       /* 16px / 24px — body, default */
+  --prizm-text-lg:   1.125rem;   /* 18px / 28px — lead paragraph */
+  --prizm-text-xl:   1.25rem;    /* 20px / 28px — card title */
+  --prizm-text-2xl:  1.5rem;     /* 24px / 32px — subsection heading */
+  --prizm-text-3xl:  1.875rem;   /* 30px / 36px — section heading */
+  --prizm-text-4xl:  2.25rem;    /* 36px / 40px — page title */
+  --prizm-text-5xl:  3rem;       /* 48px / 1    — display headline (largest in practice) */
+
+  /* Line heights — paired with each size, never standalone */
+  --prizm-leading-tight:   1.25;   /* headings (default) */
+  --prizm-leading-snug:    1.375;
+  --prizm-leading-normal:  1.5;    /* body */
+  --prizm-leading-relaxed: 1.625;  /* prose, alert body */
+
+  /* Letter-spacing — PRIZM leans on tight tracking for headings */
+  --prizm-tracking-tighter: -0.05em;
+  --prizm-tracking-tight:   -0.025em;  /* heading default */
+  --prizm-tracking-normal:  0;
+  --prizm-tracking-wide:    0.025em;
+  --prizm-tracking-wider:   0.05em;    /* eyebrow uppercase */
+  --prizm-tracking-widest:  0.1em;     /* eyebrow uppercase (looser) */
+
+  /* Font weights */
+  --prizm-font-normal:    400;
+  --prizm-font-medium:    500;
+  --prizm-font-semibold:  600;  /* heading + button + table-head default */
+  --prizm-font-bold:      700;
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — Enterprise light (the :root default)
+   ============================================================ */
+
+:root,
+[data-zone="enterprise"][data-mode="light"] {
+  color-scheme: light;
+
+  --prizm-color-bg:               var(--prizm-slate-50);
+  --prizm-color-bg-subtle:        oklch(99.5% 0.002 247.84);
+  --prizm-color-bg-muted:         var(--prizm-slate-100);
+  --prizm-color-surface:          oklch(100% 0 0);
+  --prizm-color-surface-elevated: oklch(100% 0 0);
+
+  --prizm-color-border:           var(--prizm-slate-200);
+  --prizm-color-border-strong:    var(--prizm-slate-300);
+
+  --prizm-color-fg:        var(--prizm-slate-900);
+  --prizm-color-fg-muted:  var(--prizm-slate-600);
+  --prizm-color-fg-subtle: var(--prizm-slate-500);
+
+  --prizm-color-accent:       var(--prizm-blue-600);
+  --prizm-color-accent-fg:    oklch(100% 0 0);
+  --prizm-color-accent-hover: var(--prizm-blue-700);
+
+  --prizm-color-danger:    var(--prizm-red-700);
+  --prizm-color-danger-fg: oklch(100% 0 0);
+  --prizm-color-success:   var(--prizm-green-700);
+  --prizm-color-warning:   var(--prizm-amber-700);
+  --prizm-color-info:      var(--prizm-sky-700);
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — Enterprise dark
+   ============================================================ */
+
+[data-zone="enterprise"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --prizm-color-bg:               var(--prizm-slate-950);
+  --prizm-color-bg-subtle:        oklch(10.4% 0.04 264.7);
+  --prizm-color-bg-muted:         oklch(16.5% 0.04 265.75);
+  --prizm-color-surface:          var(--prizm-slate-900);
+  --prizm-color-surface-elevated: var(--prizm-slate-800);
+
+  --prizm-color-border:           var(--prizm-slate-800);
+  --prizm-color-border-strong:    var(--prizm-slate-700);
+
+  --prizm-color-fg:        var(--prizm-slate-50);
+  --prizm-color-fg-muted:  var(--prizm-slate-300);
+  --prizm-color-fg-subtle: var(--prizm-slate-400);
+
+  --prizm-color-accent:       var(--prizm-blue-500);
+  --prizm-color-accent-fg:    var(--prizm-slate-950);
+  --prizm-color-accent-hover: var(--prizm-blue-400);
+
+  --prizm-color-danger:    var(--prizm-red-600);
+  --prizm-color-danger-fg: var(--prizm-slate-50);
+  --prizm-color-success:   var(--prizm-green-500);
+  --prizm-color-warning:   var(--prizm-amber-500);
+  --prizm-color-info:      var(--prizm-sky-500);
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — C3 light
+   (denser, more saturated, tactical; cyan accent)
+   ============================================================ */
+
+[data-zone="c3"][data-mode="light"] {
+  color-scheme: light;
+
+  --prizm-color-bg:               oklch(97.4% 0.005 247.84);
+  --prizm-color-bg-subtle:        var(--prizm-slate-50);
+  --prizm-color-bg-muted:         var(--prizm-slate-100);
+  --prizm-color-surface:          oklch(100% 0 0);
+  --prizm-color-surface-elevated: oklch(100% 0 0);
+
+  --prizm-color-border:           var(--prizm-slate-300);
+  --prizm-color-border-strong:    var(--prizm-slate-400);
+
+  --prizm-color-fg:        var(--prizm-slate-950);
+  --prizm-color-fg-muted:  var(--prizm-slate-700);
+  --prizm-color-fg-subtle: var(--prizm-slate-600);
+
+  --prizm-color-accent:       var(--prizm-cyan-700);
+  --prizm-color-accent-fg:    oklch(100% 0 0);
+  --prizm-color-accent-hover: var(--prizm-cyan-800);
+
+  --prizm-color-danger:    var(--prizm-red-700);
+  --prizm-color-danger-fg: oklch(100% 0 0);
+  --prizm-color-success:   var(--prizm-green-700);
+  --prizm-color-warning:   var(--prizm-amber-700);
+  --prizm-color-info:      var(--prizm-sky-700);
+
+  /* Liquid glass — darker tint over bright backdrop */
+  --prizm-glass-chrome-bg:        oklch(20% 0.025 240 / 0.06);
+  --prizm-glass-chrome-border:    oklch(0% 0 0 / 0.08);
+  --prizm-glass-chrome-blur:      8px;
+  --prizm-glass-chrome-saturate:  180%;
+  --prizm-glass-chrome-shadow:    inset 0 1px 0 oklch(100% 0 0 / 0.25);
+
+  --prizm-glass-panel-bg:         oklch(20% 0.025 240 / 0.1);
+  --prizm-glass-panel-border:     oklch(0% 0 0 / 0.1);
+  --prizm-glass-panel-blur:       12px;
+  --prizm-glass-panel-saturate:   180%;
+  --prizm-glass-panel-shadow:     inset 0 1px 0 oklch(100% 0 0 / 0.3), 0 8px 24px oklch(0% 0 0 / 0.08);
+  --prizm-glass-noise-opacity:    0.05; /* @kind other */
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — C3 dark
+   (operator default; very dark surfaces, high contrast, cyan)
+   ============================================================ */
+
+[data-zone="c3"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --prizm-color-bg:               oklch(9.8%  0.03  264.7);
+  --prizm-color-bg-subtle:        var(--prizm-slate-950);
+  --prizm-color-bg-muted:         oklch(15.5% 0.04  264.7);
+  --prizm-color-surface:          var(--prizm-slate-900);
+  --prizm-color-surface-elevated: var(--prizm-slate-800);
+
+  --prizm-color-border:           var(--prizm-slate-700);
+  --prizm-color-border-strong:    var(--prizm-slate-600);
+
+  --prizm-color-fg:        oklch(99.0% 0.002 247.84);
+  --prizm-color-fg-muted:  var(--prizm-slate-300);
+  --prizm-color-fg-subtle: var(--prizm-slate-400);
+
+  --prizm-color-accent:       var(--prizm-cyan-400);
+  --prizm-color-accent-fg:    var(--prizm-slate-950);
+  --prizm-color-accent-hover: var(--prizm-cyan-300);
+
+  --prizm-color-danger:    var(--prizm-red-600);
+  --prizm-color-danger-fg: var(--prizm-slate-50);
+  --prizm-color-success:   var(--prizm-green-500);
+  --prizm-color-warning:   var(--prizm-amber-500);
+  --prizm-color-info:      var(--prizm-sky-500);
+
+  /* Liquid glass — lighter tint over dark backdrop */
+  --prizm-glass-chrome-bg:        oklch(85% 0.015 220 / 0.06);
+  --prizm-glass-chrome-border:    oklch(100% 0 0 / 0.08);
+  --prizm-glass-chrome-blur:      8px;
+  --prizm-glass-chrome-saturate:  180%;
+  --prizm-glass-chrome-shadow:    inset 0 1px 0 oklch(100% 0 0 / 0.1);
+
+  --prizm-glass-panel-bg:         oklch(85% 0.015 220 / 0.1);
+  --prizm-glass-panel-border:     oklch(100% 0 0 / 0.1);
+  --prizm-glass-panel-blur:       12px;
+  --prizm-glass-panel-saturate:   180%;
+  --prizm-glass-panel-shadow:     inset 0 1px 0 oklch(100% 0 0 / 0.15), 0 12px 32px oklch(0% 0 0 / 0.5);
+  --prizm-glass-noise-opacity:    0.04; /* @kind other */
+}
+
+
+/* ============================================================
+   ELEMENT DEFAULTS
+   ------------------------------------------------------------
+   Sets sensible defaults on bare HTML so plain content (h1,
+   p, code, kbd) inherits PRIZM's typography without needing
+   utility classes everywhere. UI kits override locally where
+   they want different sizes.
+   ============================================================ */
+
+html {
+  font-family: var(--prizm-font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--prizm-color-bg);
+  color: var(--prizm-color-fg);
+  margin: 0;
+  line-height: var(--prizm-leading-normal);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--prizm-color-fg);
+  font-weight: var(--prizm-font-semibold);
+  letter-spacing: var(--prizm-tracking-tight);
+  line-height: var(--prizm-leading-tight);
+  margin: 0;
+}
+
+h1 { font-size: var(--prizm-text-4xl); }
+h2 { font-size: var(--prizm-text-2xl); }
+h3 { font-size: var(--prizm-text-xl); }
+h4 { font-size: var(--prizm-text-lg); }
+h5 { font-size: var(--prizm-text-base); }
+h6 { font-size: var(--prizm-text-sm); }
+
+p { margin: 0; color: var(--prizm-color-fg); }
+
+code, kbd, pre, samp {
+  font-family: var(--prizm-font-mono);
+  font-size: 0.9em;
+}
+
+/* PRIZM site-wide rule: lucide ships at stroke-width 2; PRIZM
+   prefers 1.5 for a crisper / precision feel. Inline SVGs that
+   set stroke-width on individual <path>s are unaffected. */
+svg {
+  stroke-width: 1.5;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--prizm-color-accent);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   LIQUID GLASS — C3-only surface treatment
+   ------------------------------------------------------------
+   Two tiers: chrome (lighter blur, app frame) and panel (heavier
+   blur, floating overlays). The driving tokens are only declared
+   under [data-zone="c3"], so applying these classes outside C3
+   has no effect.
+   ============================================================ */
+
+.surface-glass-chrome,
+.surface-glass-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.surface-glass-chrome {
+  background-color: var(--prizm-glass-chrome-bg, transparent);
+  border: 1px solid var(--prizm-glass-chrome-border, transparent);
+  box-shadow: var(--prizm-glass-chrome-shadow, none);
+}
+
+.surface-glass-panel {
+  background-color: var(--prizm-glass-panel-bg, transparent);
+  border: 1px solid var(--prizm-glass-panel-border, transparent);
+  box-shadow: var(--prizm-glass-panel-shadow, none);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .surface-glass-chrome {
+    -webkit-backdrop-filter: blur(var(--prizm-glass-chrome-blur, 8px)) saturate(var(--prizm-glass-chrome-saturate, 180%));
+            backdrop-filter: blur(var(--prizm-glass-chrome-blur, 8px)) saturate(var(--prizm-glass-chrome-saturate, 180%));
+  }
+  .surface-glass-panel {
+    -webkit-backdrop-filter: blur(var(--prizm-glass-panel-blur, 12px)) saturate(var(--prizm-glass-panel-saturate, 180%));
+            backdrop-filter: blur(var(--prizm-glass-panel-blur, 12px)) saturate(var(--prizm-glass-panel-saturate, 180%));
+  }
+}
+
+.surface-glass-chrome::before,
+.surface-glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("../assets/noise.svg");
+  background-size: 160px 160px;
+  opacity: var(--prizm-glass-noise-opacity, 0);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.surface-glass-chrome > *,
+.surface-glass-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ============================================================
+   UTILITY CLASSES — small, opt-in
+   ------------------------------------------------------------
+   The UI kits use Tailwind shape semantics in their JSX. For
+   plain HTML cards in preview/, this short list of utility
+   classes lets us style cards without pulling in all of Tailwind.
+   ============================================================ */
+
+.font-mono { font-family: var(--prizm-font-mono); }
+.tabular-nums { font-variant-numeric: tabular-nums; }
+</style>
+<style>/* Root entry point for consumers — canonical single-file token + font distribution. */
+/* ============================================================
+   PRIZM 4.0 — colors and type
+   ------------------------------------------------------------
+   Single-file CSS distribution of PRIZM's tokens, suitable for
+   plain HTML files (no Tailwind, no Next.js). Lifted from the
+   upstream PRIZM repo and merged:
+
+     styles/tokens/baseline.css        (raw OKLCH palettes)
+     styles/tokens/c3-light.css        (C3 light semantics)
+     styles/tokens/c3-dark.css         (C3 dark semantics)
+     styles/tokens/enterprise-light.css
+     styles/tokens/enterprise-dark.css
+     styles/fonts.css                  (the @font-face block below)
+
+   Apply a theme by setting two data attributes on <html>:
+
+     <html data-zone="c3"          data-mode="dark">   — operator default
+     <html data-zone="c3"          data-mode="light">  — daylight / briefing
+     <html data-zone="enterprise"  data-mode="light">  — overall default
+     <html data-zone="enterprise"  data-mode="dark">
+
+   :root falls back to enterprise-light.
+
+   Fonts are self-hosted from fonts/ — air-gap safe.
+   ============================================================ */
+
+
+/* ============================================================
+   @FONT-FACE — self-hosted, air-gap safe
+   ------------------------------------------------------------
+   Inter (18pt optical size) is registered as the "Inter" family
+   across all nine weights + italic counterparts. The 18pt cut
+   is tuned for ≤20px UI text; PRIZM's headings cap at 60px so
+   18pt is acceptable site-wide. To swap in the 28pt cut for
+   hero-scale headings, register an "Inter Display" family and
+   apply selectively (see fonts/README.md for the recipe).
+
+   JetBrains Mono is registered across eight weights + italics.
+   ============================================================ */
+
+/* Inter — roman */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100; font-display: swap; src: url("a1208756-83da-4341-88b3-e2539749eb12") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 200; font-display: swap; src: url("f97c9d37-6a59-45bb-b669-16e10aac00af") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 300; font-display: swap; src: url("cdc91240-6eb0-40e3-aeac-8bd22aa87157") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("a140bad6-972d-47f7-81ef-e21a8b21dc75") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("7b972d1a-c411-4d5a-ae03-9800ac332f9f") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("2d0f5296-dac1-42f5-b842-e8b74152d1a3") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("4055f645-3ae7-49b7-9dcc-3722f4b93f98") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 800; font-display: swap; src: url("8d6fd80b-7b54-4ae2-aae9-25f619d35976") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 900; font-display: swap; src: url("eedd63e1-52f2-4337-931a-564af86a3926") format("truetype"); }
+
+/* Inter — italic */
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 100; font-display: swap; src: url("296a2a1c-b0b7-4a01-9f57-e0aece163f1a") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 200; font-display: swap; src: url("aad7fdac-fa07-41c0-8ee3-7a3948788641") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 300; font-display: swap; src: url("e7364abb-6431-425a-b2b4-f90c00a6ec8a") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 400; font-display: swap; src: url("c41684c1-ef56-407a-b1a4-699d22c09d35") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 500; font-display: swap; src: url("6b0df26f-899a-4403-9555-a3ef44badcdb") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 600; font-display: swap; src: url("d8d70dbc-90c8-449b-a426-57ec9253aa19") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 700; font-display: swap; src: url("4d7867d9-32eb-4f7e-aad4-32795007b750") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 800; font-display: swap; src: url("6c3b13b9-4209-449b-9373-af89ef5bd237") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 900; font-display: swap; src: url("86b1e3c4-024c-4931-b37f-0455ec49435b") format("truetype"); }
+
+/* Inter Display — 28pt cut for hero text (≥36px). Opt-in via font-family. */
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 400; font-display: swap; src: url("2b593c57-0289-450d-a5f5-37b752d86ff2") format("truetype"); }
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 500; font-display: swap; src: url("941712e2-a0c3-443f-b9a6-85f70ee97b7c") format("truetype"); }
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 600; font-display: swap; src: url("dbcfa20e-0231-4084-b0e9-1e8caa6649f4") format("truetype"); }
+@font-face { font-family: "Inter Display"; font-style: normal; font-weight: 700; font-display: swap; src: url("c0269217-cf3b-45c3-996e-9948fa0c995c") format("truetype"); }
+
+/* JetBrains Mono — roman */
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 100; font-display: swap; src: url("02d09c04-a6fa-4ace-b2b2-c082de19ed3c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 200; font-display: swap; src: url("17d21630-2f0e-4065-9775-153717be580c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 300; font-display: swap; src: url("fd346336-aea9-459a-8186-c1ab8c48159c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("c67a9ce8-3502-4b74-960b-c6f25152db44") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("7123d9f0-1433-426f-92fc-4391e096b54c") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("c051d963-feff-491f-a8ba-bfeada882f4e") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("6bb17509-99bf-4376-af3a-d516b2618e40") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 800; font-display: swap; src: url("fa8fab0e-de70-4e7b-926e-5194a51b3799") format("truetype"); }
+
+/* JetBrains Mono — italic */
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 100; font-display: swap; src: url("fd0ce279-6c39-4061-8875-6c2f5b2ffa8d") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 200; font-display: swap; src: url("37a48641-97d7-4713-8648-12a81aced751") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 300; font-display: swap; src: url("b91f339f-0312-485e-9b70-9b2cd30da2ff") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 400; font-display: swap; src: url("e2e5778b-fa6b-4d29-86b6-5f12cbeae5af") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 500; font-display: swap; src: url("9733100b-3dfb-4089-b36a-caebe025170f") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 600; font-display: swap; src: url("7599030f-ac83-42c1-a933-080bf0712767") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 700; font-display: swap; src: url("1b3d0112-e77a-4351-9e7c-b866d0a53158") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: italic; font-weight: 800; font-display: swap; src: url("3bd11e98-1a32-4421-a521-2c3fc88ba85d") format("truetype"); }
+
+
+/* ============================================================
+   BASELINE — raw OKLCH palettes
+   ============================================================ */
+
+:root {
+  /* Neutral scale (slate) */
+  --prizm-slate-50:  oklch(98.5% 0.002 247.84);
+  --prizm-slate-100: oklch(96.8% 0.007 247.9);
+  --prizm-slate-200: oklch(92.9% 0.013 255.51);
+  --prizm-slate-300: oklch(86.9% 0.022 252.89);
+  --prizm-slate-400: oklch(70.4% 0.04  256.79);
+  --prizm-slate-500: oklch(55.4% 0.046 257.42);
+  --prizm-slate-600: oklch(44.6% 0.043 257.28);
+  --prizm-slate-700: oklch(37.2% 0.044 257.29);
+  --prizm-slate-800: oklch(27.9% 0.041 260.03);
+  --prizm-slate-900: oklch(20.8% 0.042 265.75);
+  --prizm-slate-950: oklch(12.9% 0.042 264.7);
+
+  /* Accent — cyan (C3 product family) */
+  --prizm-cyan-50:  oklch(98.4% 0.019 200.87);
+  --prizm-cyan-100: oklch(95.7% 0.045 203.18);
+  --prizm-cyan-200: oklch(91.7% 0.08  205.04);
+  --prizm-cyan-300: oklch(86.5% 0.127 207.08);
+  --prizm-cyan-400: oklch(78.9% 0.154 211.53);
+  --prizm-cyan-500: oklch(71.5% 0.143 215.22);
+  --prizm-cyan-600: oklch(60.9% 0.126 221.72);
+  --prizm-cyan-700: oklch(52.0% 0.105 223.13);
+  --prizm-cyan-800: oklch(45.0% 0.085 224.28);
+  --prizm-cyan-900: oklch(39.8% 0.07  227.39);
+  --prizm-cyan-950: oklch(30.2% 0.056 229.69);
+
+  /* Accent — blue (Enterprise product family) */
+  --prizm-blue-50:  oklch(97.0% 0.014 254.6);
+  --prizm-blue-100: oklch(93.2% 0.032 255.59);
+  --prizm-blue-200: oklch(88.2% 0.059 254.1);
+  --prizm-blue-300: oklch(80.9% 0.105 251.81);
+  --prizm-blue-400: oklch(70.7% 0.165 254.62);
+  --prizm-blue-500: oklch(62.3% 0.214 259.81);
+  --prizm-blue-600: oklch(54.6% 0.245 262.88);
+  --prizm-blue-700: oklch(48.8% 0.243 264.38);
+  --prizm-blue-800: oklch(42.4% 0.199 265.64);
+  --prizm-blue-900: oklch(37.9% 0.146 265.52);
+  --prizm-blue-950: oklch(28.2% 0.091 267.93);
+
+  /* Semantic non-neutral hues — 500 / 600 / 700 steps.
+     Light themes prefer 700 for text/edge; dark themes prefer 500. */
+  --prizm-red-500:   oklch(63.7% 0.237 25.33);
+  --prizm-red-600:   oklch(57.7% 0.245 27.32);
+  --prizm-red-700:   oklch(50.5% 0.213 27.52);
+  --prizm-green-500: oklch(72.3% 0.219 149.58);
+  --prizm-green-600: oklch(62.7% 0.194 149.21);
+  --prizm-green-700: oklch(52.7% 0.154 150.07);
+  --prizm-amber-500: oklch(76.9% 0.188 70.08);
+  --prizm-amber-600: oklch(66.6% 0.179 58.32);
+  --prizm-amber-700: oklch(55.5% 0.163 49.0);
+  --prizm-sky-500:   oklch(68.5% 0.169 237.32);
+  --prizm-sky-600:   oklch(58.8% 0.158 241.97);
+  --prizm-sky-700:   oklch(50.0% 0.134 242.75);
+
+  /* Radii — xs through xl */
+  --prizm-radius-xs: 0.125rem;  /*  2px */
+  --prizm-radius-sm: 0.25rem;   /*  4px */
+  --prizm-radius-md: 0.375rem;  /*  6px */
+  --prizm-radius-lg: 0.5rem;    /*  8px */
+  --prizm-radius-xl: 0.75rem;   /* 12px */
+
+  /* Shadows — sm/md/lg, tuned to read on light and dark surfaces */
+  --prizm-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --prizm-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --prizm-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ------------------------------------------------------------
+   Two families. Inter is the system sans (UI, body, headings);
+   JetBrains Mono is the monospace (code, kbd, tabular numerics
+   in tickers, time labels, callsigns). There is no display or
+   serif family — PRIZM is intentionally one-sans.
+
+   Sizes follow Tailwind's default scale; PRIZM doesn't introduce
+   its own. Headings reach 4xl (text-4xl, 2.25rem) on landing
+   pages — anything larger is one-off and inline.
+   ============================================================ */
+
+:root {
+  --prizm-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --prizm-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (rem, Tailwind default — unmodified) */
+  --prizm-text-xs:   0.75rem;    /* 12px / 16px — metadata, badges, kbd, code annotations */
+  --prizm-text-sm:   0.875rem;   /* 14px / 20px — secondary text, table cells, form labels */
+  --prizm-text-base: 1rem;       /* 16px / 24px — body, default */
+  --prizm-text-lg:   1.125rem;   /* 18px / 28px — lead paragraph */
+  --prizm-text-xl:   1.25rem;    /* 20px / 28px — card title */
+  --prizm-text-2xl:  1.5rem;     /* 24px / 32px — subsection heading */
+  --prizm-text-3xl:  1.875rem;   /* 30px / 36px — section heading */
+  --prizm-text-4xl:  2.25rem;    /* 36px / 40px — page title */
+  --prizm-text-5xl:  3rem;       /* 48px / 1    — display headline (largest in practice) */
+
+  /* Line heights — paired with each size, never standalone */
+  --prizm-leading-tight:   1.25;   /* headings (default) */
+  --prizm-leading-snug:    1.375;
+  --prizm-leading-normal:  1.5;    /* body */
+  --prizm-leading-relaxed: 1.625;  /* prose, alert body */
+
+  /* Letter-spacing — PRIZM leans on tight tracking for headings */
+  --prizm-tracking-tighter: -0.05em;
+  --prizm-tracking-tight:   -0.025em;  /* heading default */
+  --prizm-tracking-normal:  0;
+  --prizm-tracking-wide:    0.025em;
+  --prizm-tracking-wider:   0.05em;    /* eyebrow uppercase */
+  --prizm-tracking-widest:  0.1em;     /* eyebrow uppercase (looser) */
+
+  /* Font weights */
+  --prizm-font-normal:    400;
+  --prizm-font-medium:    500;
+  --prizm-font-semibold:  600;  /* heading + button + table-head default */
+  --prizm-font-bold:      700;
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — Enterprise light (the :root default)
+   ============================================================ */
+
+:root,
+[data-zone="enterprise"][data-mode="light"] {
+  color-scheme: light;
+
+  --prizm-color-bg:               var(--prizm-slate-50);
+  --prizm-color-bg-subtle:        oklch(99.5% 0.002 247.84);
+  --prizm-color-bg-muted:         var(--prizm-slate-100);
+  --prizm-color-surface:          oklch(100% 0 0);
+  --prizm-color-surface-elevated: oklch(100% 0 0);
+
+  --prizm-color-border:           var(--prizm-slate-200);
+  --prizm-color-border-strong:    var(--prizm-slate-300);
+
+  --prizm-color-fg:        var(--prizm-slate-900);
+  --prizm-color-fg-muted:  var(--prizm-slate-600);
+  --prizm-color-fg-subtle: var(--prizm-slate-500);
+
+  --prizm-color-accent:       var(--prizm-blue-600);
+  --prizm-color-accent-fg:    oklch(100% 0 0);
+  --prizm-color-accent-hover: var(--prizm-blue-700);
+
+  --prizm-color-danger:    var(--prizm-red-700);
+  --prizm-color-danger-fg: oklch(100% 0 0);
+  --prizm-color-success:   var(--prizm-green-700);
+  --prizm-color-warning:   var(--prizm-amber-700);
+  --prizm-color-info:      var(--prizm-sky-700);
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — Enterprise dark
+   ============================================================ */
+
+[data-zone="enterprise"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --prizm-color-bg:               var(--prizm-slate-950);
+  --prizm-color-bg-subtle:        oklch(10.4% 0.04 264.7);
+  --prizm-color-bg-muted:         oklch(16.5% 0.04 265.75);
+  --prizm-color-surface:          var(--prizm-slate-900);
+  --prizm-color-surface-elevated: var(--prizm-slate-800);
+
+  --prizm-color-border:           var(--prizm-slate-800);
+  --prizm-color-border-strong:    var(--prizm-slate-700);
+
+  --prizm-color-fg:        var(--prizm-slate-50);
+  --prizm-color-fg-muted:  var(--prizm-slate-300);
+  --prizm-color-fg-subtle: var(--prizm-slate-400);
+
+  --prizm-color-accent:       var(--prizm-blue-500);
+  --prizm-color-accent-fg:    var(--prizm-slate-950);
+  --prizm-color-accent-hover: var(--prizm-blue-400);
+
+  --prizm-color-danger:    var(--prizm-red-600);
+  --prizm-color-danger-fg: var(--prizm-slate-50);
+  --prizm-color-success:   var(--prizm-green-500);
+  --prizm-color-warning:   var(--prizm-amber-500);
+  --prizm-color-info:      var(--prizm-sky-500);
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — C3 light
+   (denser, more saturated, tactical; cyan accent)
+   ============================================================ */
+
+[data-zone="c3"][data-mode="light"] {
+  color-scheme: light;
+
+  --prizm-color-bg:               oklch(97.4% 0.005 247.84);
+  --prizm-color-bg-subtle:        var(--prizm-slate-50);
+  --prizm-color-bg-muted:         var(--prizm-slate-100);
+  --prizm-color-surface:          oklch(100% 0 0);
+  --prizm-color-surface-elevated: oklch(100% 0 0);
+
+  --prizm-color-border:           var(--prizm-slate-300);
+  --prizm-color-border-strong:    var(--prizm-slate-400);
+
+  --prizm-color-fg:        var(--prizm-slate-950);
+  --prizm-color-fg-muted:  var(--prizm-slate-700);
+  --prizm-color-fg-subtle: var(--prizm-slate-600);
+
+  --prizm-color-accent:       var(--prizm-cyan-700);
+  --prizm-color-accent-fg:    oklch(100% 0 0);
+  --prizm-color-accent-hover: var(--prizm-cyan-800);
+
+  --prizm-color-danger:    var(--prizm-red-700);
+  --prizm-color-danger-fg: oklch(100% 0 0);
+  --prizm-color-success:   var(--prizm-green-700);
+  --prizm-color-warning:   var(--prizm-amber-700);
+  --prizm-color-info:      var(--prizm-sky-700);
+
+  /* Liquid glass — darker tint over bright backdrop */
+  --prizm-glass-chrome-bg:        oklch(20% 0.025 240 / 0.06);
+  --prizm-glass-chrome-border:    oklch(0% 0 0 / 0.08);
+  --prizm-glass-chrome-blur:      8px;
+  --prizm-glass-chrome-saturate:  180%;
+  --prizm-glass-chrome-shadow:    inset 0 1px 0 oklch(100% 0 0 / 0.25);
+
+  --prizm-glass-panel-bg:         oklch(20% 0.025 240 / 0.1);
+  --prizm-glass-panel-border:     oklch(0% 0 0 / 0.1);
+  --prizm-glass-panel-blur:       12px;
+  --prizm-glass-panel-saturate:   180%;
+  --prizm-glass-panel-shadow:     inset 0 1px 0 oklch(100% 0 0 / 0.3), 0 8px 24px oklch(0% 0 0 / 0.08);
+  --prizm-glass-noise-opacity:    0.05; /* @kind other */
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — C3 dark
+   (operator default; very dark surfaces, high contrast, cyan)
+   ============================================================ */
+
+[data-zone="c3"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --prizm-color-bg:               oklch(9.8%  0.03  264.7);
+  --prizm-color-bg-subtle:        var(--prizm-slate-950);
+  --prizm-color-bg-muted:         oklch(15.5% 0.04  264.7);
+  --prizm-color-surface:          var(--prizm-slate-900);
+  --prizm-color-surface-elevated: var(--prizm-slate-800);
+
+  --prizm-color-border:           var(--prizm-slate-700);
+  --prizm-color-border-strong:    var(--prizm-slate-600);
+
+  --prizm-color-fg:        oklch(99.0% 0.002 247.84);
+  --prizm-color-fg-muted:  var(--prizm-slate-300);
+  --prizm-color-fg-subtle: var(--prizm-slate-400);
+
+  --prizm-color-accent:       var(--prizm-cyan-400);
+  --prizm-color-accent-fg:    var(--prizm-slate-950);
+  --prizm-color-accent-hover: var(--prizm-cyan-300);
+
+  --prizm-color-danger:    var(--prizm-red-600);
+  --prizm-color-danger-fg: var(--prizm-slate-50);
+  --prizm-color-success:   var(--prizm-green-500);
+  --prizm-color-warning:   var(--prizm-amber-500);
+  --prizm-color-info:      var(--prizm-sky-500);
+
+  /* Liquid glass — lighter tint over dark backdrop */
+  --prizm-glass-chrome-bg:        oklch(85% 0.015 220 / 0.06);
+  --prizm-glass-chrome-border:    oklch(100% 0 0 / 0.08);
+  --prizm-glass-chrome-blur:      8px;
+  --prizm-glass-chrome-saturate:  180%;
+  --prizm-glass-chrome-shadow:    inset 0 1px 0 oklch(100% 0 0 / 0.1);
+
+  --prizm-glass-panel-bg:         oklch(85% 0.015 220 / 0.1);
+  --prizm-glass-panel-border:     oklch(100% 0 0 / 0.1);
+  --prizm-glass-panel-blur:       12px;
+  --prizm-glass-panel-saturate:   180%;
+  --prizm-glass-panel-shadow:     inset 0 1px 0 oklch(100% 0 0 / 0.15), 0 12px 32px oklch(0% 0 0 / 0.5);
+  --prizm-glass-noise-opacity:    0.04; /* @kind other */
+}
+
+
+/* ============================================================
+   ELEMENT DEFAULTS
+   ------------------------------------------------------------
+   Sets sensible defaults on bare HTML so plain content (h1,
+   p, code, kbd) inherits PRIZM's typography without needing
+   utility classes everywhere. UI kits override locally where
+   they want different sizes.
+   ============================================================ */
+
+html {
+  font-family: var(--prizm-font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--prizm-color-bg);
+  color: var(--prizm-color-fg);
+  margin: 0;
+  line-height: var(--prizm-leading-normal);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--prizm-color-fg);
+  font-weight: var(--prizm-font-semibold);
+  letter-spacing: var(--prizm-tracking-tight);
+  line-height: var(--prizm-leading-tight);
+  margin: 0;
+}
+
+h1 { font-size: var(--prizm-text-4xl); }
+h2 { font-size: var(--prizm-text-2xl); }
+h3 { font-size: var(--prizm-text-xl); }
+h4 { font-size: var(--prizm-text-lg); }
+h5 { font-size: var(--prizm-text-base); }
+h6 { font-size: var(--prizm-text-sm); }
+
+p { margin: 0; color: var(--prizm-color-fg); }
+
+code, kbd, pre, samp {
+  font-family: var(--prizm-font-mono);
+  font-size: 0.9em;
+}
+
+/* PRIZM site-wide rule: lucide ships at stroke-width 2; PRIZM
+   prefers 1.5 for a crisper / precision feel. Inline SVGs that
+   set stroke-width on individual <path>s are unaffected. */
+svg {
+  stroke-width: 1.5;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--prizm-color-accent);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   LIQUID GLASS — C3-only surface treatment
+   ------------------------------------------------------------
+   Two tiers: chrome (lighter blur, app frame) and panel (heavier
+   blur, floating overlays). The driving tokens are only declared
+   under [data-zone="c3"], so applying these classes outside C3
+   has no effect.
+   ============================================================ */
+
+.surface-glass-chrome,
+.surface-glass-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.surface-glass-chrome {
+  background-color: var(--prizm-glass-chrome-bg, transparent);
+  border: 1px solid var(--prizm-glass-chrome-border, transparent);
+  box-shadow: var(--prizm-glass-chrome-shadow, none);
+}
+
+.surface-glass-panel {
+  background-color: var(--prizm-glass-panel-bg, transparent);
+  border: 1px solid var(--prizm-glass-panel-border, transparent);
+  box-shadow: var(--prizm-glass-panel-shadow, none);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .surface-glass-chrome {
+    -webkit-backdrop-filter: blur(var(--prizm-glass-chrome-blur, 8px)) saturate(var(--prizm-glass-chrome-saturate, 180%));
+            backdrop-filter: blur(var(--prizm-glass-chrome-blur, 8px)) saturate(var(--prizm-glass-chrome-saturate, 180%));
+  }
+  .surface-glass-panel {
+    -webkit-backdrop-filter: blur(var(--prizm-glass-panel-blur, 12px)) saturate(var(--prizm-glass-panel-saturate, 180%));
+            backdrop-filter: blur(var(--prizm-glass-panel-blur, 12px)) saturate(var(--prizm-glass-panel-saturate, 180%));
+  }
+}
+
+.surface-glass-chrome::before,
+.surface-glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("../assets/noise.svg");
+  background-size: 160px 160px;
+  opacity: var(--prizm-glass-noise-opacity, 0);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.surface-glass-chrome > *,
+.surface-glass-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ============================================================
+   UTILITY CLASSES — small, opt-in
+   ------------------------------------------------------------
+   The UI kits use Tailwind shape semantics in their JSX. For
+   plain HTML cards in preview/, this short list of utility
+   classes lets us style cards without pulling in all of Tailwind.
+   ============================================================ */
+
+.font-mono { font-family: var(--prizm-font-mono); }
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+</style>
+<script src="05ce2411-4722-469b-b855-e2d53e7baf30"></script>
+
+<style>
+body { margin: 0; background: var(--prizm-color-bg); color: var(--prizm-color-fg); font-family: var(--prizm-font-sans); -webkit-font-smoothing: antialiased; }
+a { color: var(--prizm-color-accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 4px; }
+input, select, textarea, button { font-family: inherit; }
+svg { stroke-width: 1.5; }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="aig" x1="9" y1="6" x2="4.6946" y2="7.27033" sc-camel-gradient-units="userSpaceOnUse"><stop stop-color="#00DCFF"></stop><stop offset="1" stop-color="#1B65F8"></stop></linearGradient></defs></svg>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:24px;height:56px;padding:0 28px;background:var(--prizm-color-surface);border-bottom:1px solid var(--prizm-color-border)">
+  <div style="display:flex;align-items:center;gap:32px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-accent)"><path d="M12 2L22 20H2L12 2Z"></path><path d="M12 2L12 20"></path></svg>
+      <span style="font-size:14px;font-weight:600;letter-spacing:-0.02em">My Assets Record</span>
+    </div>
+    <nav style="display:flex;align-items:center;gap:4px">
+      <button sc-camel-on-click="{{ goHome }}" style="height:32px;padding:0 12px;border:0;border-radius:6px;background:transparent;font-size:13px;cursor:pointer;transition:background 150ms ease-out;font-weight:{{ homeWeight }};color:{{ homeColor }}" style-hover="background:var(--prizm-color-bg-muted)">Home</button>
+      <button sc-camel-on-click="{{ goAssets }}" style="height:32px;padding:0 12px;border:0;border-radius:6px;background:transparent;font-size:13px;cursor:pointer;transition:background 150ms ease-out;font-weight:{{ assetsWeight }};color:{{ assetsColor }}" style-hover="background:var(--prizm-color-bg-muted)">Assets</button>
+    </nav>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <button data-tip="Help centre — guides on asset classification, tagging and capitalisation." style="display:grid;place-items:center;border:0;padding:0;background:none;color:var(--prizm-color-fg-muted);cursor:pointer;transition:color 150ms ease-out" style-hover="color:var(--prizm-color-fg)">
+      <svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;padding-left:12px;border-left:1px solid var(--prizm-color-border)">
+      <div style="width:28px;height:28px;border-radius:99px;background:var(--prizm-color-bg-muted);color:var(--prizm-color-fg-muted);display:grid;place-items:center;font-size:11px;font-weight:600">TL</div>
+      <div style="display:flex;flex-direction:column;line-height:1.25">
+        <span style="font-size:12px;font-weight:600">Tan Li Wei</span>
+        <span style="font-size:11px;color:var(--prizm-color-fg-subtle)">Project manager</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ onHome }}" hint-placeholder-val="{{ true }}">
+<main style="flex:1;padding:36px 28px 72px">
+  <div style="max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:36px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      
+      <h1 style="margin:0;font-size:28px;font-weight:600;letter-spacing:-0.025em">Home</h1>
+      <p style="margin:2px 0 0;font-size:14px;color:var(--prizm-color-fg-muted);max-width:60ch;text-wrap:pretty">Track resources, equipment, and assets on My Assets Record (MAR)</p>
+    </div>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <h2 style="margin:0;font-size:16px;font-weight:600;letter-spacing:-0.015em">Action items</h2>
+        <span style="font-size:12px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums">1 pending</span>
+      </div>
+      <button sc-camel-on-click="{{ goForm }}" style="display:flex;align-items:center;gap:18px;width:100%;text-align:left;padding:16px 18px;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm);cursor:pointer;transition:background 150ms ease-out" style-hover="background:var(--prizm-color-bg-muted)">
+        <div style="width:34px;height:34px;flex:none;border-radius:6px;background:color-mix(in oklab, var(--prizm-color-accent) 10%, var(--prizm-color-surface));color:var(--prizm-color-accent);display:grid;place-items:center">
+          <svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 5h2"></path><path d="M3 12h2"></path><path d="M3 19h2"></path><path d="M9 5h12"></path><path d="M9 12h12"></path><path d="M9 19h12"></path></svg>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;letter-spacing:-0.01em">Review asset record<svg width="14" height="14" sc-camel-view-box="0 0 16 16" fill="none"><path d="M6.33333 12.6667L5.44255 10.7069C4.9423 9.6064 4.06027 8.72436 2.95973 8.22412L1 7.33333L2.95973 6.44255C4.06027 5.9423 4.9423 5.06027 5.44255 3.95973L6.33333 2L7.22412 3.95973C7.72436 5.06027 8.6064 5.9423 9.70694 6.44255L11.6667 7.33333L9.70694 8.22412C8.6064 8.72436 7.72437 9.6064 7.22412 10.7069L6.33333 12.6667ZM11.6667 14L11.6092 13.8736C11.109 12.7731 10.2269 11.891 9.1264 11.3908L9 11.3333L9.1264 11.2759C10.2269 10.7756 11.109 9.8936 11.6092 8.79306L11.6667 8.66667L11.7241 8.79306C12.2244 9.8936 13.1064 10.7756 14.2069 11.2759L14.3333 11.3333L14.2069 11.3908C13.1064 11.891 12.2244 12.7731 11.7241 13.8736L11.6667 14Z" fill="url(#aig)"></path></svg></span>
+          <span style="font-size:12.5px;color:var(--prizm-color-fg-muted)">Wifi Card · Invoice INV-2026-00834 · PO DSTA-26-0192</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;flex:none">
+          <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)"><path d="M9 18l6-6-6-6"></path></svg>
+        </div>
+      </button>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:16px;font-weight:600;letter-spacing:-0.015em">Asset categories</h2>
+      <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:14px">
+        <button sc-camel-on-click="{{ goAssets }}" style="display:flex;flex-direction:column;gap:14px;text-align:left;padding:16px;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm);cursor:pointer;transition:background 150ms ease-out" style-hover="background:var(--prizm-color-bg-muted)">
+          <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:14px;font-weight:600">CAT A</span>
+            <span style="font-size:12px;color:var(--prizm-color-fg-muted)">Capitalised · value ≥ $100,000</span>
+            <span style="font-size:12px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums;margin-top:4px">41 assets</span>
+          </div>
+        </button>
+        <button sc-camel-on-click="{{ goAssets }}" style="display:flex;flex-direction:column;gap:14px;text-align:left;padding:16px;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm);cursor:pointer;transition:background 150ms ease-out" style-hover="background:var(--prizm-color-bg-muted)">
+          <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:14px;font-weight:600">CAT B</span>
+            <span style="font-size:12px;color:var(--prizm-color-fg-muted)">Tagged equipment · under threshold</span>
+            <span style="font-size:12px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums;margin-top:4px">318 assets</span>
+          </div>
+        </button>
+        <button sc-camel-on-click="{{ goAssets }}" style="display:flex;flex-direction:column;gap:14px;text-align:left;padding:16px;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm);cursor:pointer;transition:background 150ms ease-out" style-hover="background:var(--prizm-color-bg-muted)">
+          <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:14px;font-weight:600">CAT C</span>
+            <span style="font-size:12px;color:var(--prizm-color-fg-muted)">Consumable and controlled stores</span>
+            <span style="font-size:12px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums;margin-top:4px">1,204 assets</span>
+          </div>
+        </button>
+      </div>
+    </section>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ onForm }}" hint-placeholder-val="{{ true }}">
+<main style="flex:1;padding:28px 28px 120px">
+  <div style="max-width:1220px;margin:0 auto;display:flex;flex-direction:column;gap:22px">
+
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--prizm-color-fg-subtle)">
+      <button sc-camel-on-click="{{ goHome }}" style="border:0;background:none;padding:0;font-size:12px;color:var(--prizm-color-fg-subtle);cursor:pointer" style-hover="color:var(--prizm-color-fg)">Home</button>
+      <span>/</span>
+      <span>Action items</span>
+      <span>/</span>
+      <span style="color:var(--prizm-color-fg)">Review asset record</span>
+    </div>
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--prizm-color-fg-subtle)">Asset registration</span>
+        <h1 style="margin:0;font-size:26px;font-weight:600;letter-spacing:-0.025em">Wifi Card</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-warning) 13%, var(--prizm-color-surface));font-size:11.5px;font-weight:500;color:var(--prizm-color-warning)">Pending review</span>
+        <span style="font-size:11.5px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums">Extracted 01 Sep 2026 09:14</span>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid color-mix(in oklab, var(--prizm-color-accent) 25%, var(--prizm-color-border));border-radius:8px;background:color-mix(in oklab, var(--prizm-color-accent) 5%, var(--prizm-color-surface))">
+      <svg width="16" height="16" sc-camel-view-box="0 0 16 16" fill="none" style="flex:none;margin-top:1px"><path d="M6.33333 12.6667L5.44255 10.7069C4.9423 9.6064 4.06027 8.72436 2.95973 8.22412L1 7.33333L2.95973 6.44255C4.06027 5.9423 4.9423 5.06027 5.44255 3.95973L6.33333 2L7.22412 3.95973C7.72436 5.06027 8.6064 5.9423 9.70694 6.44255L11.6667 7.33333L9.70694 8.22412C8.6064 8.72436 7.72437 9.6064 7.22412 10.7069L6.33333 12.6667ZM11.6667 14L11.6092 13.8736C11.109 12.7731 10.2269 11.891 9.1264 11.3908L9 11.3333L9.1264 11.2759C10.2269 10.7756 11.109 9.8936 11.6092 8.79306L11.6667 8.66667L11.7241 8.79306C12.2244 9.8936 13.1064 10.7756 14.2069 11.2759L14.3333 11.3333L14.2069 11.3908C13.1064 11.891 12.2244 12.7731 11.7241 13.8736L11.6667 14Z" fill="url(#aig)"></path></svg>
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-size:13px;font-weight:600;letter-spacing:-0.01em">20 of 23 fields pre-filled from purchase documents</span>
+        <span style="font-size:12.5px;color:var(--prizm-color-fg-muted);text-wrap:pretty">Values are read from the invoice, the GeBIZ purchase order and the scope of work.</span>
+      </div>
+    </div>
+
+    <sc-if value="{{ showLegend }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-wrap:wrap;gap:20px;padding:11px 14px;border:1px solid var(--prizm-color-border);border-radius:6px;background:var(--prizm-color-surface)">
+      <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--prizm-color-fg-muted)">
+        <span style="width:22px;height:14px;border-radius:3px;border:1px solid color-mix(in oklab, var(--prizm-color-accent) 35%, var(--prizm-color-border));background:color-mix(in oklab, var(--prizm-color-accent) 7%, var(--prizm-color-surface))"></span>
+        AI suggestion — check it
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--prizm-color-fg-muted)">
+        <span style="width:22px;height:14px;border-radius:3px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface)"></span>
+        Extracted from documents — editable
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--prizm-color-fg-muted)">
+        <span style="width:22px;height:14px;border-radius:3px;border:1px dashed var(--prizm-color-border-strong);background:var(--prizm-color-bg-muted)"></span>
+        System default — confirm the custodian
+      </div>
+    </div>
+    </sc-if>
+
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start">
+
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm)">
+
+        <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-size:15px;font-weight:600;letter-spacing:-0.015em">Vendor details</h2>
+          <div style="display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px 18px">
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35">
+                <span style="font-size:12px;font-weight:600">Purchase type<span style="color:var(--prizm-color-danger)"> *</span></span>
+                <span data-tip="Contracting instrument the asset was bought under: one-time purchase, period contract call-off, or demand against a framework agreement." style="display:inline-grid;place-items:center;width:14px;height:14px;cursor:help;color:var(--prizm-color-fg-subtle)"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>
+              </div>
+              <sc-raw-select style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 8px;font-size:13px;color:var(--prizm-color-fg)">
+                <option>One-time purchase</option>
+                <option>Period contract call-off</option>
+                <option>Framework demand</option>
+              </sc-raw-select>
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Invoice No.<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <input value="INV-2026-00834" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">PO No.</span></div>
+              <input value="DSTA-26-0192" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">DO No.</span></div>
+              <input value="DO-88213" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Brand/Model<span style="color:var(--prizm-color-danger)"> *</span></span><span style="font-size:11px;color:var(--prizm-color-fg-subtle);font-weight:400">max 40 chars</span></div>
+              <input maxlength="40" value="Wifi Card" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Vendor/Supplier<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <input value="Nera Telecommunications Ltd" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Quantity</span></div>
+              <input value="1" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Period Contract</span></div>
+              <input value="PC/2024/NET/017" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+          </div>
+        </div>
+
+        <div style="height:1px;background:var(--prizm-color-border)"></div>
+
+        <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:16px">
+          <h2 style="margin:0;font-size:15px;font-weight:600;letter-spacing:-0.015em">MINDEF/SAF details</h2>
+          <div style="display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px 18px">
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Project<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <input value="PJ-4417 Perimeter Sensor Refresh" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px;position:relative">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35">
+                <span style="font-size:12px;font-weight:600">MINDEF Category<span style="color:var(--prizm-color-danger)"> *</span></span>
+                <span data-ai-trigger="" style="display:inline-flex;align-items:center;gap:4px;padding:1px 6px 1px 4px;border-radius:99px;border:1px solid color-mix(in oklab, var(--prizm-color-accent) 30%, var(--prizm-color-border));background:color-mix(in oklab, var(--prizm-color-accent) 7%, var(--prizm-color-surface));cursor:help">
+                  <svg width="12" height="12" sc-camel-view-box="0 0 16 16" fill="none"><path d="M6.33333 12.6667L5.44255 10.7069C4.9423 9.6064 4.06027 8.72436 2.95973 8.22412L1 7.33333L2.95973 6.44255C4.06027 5.9423 4.9423 5.06027 5.44255 3.95973L6.33333 2L7.22412 3.95973C7.72436 5.06027 8.6064 5.9423 9.70694 6.44255L11.6667 7.33333L9.70694 8.22412C8.6064 8.72436 7.72437 9.6064 7.22412 10.7069L6.33333 12.6667ZM11.6667 14L11.6092 13.8736C11.109 12.7731 10.2269 11.891 9.1264 11.3908L9 11.3333L9.1264 11.2759C10.2269 10.7756 11.109 9.8936 11.6092 8.79306L11.6667 8.66667L11.7241 8.79306C12.2244 9.8936 13.1064 10.7756 14.2069 11.2759L14.3333 11.3333L14.2069 11.3908C13.1064 11.891 12.2244 12.7731 11.7241 13.8736L11.6667 14Z" fill="url(#aig)"></path></svg>
+                  <span style="font-size:10px;font-weight:600;letter-spacing:0.03em;color:var(--prizm-color-accent)">WHY</span>
+                </span>
+              </div>
+              <sc-raw-select style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid color-mix(in oklab, var(--prizm-color-accent) 35%, var(--prizm-color-border));background:color-mix(in oklab, var(--prizm-color-accent) 7%, var(--prizm-color-surface));padding:0 8px;font-size:13px;color:var(--prizm-color-fg)">
+                <option>Personal Computers, Software &amp; Peripherals</option>
+                <option>Host Computers &amp; Peripherals</option>
+                <option>Network Infrastructure &amp; Equipment</option>
+                <option>Application Software (In-house Developed)</option>
+                <option>System Software (COTS)</option>
+                <option>Communications Equipment</option>
+                <option>Office Equipment</option>
+                <option>Technology Equipment</option>
+                <option>Inventory / Consumable Materials</option>
+                <option>Expenses (Non-capital)</option>
+              </sc-raw-select>
+
+              <div data-ai-pop="" style="position:absolute;z-index:60;top:calc(100% + 6px);left:0;width:420px;max-width:calc(100vw - 60px);padding:14px 15px;border:1px solid var(--prizm-color-border-strong);border-radius:8px;background:var(--prizm-color-surface-elevated);box-shadow:var(--prizm-shadow-lg);opacity:0;pointer-events:none;transform:translateY(3px);transition:opacity 150ms ease-out, transform 150ms ease-out">
+                <div style="display:flex;flex-direction:column;gap:11px">
+                  <div style="display:flex;align-items:center;gap:7px">
+                    <svg width="13" height="13" sc-camel-view-box="0 0 16 16" fill="none"><path d="M6.33333 12.6667L5.44255 10.7069C4.9423 9.6064 4.06027 8.72436 2.95973 8.22412L1 7.33333L2.95973 6.44255C4.06027 5.9423 4.9423 5.06027 5.44255 3.95973L6.33333 2L7.22412 3.95973C7.72436 5.06027 8.6064 5.9423 9.70694 6.44255L11.6667 7.33333L9.70694 8.22412C8.6064 8.72436 7.72437 9.6064 7.22412 10.7069L6.33333 12.6667ZM11.6667 14L11.6092 13.8736C11.109 12.7731 10.2269 11.891 9.1264 11.3908L9 11.3333L9.1264 11.2759C10.2269 10.7756 11.109 9.8936 11.6092 8.79306L11.6667 8.66667L11.7241 8.79306C12.2244 9.8936 13.1064 10.7756 14.2069 11.2759L14.3333 11.3333L14.2069 11.3908C13.1064 11.891 12.2244 12.7731 11.7241 13.8736L11.6667 14Z" fill="url(#aig)"></path></svg>
+                    <span style="font-size:12px;font-weight:600;letter-spacing:-0.01em">Why Communications &amp; Network Equipment</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <div style="display:flex;gap:9px">
+                      <span style="flex:none;width:66px;font-size:10.5px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);padding-top:1px">PO line 3</span>
+                      <span style="font-size:12px;color:var(--prizm-color-fg);line-height:1.5;text-wrap:pretty">"Wifi card, 802.11ax dual-band PCIe module, enterprise grade" — 1 unit, delivered to Blk 27 comms room.</span>
+                    </div>
+                    <div style="display:flex;gap:9px">
+                      <span style="flex:none;width:66px;font-size:10.5px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);padding-top:1px">SOW 4.2</span>
+                      <span style="font-size:12px;color:var(--prizm-color-fg);line-height:1.5;text-wrap:pretty">Card to be fitted into the existing perimeter sensor backhaul segment and registered under the network inventory.</span>
+                    </div>
+                    <div style="display:flex;gap:9px">
+                      <span style="flex:none;width:66px;font-size:10.5px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);padding-top:1px">Rule 2.1c</span>
+                      <span style="font-size:12px;color:var(--prizm-color-fg);line-height:1.5;text-wrap:pretty">Wireless networking hardware forming part of a fixed network installation classifies as Communications &amp; Network Equipment.</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:10px;border-top:1px solid var(--prizm-color-border)">
+                    <span style="font-size:11.5px;color:var(--prizm-color-fg-muted)">Two rules matched. Second-best: Computer Equipment.</span>
+                    <span style="font-size:11px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle)">3 sources</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div data-prov="manual" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">CAT B or C or Dev?<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <sc-raw-select data-manual-select="" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-warning);background:color-mix(in oklab, var(--prizm-color-warning) 10%, var(--prizm-color-surface));padding:0 8px;font-size:13px;color:var(--prizm-color-fg)">
+                <option value="">Select — required</option>
+                <option value="B">CAT B</option>
+                <option value="C">CAT C</option>
+                <option value="DEV">Dev</option>
+              </sc-raw-select>
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Taggable<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <sc-raw-select style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 8px;font-size:13px;color:var(--prizm-color-fg)">
+                <option>Yes</option>
+                <option>No</option>
+              </sc-raw-select>
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px;grid-column:1 / -1">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:17px">
+                <span style="font-size:12px;font-weight:600">Description<span style="color:var(--prizm-color-danger)"> *</span></span>
+                <span data-desc-count="" style="font-size:11px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums">504 characters remaining</span>
+              </div>
+              <textarea data-desc="" maxlength="800" rows="4" style="width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:9px 10px;font-size:13px;line-height:1.55;color:var(--prizm-color-fg);resize:vertical">Wifi card, 802.11ax dual-band PCIe module, supplied under PC/2024/NET/017 for the Blk 27 perimeter sensor backhaul segment. Includes dual-band antenna kit and low-profile mounting bracket as delivered components. Installed and commissioned by the vendor per SOW clause 4.2.</textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div style="height:1px;background:var(--prizm-color-border)"></div>
+
+        <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px 18px">
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">GL Date</span></div>
+              <input value="2026-08-29" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">DO Date<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <input value="2026-08-27" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Tag Number</span></div>
+              <input value="" placeholder="Assigned after tagging" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Serial No.<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <input value="FOC2649X0AB" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Unit Price<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+              <input value="SGD 12,480.00" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35">
+                <span style="font-size:12px;font-weight:600">Asset capitalisation Date</span>
+                <span data-tip="Date the asset enters the fixed asset register and begins depreciating. Defaults to the delivery date unless commissioning is later." style="display:inline-grid;place-items:center;width:14px;height:14px;cursor:help;color:var(--prizm-color-fg-subtle)"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>
+              </div>
+              <input value="2026-08-29" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35">
+                <span style="font-size:12px;font-weight:600">Material Number</span>
+                <span data-tip="SAP material master number for this item. Used to link the record to procurement and stock movement history." style="display:inline-grid;place-items:center;width:14px;height:14px;cursor:help;color:var(--prizm-color-fg-subtle)"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>
+              </div>
+              <input value="7100042318" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35">
+                <span style="font-size:12px;font-weight:600">Receiving Plant</span>
+                <span data-tip="Plant code of the unit that took delivery. Determines which inventory ledger the asset sits in." style="display:inline-grid;place-items:center;width:14px;height:14px;cursor:help;color:var(--prizm-color-fg-subtle)"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>
+              </div>
+              <input value="SG21" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+            <div data-prov="ai" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35">
+                <span style="font-size:12px;font-weight:600">Receiving SLOC</span>
+                <span data-tip="Storage location within the receiving plant — the physical store, room or rack the asset was booked into." style="display:inline-grid;place-items:center;width:14px;height:14px;cursor:help;color:var(--prizm-color-fg-subtle)"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></span>
+              </div>
+              <input value="0027-COMMS" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg)">
+            </div>
+
+          </div>
+        </div>
+
+        <div style="height:1px;background:var(--prizm-color-border)"></div>
+
+        <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <h2 style="margin:0;font-size:15px;font-weight:600;letter-spacing:-0.015em">Custodianship</h2>
+          </div>
+          <div data-prov="system" style="display:flex;flex-direction:column;gap:6px;max-width:340px;padding:13px 14px;border:1px dashed var(--prizm-color-border-strong);border-radius:6px;background:var(--prizm-color-bg-muted)">
+            <div style="display:flex;align-items:flex-start;flex-wrap:wrap;gap:2px 5px;min-height:32px;line-height:1.35"><span style="font-size:12px;font-weight:600">Assignee<span style="color:var(--prizm-color-danger)"> *</span></span></div>
+            <input value="Tan Li Wei" style="height:34px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border-strong);background:var(--prizm-color-surface);padding:0 10px;font-size:13px;color:var(--prizm-color-fg)">
+          </div>
+        </div>
+
+        <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:9px;margin:0 22px 4px;padding:11px 13px;border:1px solid var(--prizm-color-danger);border-radius:6px;background:color-mix(in oklab, var(--prizm-color-danger) 8%, var(--prizm-color-surface))">
+          <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-danger)" style="flex:none"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+          <span style="font-size:12.5px;color:var(--prizm-color-danger)">CAT B or C or Dev? must be selected before the review can be completed.</span>
+        </div>
+        </sc-if>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 16px;padding:16px 22px;border-top:1px solid var(--prizm-color-border);background:var(--prizm-color-bg-subtle);border-radius:0 0 8px 8px">
+          <span style="font-size:12px;color:var(--prizm-color-fg-muted)">Asset record will be updated upon review completion.</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <button sc-camel-on-click="{{ goHome }}" style="height:36px;padding:0 14px;white-space:nowrap;border:1px solid var(--prizm-color-border);border-radius:6px;background:var(--prizm-color-surface);font-size:13px;font-weight:500;color:var(--prizm-color-fg);cursor:pointer;transition:background 150ms ease-out" style-hover="background:var(--prizm-color-bg-muted)">Save draft</button>
+            <button sc-camel-on-click="{{ submit }}" style="height:36px;padding:0 18px;white-space:nowrap;border:0;border-radius:6px;background:var(--prizm-color-accent);font-size:13px;font-weight:600;color:var(--prizm-color-accent-fg);cursor:pointer;transition:background 150ms ease-out" style-hover="background:var(--prizm-color-accent-hover)">Complete review</button>
+          </div>
+        </div>
+      </div>
+
+      <sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}">
+      <aside style="position:sticky;top:80px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm)">
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--prizm-color-fg-subtle)">Source documents</span>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid var(--prizm-color-border);border-radius:6px">
+              <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)" style="flex:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+              <div style="display:flex;flex-direction:column;min-width:0">
+                <span style="font-size:12px;font-weight:500">Invoice INV-2026-00834</span>
+                <span style="font-size:11px;color:var(--prizm-color-fg-subtle);font-family:var(--prizm-font-mono)">4 line items · 2 pp</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid var(--prizm-color-border);border-radius:6px">
+              <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)" style="flex:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+              <div style="display:flex;flex-direction:column;min-width:0">
+                <span style="font-size:12px;font-weight:500">GeBIZ PO DSTA-26-0192</span>
+                <span style="font-size:11px;color:var(--prizm-color-fg-subtle);font-family:var(--prizm-font-mono)">6 line items · 3 pp</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid var(--prizm-color-border);border-radius:6px">
+              <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)" style="flex:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+              <div style="display:flex;flex-direction:column;min-width:0">
+                <span style="font-size:12px;font-weight:500">Scope of work, rev C</span>
+                <span style="font-size:11px;color:var(--prizm-color-fg-subtle);font-family:var(--prizm-font-mono)">clauses 1–7 · 11 pp</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid var(--prizm-color-border);border-radius:6px">
+              <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)" style="flex:none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+              <div style="display:flex;flex-direction:column;min-width:0">
+                <span style="font-size:12px;font-weight:500">Delivery order DO-88213</span>
+                <span style="font-size:11px;color:var(--prizm-color-fg-subtle);font-family:var(--prizm-font-mono)">1 consignment · 1 p</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding:16px;border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm)">
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--prizm-color-fg-subtle)">Review status</span>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;color:var(--prizm-color-fg-muted)">
+            <div style="display:flex;justify-content:space-between;gap:8px"><span>Extracted</span><span style="font-family:var(--prizm-font-mono);color:var(--prizm-color-fg);font-variant-numeric:tabular-nums">20 fields</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span>System default</span><span style="font-family:var(--prizm-font-mono);color:var(--prizm-color-fg);font-variant-numeric:tabular-nums">1 field</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span>Manual entry</span><span style="font-family:var(--prizm-font-mono);color:var(--prizm-color-warning);font-variant-numeric:tabular-nums">2 fields</span></div>
+          </div>
+        </div>
+      </aside>
+      </sc-if>
+
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ onAssets }}" hint-placeholder-val="{{ true }}">
+<main style="flex:1;padding:36px 28px 96px">
+  <div style="max-width:1220px;margin:0 auto;display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        
+        <h1 style="margin:0;font-size:28px;font-weight:600;letter-spacing:-0.025em">Assets</h1>
+      </div>
+      <span style="font-size:12px;font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle);font-variant-numeric:tabular-nums">1,563 records · updated 01 Sep 2026 09:22</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="position:relative;flex:1;min-width:240px">
+        <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-fg-subtle)" style="position:absolute;left:10px;top:10px"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input placeholder="Search by tag number, serial, model or vendor" style="height:36px;width:100%;box-sizing:border-box;border-radius:6px;border:1px solid var(--prizm-color-border);background:var(--prizm-color-surface);padding:0 12px 0 32px;font-size:13px;color:var(--prizm-color-fg);box-shadow:var(--prizm-shadow-sm)">
+      </div>
+      <button style="height:36px;padding:0 12px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--prizm-color-border);border-radius:6px;background:var(--prizm-color-surface);font-size:13px;font-weight:500;color:var(--prizm-color-fg);cursor:pointer" style-hover="background:var(--prizm-color-bg-muted)">
+        <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18"></path><path d="M7 12h10"></path><path d="M10 18h4"></path></svg>Filter
+      </button>
+      <button style="height:36px;padding:0 12px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--prizm-color-border);border-radius:6px;background:var(--prizm-color-surface);font-size:13px;font-weight:500;color:var(--prizm-color-fg);cursor:pointer" style-hover="background:var(--prizm-color-bg-muted)">
+        Manage<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+      <button style="height:36px;padding:0 14px;display:inline-flex;align-items:center;gap:7px;border:0;border-radius:6px;background:var(--prizm-color-accent);font-size:13px;font-weight:600;color:var(--prizm-color-accent-fg);cursor:pointer" style-hover="background:var(--prizm-color-accent-hover)">
+        <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Add
+      </button>
+    </div>
+
+    <div style="border:1px solid var(--prizm-color-border);border-radius:8px;background:var(--prizm-color-surface);box-shadow:var(--prizm-shadow-sm);overflow:hidden">
+      <sc-raw-table style="width:100%;border-collapse:collapse;font-size:13px">
+        <sc-raw-thead>
+          <sc-raw-tr style="background:var(--prizm-color-bg-subtle)">
+            <sc-raw-th style="width:34px;border-bottom:1px solid var(--prizm-color-border)"></sc-raw-th>
+            <sc-raw-th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Asset</sc-raw-th>
+            <sc-raw-th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Tag no.</sc-raw-th>
+            <sc-raw-th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Category</sc-raw-th>
+            <sc-raw-th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Serial no.</sc-raw-th>
+            <sc-raw-th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Custodian</sc-raw-th>
+            <sc-raw-th style="text-align:right;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Unit price</sc-raw-th>
+            <sc-raw-th style="text-align:left;padding:10px 12px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--prizm-color-fg-subtle);border-bottom:1px solid var(--prizm-color-border)">Status</sc-raw-th>
+          </sc-raw-tr>
+        </sc-raw-thead>
+        <sc-raw-tbody>
+          <sc-if value="{{ registered }}" hint-placeholder-val="{{ false }}">
+          <sc-raw-tr style="background:color-mix(in oklab, var(--prizm-color-accent) 5%, var(--prizm-color-surface))">
+            <sc-raw-td style="padding:0 0 0 8px;border-bottom:1px solid var(--prizm-color-border)"><button data-expand="new" data-open="1" style="width:22px;height:22px;display:grid;place-items:center;border:0;background:none;color:var(--prizm-color-fg-subtle);cursor:pointer;transform:rotate(90deg);transition:transform 150ms ease-out"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"></path></svg></button></sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)"><div style="display:flex;align-items:center;gap:8px"><span style="font-weight:600">Wifi Card</span><span style="padding:2px 7px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-accent) 13%, var(--prizm-color-surface));font-size:10.5px;font-weight:600;color:var(--prizm-color-accent)">NEW</span></div></sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle)">Pending</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">CAT B · Comms &amp; Network</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">FOC2649X0AB</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">Tan Li Wei</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums">12,480.00</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-success) 14%, var(--prizm-color-surface));font-size:11px;font-weight:500;color:var(--prizm-color-success)">Registered</span></sc-raw-td>
+          </sc-raw-tr>
+          <sc-raw-tr data-child="new" style="display:table-row">
+            <sc-raw-td style="border-bottom:1px solid var(--prizm-color-border)"></sc-raw-td>
+            <sc-raw-td style="padding:9px 12px 9px 26px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Dual-band antenna kit</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle)">—</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Component</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-muted)">FOC2650M11X</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Tan Li Wei</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg-muted)">2,140.00</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="font-size:11px;color:var(--prizm-color-fg-subtle)">Linked</span></sc-raw-td>
+          </sc-raw-tr>
+          <sc-raw-tr data-child="new" style="display:table-row">
+            <sc-raw-td style="border-bottom:1px solid var(--prizm-color-border)"></sc-raw-td>
+            <sc-raw-td style="padding:9px 12px 9px 26px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Low-profile mounting bracket</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle)">—</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Component</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-muted)">DTM2634K09P</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Tan Li Wei</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg-muted)">890.00</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="font-size:11px;color:var(--prizm-color-fg-subtle)">Linked</span></sc-raw-td>
+          </sc-raw-tr>
+          </sc-if>
+
+          <sc-raw-tr>
+            <sc-raw-td style="padding:0 0 0 8px;border-bottom:1px solid var(--prizm-color-border)"><button data-expand="a2" data-open="0" style="width:22px;height:22px;display:grid;place-items:center;border:0;background:none;color:var(--prizm-color-fg-subtle);cursor:pointer;transition:transform 150ms ease-out"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"></path></svg></button></sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-weight:500">Axis Q6135-LE PTZ camera</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">B-104772</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">CAT B · Security &amp; Surveillance</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">ACCC8E4A2211</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">Kumar S.</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums">8,320.00</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-success) 14%, var(--prizm-color-surface));font-size:11px;font-weight:500;color:var(--prizm-color-success)">Registered</span></sc-raw-td>
+          </sc-raw-tr>
+          <sc-raw-tr data-child="a2" style="display:none">
+            <sc-raw-td style="border-bottom:1px solid var(--prizm-color-border)"></sc-raw-td>
+            <sc-raw-td style="padding:9px 12px 9px 26px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Pole mount bracket T91G61</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle)">—</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Component</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-muted)">—</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Kumar S.</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg-muted)">210.00</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="font-size:11px;color:var(--prizm-color-fg-subtle)">Linked</span></sc-raw-td>
+          </sc-raw-tr>
+
+          <sc-raw-tr>
+            <sc-raw-td style="padding:0 0 0 8px;border-bottom:1px solid var(--prizm-color-border)"></sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-weight:500">Fluke 8846A precision multimeter</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">B-104588</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">CAT B · Test &amp; Measurement</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">2841094</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">Lim H. M.</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums">4,905.00</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-warning) 14%, var(--prizm-color-surface));font-size:11px;font-weight:500;color:var(--prizm-color-warning)">Calibration due</span></sc-raw-td>
+          </sc-raw-tr>
+          <sc-raw-tr>
+            <sc-raw-td style="padding:0 0 0 8px;border-bottom:1px solid var(--prizm-color-border)"><button data-expand="a4" data-open="0" style="width:22px;height:22px;display:grid;place-items:center;border:0;background:none;color:var(--prizm-color-fg-subtle);cursor:pointer;transition:transform 150ms ease-out"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"></path></svg></button></sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-weight:500">Dell PowerEdge R660 server</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">A-002914</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">CAT A · Computer Equipment</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono)">JH4KP93</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)">Tan Li Wei</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums">118,600.00</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-success) 14%, var(--prizm-color-surface));font-size:11px;font-weight:500;color:var(--prizm-color-success)">Registered</span></sc-raw-td>
+          </sc-raw-tr>
+          <sc-raw-tr data-child="a4" style="display:none">
+            <sc-raw-td style="border-bottom:1px solid var(--prizm-color-border)"></sc-raw-td>
+            <sc-raw-td style="padding:9px 12px 9px 26px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">iDRAC9 enterprise licence</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-subtle)">—</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Component</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);font-family:var(--prizm-font-mono);color:var(--prizm-color-fg-muted)">—</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);color:var(--prizm-color-fg-muted)">Tan Li Wei</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border);text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums;color:var(--prizm-color-fg-muted)">1,480.00</sc-raw-td>
+            <sc-raw-td style="padding:9px 12px;border-bottom:1px solid var(--prizm-color-border)"><span style="font-size:11px;color:var(--prizm-color-fg-subtle)">Linked</span></sc-raw-td>
+          </sc-raw-tr>
+          <sc-raw-tr>
+            <sc-raw-td style="padding:0 0 0 8px"></sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;font-weight:500">Panduit 42U network rack</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;font-family:var(--prizm-font-mono)">B-103991</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px">CAT B · Comms &amp; Network</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;font-family:var(--prizm-font-mono)">PN42U-0117</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px">Kumar S.</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px;text-align:right;font-family:var(--prizm-font-mono);font-variant-numeric:tabular-nums">3,260.00</sc-raw-td>
+            <sc-raw-td style="padding:11px 12px"><span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:99px;background:color-mix(in oklab, var(--prizm-color-success) 14%, var(--prizm-color-surface));font-size:11px;font-weight:500;color:var(--prizm-color-success)">Registered</span></sc-raw-td>
+          </sc-raw-tr>
+        </sc-raw-tbody>
+      </sc-raw-table>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;left:50%;bottom:28px;z-index:80;display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--prizm-color-border-strong);border-radius:8px;background:var(--prizm-color-fg);color:var(--prizm-color-bg);box-shadow:var(--prizm-shadow-lg);animation:toastIn 200ms ease-out">
+  <svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="var(--prizm-color-success)" style="flex:none"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+  <div style="display:flex;flex-direction:column;gap:1px">
+    <span style="font-size:13px;font-weight:600">Asset record registered</span>
+    <span style="font-size:12px;opacity:0.75">Wifi Card added to CAT B. Tag number pending.</span>
+  </div>
+  <button sc-camel-on-click="{{ dismiss }}" style="width:24px;height:24px;display:grid;place-items:center;border:0;border-radius:5px;background:transparent;color:currentColor;opacity:0.6;cursor:pointer;margin-left:6px">
+    <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+  </button>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;form&quot;,&quot;assets&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;\&quot;home\&quot; | \&quot;form\&quot; | \&quot;assets\&quot;&quot;},&quot;showSourceRail&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showProvenanceLegend&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { screen: props.startScreen || "home", toast: false, err: false };
+    this.tipEl = null;
+  }
+
+  go(screen) {
+    this.setState({ screen, err: false }, () => { if (this._syncCount) this._syncCount(); });
+    window.scrollTo(0, 0);
+  }
+
+  submit() {
+    const sel = document.querySelector('[data-manual-select]');
+    if (sel && !sel.value) {
+      this.setState({ err: true });
+      sel.style.borderColor = "var(--prizm-color-danger)";
+      sel.focus();
+      return;
+    }
+    this.setState({ screen: "assets", toast: true, err: false, registered: true });
+    window.scrollTo(0, 0);
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: false }), 7000);
+  }
+
+  componentDidMount() {
+    const root = document.body;
+
+    // keep the description counter honest whatever the seeded copy is
+    const syncCount = () => {
+      const ta = document.querySelector("[data-desc]");
+      const c = document.querySelector("[data-desc-count]");
+      if (ta && c) c.textContent = (800 - ta.value.length) + " characters remaining";
+    };
+    syncCount();
+    this._syncCount = syncCount;
+
+    // floating tooltip for (i) info icons
+    const tip = document.createElement("div");
+    Object.assign(tip.style, {
+      position: "fixed", zIndex: 90, maxWidth: "260px", padding: "8px 10px",
+      borderRadius: "6px", background: "var(--prizm-color-fg)", color: "var(--prizm-color-bg)",
+      font: "400 12px/1.45 var(--prizm-font-sans)", boxShadow: "var(--prizm-shadow-lg)",
+      opacity: "0", pointerEvents: "none", transition: "opacity 150ms ease-out"
+    });
+    document.body.appendChild(tip);
+    this.tipEl = tip;
+
+    root.addEventListener("mouseover", (e) => {
+      const t = e.target.closest("[data-tip]");
+      if (!t) return;
+      tip.textContent = t.getAttribute("data-tip");
+      const r = t.getBoundingClientRect();
+      tip.style.opacity = "1";
+      const tr = tip.getBoundingClientRect();
+      tip.style.left = Math.max(12, Math.min(window.innerWidth - tr.width - 12, r.left - tr.width / 2 + r.width / 2)) + "px";
+      tip.style.top = (r.top - tr.height - 8 < 8 ? r.bottom + 8 : r.top - tr.height - 8) + "px";
+    });
+    root.addEventListener("mouseout", (e) => {
+      if (e.target.closest("[data-tip]")) tip.style.opacity = "0";
+    });
+
+    // AI reasoning popover — hover to view
+    root.addEventListener("mouseover", (e) => {
+      const trigger = e.target.closest("[data-ai-trigger]");
+      const pop = document.querySelector("[data-ai-pop]");
+      if (!pop) return;
+      if (trigger || e.target.closest("[data-ai-pop]")) {
+        pop.style.opacity = "1";
+        pop.style.pointerEvents = "auto";
+        pop.style.transform = "translateY(0)";
+      }
+    });
+    root.addEventListener("mouseout", (e) => {
+      const pop = document.querySelector("[data-ai-pop]");
+      if (!pop) return;
+      const to = e.relatedTarget;
+      if (to && (to.closest && (to.closest("[data-ai-trigger]") || to.closest("[data-ai-pop]")))) return;
+      if (e.target.closest("[data-ai-trigger]") || e.target.closest("[data-ai-pop]")) {
+        pop.style.opacity = "0";
+        pop.style.pointerEvents = "none";
+        pop.style.transform = "translateY(3px)";
+      }
+    });
+
+    // mark extracted fields as edited once the operator changes them
+    root.addEventListener("input", (e) => {
+      const f = e.target.closest('[data-prov="ai"]');
+      if (f && !f.querySelector('[data-chip="edited"]')) {
+        const chip = document.createElement("span");
+        chip.setAttribute("data-chip", "edited");
+        chip.style.cssText = "display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-family:var(--prizm-font-mono);color:var(--prizm-color-warning)";
+        chip.innerHTML = '<span style="width:5px;height:5px;border-radius:9px;background:var(--prizm-color-warning)"></span>Edited by you';
+        f.appendChild(chip);
+      }
+      if (e.target.hasAttribute("data-desc")) {
+        const c = document.querySelector("[data-desc-count]");
+        if (c) c.textContent = (800 - e.target.value.length) + " characters remaining";
+      }
+      if (e.target.hasAttribute("data-manual-select") && e.target.value) {
+        e.target.style.borderColor = "var(--prizm-color-border-strong)";
+        e.target.style.background = "var(--prizm-color-surface)";
+        const chip = e.target.closest("[data-prov]").querySelector("[data-chip]");
+        if (chip) {
+          chip.innerHTML = '<span style="width:5px;height:5px;border-radius:9px;background:var(--prizm-color-success)"></span>Selected by you';
+          chip.style.color = "var(--prizm-color-success)";
+        }
+        this.setState({ err: false });
+      }
+    });
+    root.addEventListener("change", (e) => {
+      if (e.target.hasAttribute("data-manual-select")) root.dispatchEvent(new Event("input", { bubbles: true }));
+    }, true);
+
+    // assets table: expand / collapse component sub-rows
+    root.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-expand]");
+      if (!btn) return;
+      const key = btn.getAttribute("data-expand");
+      const open = btn.getAttribute("data-open") === "1";
+      btn.setAttribute("data-open", open ? "0" : "1");
+      btn.style.transform = open ? "rotate(0deg)" : "rotate(90deg)";
+      document.querySelectorAll('[data-child="' + key + '"]').forEach((r) => {
+        r.style.display = open ? "none" : "table-row";
+      });
+    });
+  }
+
+  renderVals() {
+    const s = this.state.screen;
+    return {
+      onHome: s === "home",
+      homeWeight: s === "home" ? "600" : "500",
+      homeColor: s === "home" ? "var(--prizm-color-fg)" : "var(--prizm-color-fg-muted)",
+      assetsWeight: s === "assets" ? "600" : "500",
+      assetsColor: s === "assets" ? "var(--prizm-color-fg)" : "var(--prizm-color-fg-muted)",
+      onForm: s === "form",
+      onAssets: s === "assets",
+      toast: this.state.toast,
+      registered: !!this.state.registered || this.props.startScreen === "assets",
+      err: this.state.err,
+      showRail: this.props.showSourceRail !== false,
+      showLegend: this.props.showProvenanceLegend !== false,
+      goHome: () => this.go("home"),
+      goForm: () => this.go("form"),
+      goAssets: () => this.go("assets"),
+      submit: () => this.submit(),
+      dismiss: () => this.setState({ toast: false })
+    };
+  }
+}
+</script>
+
+
+</body></html>

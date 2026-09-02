@@ -94,6 +94,105 @@ the next run — no code change.
 - `GET /results/{job_id}` — the published pipeline result (404 until ready).
 - `GET /health` — `{status, db, redis}`.
 
+Register + review (what the frontend calls):
+- `GET /api/summary` — home tiles: per-CAT counts, pending count, last-updated.
+- `GET /api/categories?system=oxn` — MINDEF Category options from the category YAML.
+- `GET /api/assets?search=&limit=&offset=` — the register; top-level rows with
+  their components nested. `search` matches tag no., serial no., model, vendor.
+- `GET /api/review/latest`, `GET /api/review/{job_id}` — one record as review-form
+  fields, each tagged with its provenance (`ai` / `system` / `manual`), plus the
+  classification rationale and the source-document list.
+- `GET /api/jobs/{job_id}/status` — `{status: queued|ready|error, stage}`. Always
+  200, so a client can poll an in-flight upload without generating 404 noise.
+  While `status` is `queued`, `stage` says where in the pipeline the job is —
+  one of `extract`, `context`, `enrich`, `categorize`, `write`
+  (`app/pipeline/orchestrator.py`: `STAGES`), or `""` before the consumer picks
+  the job up. The consumer records it per job under `assets:progress:<job_id>`;
+  the upload screen renders it as a checklist so a two-minute run is legible.
+- `POST /api/review/{job_id}/complete` — persist a reviewed record. The reviewed
+  line item becomes the asset (`status="Registered"`); the other line items from
+  the same invoice are linked to it as components (`parent_no`).
+- `GET /api/review/blank` — an empty registration form for adding an asset by
+  hand. All 23 fields come back marked `manual`, which falls out of the existing
+  provenance rules rather than being a special case.
+- `POST /api/assets` — add an asset. With a `job_id` this is a completed review
+  (components are linked as above); without one the record was typed in by hand
+  and is inserted directly, carrying no `job_id` so it never shows up as pending.
+
+Source documents (what the review screen's rail links to):
+- `GET /api/documents/receipt/{receipt_id}` — the uploaded invoice's own bytes,
+  served with the stored content type. For a PDF, `?as=png&page=N` renders that
+  page (pdf2image + poppler, already in the image) so a viewer never depends on
+  a browser PDF plugin.
+- `GET /api/documents/receipt/{receipt_id}/info` — `{filename, content_type,
+  is_pdf, pages, size}`; what a viewer needs before it fetches.
+- `GET /api/documents/po/{ref_no}`, `GET /api/documents/sow/{ref_no}` — the
+  purchase order(s) and scope of work filed under a PO reference, as
+  `{ref_no, documents: [{filename, category, content}]}`.
+
+Each `source_documents` entry in a review payload carries a `kind`
+(`invoice`/`po`/`sow`/`do`) and the `url` that serves it — empty when the
+reference was extracted but nothing is held for it. A review payload also carries
+`context_match`: which purchase order the crawler tied the invoice to, how
+confident it is, and the evidence, which the rail renders under the PO entry.
+
+## Matching an invoice to its purchase order
+
+`app/agents/document_crawler.py` answers "which contract is this invoice
+against?" It used to be one exact lookup on the digits the VLM read off the page;
+a single misread digit meant no PO or SOW context at all, and every downstream
+step quietly degraded. Now there is a ladder:
+
+| rung | how | cost |
+|---|---|---|
+| 0 | the reference matches exactly | no model call |
+| 1 | a deepagents agent with five tools | one local round trip |
+| 2 | one non-tool call with the whole index | for models without tool-calling |
+| 3 | pure-Python signal scoring | no model at all |
+| 4 | no match — the pipeline behaves as it did before | — |
+
+Rung 0 covers the common case, so nothing that already worked got slower. **Rung
+3 is the load-bearing one** and was built first: fuzzy reference + vendor +
+payment-event amount identifies an order in this corpus with no model involved.
+
+The agent gets five narrow tools and never writes SQL — the whole corpus renders
+as ~2.5 KB of cards, so there is nothing to search that it cannot read. Nothing
+returns a document body; the agent picks a reference and code loads the text.
+Any reference it returns is checked against the database and dropped if absent,
+and confidence is recomputed from signals that verify rather than taken from the
+model. Below `PO_CRAWLER_MIN_CONFIDENCE` the answer is "no match": a wrong
+purchase order is worse than none.
+
+`PO_CRAWLER=off` restores the old exact-match behaviour; `deterministic` skips
+both model rungs. Run `tests/test_crawler.py` (needs Postgres, not the model) for
+the cases this exists for, including two that must be refusals.
+
+The searchable index behind it is built by `app/ingest/documents.py` from
+`po.content`/`sow.content` already in Postgres — deterministic regex
+(`app/ingest/parse.py`, verified 25/25 on every field), so it needs no model
+endpoint and takes under a second.
+
+## Serving the frontend
+
+`GET /app` serves the exported design bundle from `frontend/` with
+`<script src="/static/bridge.js">` injected **into the response**. The HTML file
+on disk is never modified — it is a read-only Claude-Design export whose fields
+are React-controlled and inert on their own. `static/bridge.js` fills the form
+and the register from the API above, makes the fields editable, wires the search
+box, the Complete-review button and a document upload, and re-applies itself
+after every React re-render. Add `?mardebug=1` for bridge logging and a
+`window.__mar` handle.
+
+Set `MAR_FRONTEND_DIR` to point at the bundle directory (the compose file mounts
+`./frontend` read-only and sets it for the container).
+
+This route and its bridge are the original design export, kept as-is. The
+operator front end now in use is the Streamlit app in
+`frontend/streamlit_app/` — the same screens, styles and workflow, ported off
+the export and talking to the `/api/*` routes above directly. Compose builds it
+as the `frontend` service on `127.0.0.1:8501`; it calls the API by service name
+(`API_BASE=http://api:8000`), so the browser only ever talks to that container.
+
 ## Layout
 ```
 api.py                      FastAPI upload server (enqueues to "object-categorization")

@@ -1,0 +1,838 @@
+/* ============================================================
+   MAR — application styles
+   ------------------------------------------------------------
+   Three parts, in order:
+
+   1. The exported design's own page CSS, verbatim (six rules and
+      one keyframe), plus the toast's exit animation.
+   2. Streamlit chrome resets — strip the framework's own header,
+      toolbar and page padding so the design's layout owns the
+      viewport.
+   3. Layout and control rules. Everything read-only is emitted as
+      the design's own markup; what an operator can click or type
+      into is a Streamlit widget, and these rules place it inside
+      that markup and give it the design's control spec.
+
+   Nothing here invents styling: every value is lifted from
+   design/markup.html or the PRIZM token set in prizm.css.
+   ============================================================ */
+
+
+/* ---------- 1. The design's own page CSS ------------------- */
+
+body { margin: 0; background: var(--prizm-color-bg); color: var(--prizm-color-fg); font-family: var(--prizm-font-sans); -webkit-font-smoothing: antialiased; }
+a { color: var(--prizm-color-accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 4px; }
+input, select, textarea, button { font-family: inherit; }
+svg { stroke-width: 1.5; }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* The design's toast disappears after 7s on a JS timer. With no JS, the
+   same 7s is an animation delay; `forwards` also holds the -50% centring
+   that toastIn ends on. */
+@keyframes toastOut { from { opacity: 1; transform: translate(-50%, 0); } to { opacity: 0; transform: translate(-50%, 6px); } }
+
+/* The upload progress card's spinner. The design has no spinner of its own —
+   it never modelled an in-flight extraction — so this is the one addition, and
+   it is the only motion on screen while the pipeline runs. */
+@keyframes mar-spin { to { transform: rotate(360deg); } }
+
+
+/* ---------- 2. Streamlit chrome ---------------------------- */
+
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+#MainMenu,
+footer { display: none !important; }
+
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"] { background: var(--prizm-color-bg); }
+
+[data-testid="stMainBlockContainer"] {
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* A container is a wrapper around a vertical block. Collapsing the wrapper
+   makes the keyed block a direct child of its parent, so the layout rules
+   below can treat `.st-key-*` as the element itself. */
+[data-testid="stLayoutWrapper"] { display: contents; }
+
+/* Spacing is the design's, set per container — never Streamlit's default.
+   Streamlit lets a vertical block grow to fill its parent; the design sizes
+   every block to its content and grows only <main>. */
+[data-testid="stVerticalBlock"] { gap: 0; flex: 0 0 auto; }
+[data-testid="stMainBlockContainer"] > [data-testid="stVerticalBlock"] {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-testid="stMarkdown"],
+[data-testid="stMarkdownContainer"] { width: 100%; }
+[data-testid="stMarkdownContainer"] { margin-bottom: 0 !important; }
+[data-testid="stMarkdown"] h1,
+[data-testid="stMarkdown"] h2,
+[data-testid="stMarkdown"] h3,
+[data-testid="stMarkdown"] h4 {
+  padding: 0;
+  font-family: var(--prizm-font-sans);
+  scroll-margin-top: 0;
+}
+/* Streamlit wraps every heading and hangs an anchor-link span inside it. The
+   design has neither: the span widens the heading box, and the wrapper stops
+   the heading being a flex item of the row it is written into. */
+[data-testid="stHeaderActionElements"] { display: none !important; }
+[data-testid="stHeadingWithActionElements"] { display: contents; }
+[data-testid="stMarkdown"] > div > p:last-child { margin-bottom: 0; }
+
+/* Every label is drawn by the design's own markup. */
+label[data-testid="stWidgetLabel"] { display: none !important; }
+
+/* Streamlit's focus ring is replaced by PRIZM's. */
+[data-testid="stTextInputRootElement"]:focus-within,
+[data-testid="stTextAreaRootElement"]:focus-within,
+div[data-baseweb="select"] > div:focus-within {
+  outline: 2px solid var(--prizm-color-accent);
+  outline-offset: 1px;
+}
+
+
+/* ---------- 3a. Controls ----------------------------------- */
+
+/* The design's input spec:
+   height:34px; border-radius:6px; 1px solid var(--prizm-color-border);
+   background:var(--prizm-color-surface); padding:0 10px; font-size:13px */
+[data-testid="stTextInputRootElement"] {
+  height: 34px;
+  min-height: 34px;
+  border-radius: 6px !important;
+  border: 1px solid var(--prizm-color-border) !important;
+  background: var(--prizm-color-surface) !important;
+  box-shadow: none !important;
+}
+[data-testid="stTextInput"] input {
+  height: 32px;
+  padding: 0 10px !important;
+  font-size: 13px !important;
+  color: var(--prizm-color-fg) !important;
+  background: transparent !important;
+  -webkit-text-fill-color: var(--prizm-color-fg);
+}
+[data-testid="stTextInput"] input::placeholder {
+  color: var(--prizm-color-fg-subtle);
+  opacity: 1;
+}
+[data-testid="stTextInput"] div[data-baseweb="base-input"] {
+  background: transparent !important;
+}
+
+[data-testid="stTextAreaRootElement"] {
+  border-radius: 6px !important;
+  border: 1px solid var(--prizm-color-border) !important;
+  background: var(--prizm-color-surface) !important;
+  box-shadow: none !important;
+}
+[data-testid="stTextArea"] textarea {
+  padding: 9px 10px !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: var(--prizm-color-fg) !important;
+  background: transparent !important;
+  resize: vertical;
+}
+[data-testid="stTextArea"] div[data-baseweb="base-input"] { background: transparent !important; }
+
+/* The design's select spec — same as the input but padding:0 8px. */
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+  height: 34px;
+  min-height: 34px;
+  border-radius: 6px !important;
+  border: 1px solid var(--prizm-color-border) !important;
+  background: var(--prizm-color-surface) !important;
+  font-size: 13px !important;
+  color: var(--prizm-color-fg) !important;
+  box-shadow: none !important;
+}
+[data-testid="stSelectbox"] div[data-baseweb="select"] div[data-baseweb="input"],
+[data-testid="stSelectbox"] div[data-baseweb="select"] input { background: transparent !important; }
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div > div:first-child { padding: 0 8px !important; }
+
+/* The dropdown popup is BaseWeb's; give it the design's surface. */
+div[data-baseweb="popover"] ul[role="listbox"] {
+  border: 1px solid var(--prizm-color-border-strong);
+  border-radius: 6px;
+  background: var(--prizm-color-surface-elevated);
+  box-shadow: var(--prizm-shadow-lg);
+  font-size: 13px;
+}
+div[data-baseweb="popover"] li[role="option"] { font-size: 13px; }
+
+/* Mono fields, from the design's per-field styling. */
+.st-key-f_invoice_no input, .st-key-f_po_no input, .st-key-f_do_no input,
+.st-key-f_quantity input, .st-key-f_period_contract input,
+.st-key-f_gl_date input, .st-key-f_do_date input, .st-key-f_tag_no input,
+.st-key-f_serial_no input, .st-key-f_price input,
+.st-key-f_asset_capitalisation_date input, .st-key-f_material_number input,
+.st-key-f_receiving_plant input, .st-key-f_receiving_sloc input {
+  font-family: var(--prizm-font-mono) !important;
+}
+.st-key-f_quantity input, .st-key-f_gl_date input, .st-key-f_do_date input,
+.st-key-f_price input, .st-key-f_asset_capitalisation_date input,
+.st-key-f_material_number input {
+  font-variant-numeric: tabular-nums;
+}
+
+/* MINDEF Category is the AI's suggestion — the design tints it accent. */
+.st-key-f_category div[data-baseweb="select"] > div {
+  border-color: color-mix(in oklab, var(--prizm-color-accent) 35%, var(--prizm-color-border)) !important;
+  background: color-mix(in oklab, var(--prizm-color-accent) 7%, var(--prizm-color-surface)) !important;
+}
+/* CAT B or C or Dev? has no upstream source — the design tints it amber. */
+.st-key-f_mindef_cat div[data-baseweb="select"] > div {
+  border-color: var(--prizm-color-warning) !important;
+  background: color-mix(in oklab, var(--prizm-color-warning) 10%, var(--prizm-color-surface)) !important;
+}
+
+
+/* ---------- 3b. Buttons ------------------------------------ */
+
+[data-testid="stButton"] button {
+  border-radius: 6px;
+  font-family: var(--prizm-font-sans);
+  transition: background 150ms ease-out;
+}
+[data-testid="stButton"] button p { font-size: inherit; font-weight: inherit; margin: 0; }
+[data-testid="stButton"] button:focus:not(:active) { box-shadow: none; }
+
+/* Header nav — the design's transparent pill; the active screen goes
+   semibold and full-contrast (rendered as Streamlit's "primary" kind). */
+.st-key-mar_nav [data-testid="stButton"] button {
+  height: 32px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0 !important;
+  background: transparent !important;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--prizm-color-fg-muted) !important;
+  box-shadow: none !important;
+}
+.st-key-mar_nav [data-testid="stButton"] button:hover {
+  background: var(--prizm-color-bg-muted) !important;
+}
+.st-key-mar_nav [data-testid="stBaseButton-primary"] {
+  font-weight: 600;
+  color: var(--prizm-color-fg) !important;
+}
+
+/* Breadcrumb "Home" — a bare text button. */
+.st-key-crumb_home button {
+  height: auto;
+  min-height: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  font-size: 12px;
+  color: var(--prizm-color-fg-subtle) !important;
+}
+.st-key-crumb_home button:hover { color: var(--prizm-color-fg) !important; }
+
+/* Footer actions — the design's secondary and accent buttons. */
+.st-key-save_draft button,
+.st-key-add_cancel button {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  white-space: nowrap;
+  border: 1px solid var(--prizm-color-border) !important;
+  background: var(--prizm-color-surface) !important;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--prizm-color-fg) !important;
+}
+.st-key-save_draft button:hover,
+.st-key-add_cancel button:hover { background: var(--prizm-color-bg-muted) !important; }
+
+.st-key-complete_review button,
+.st-key-add_submit button {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 18px;
+  white-space: nowrap;
+  border: 0 !important;
+  background: var(--prizm-color-accent) !important;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--prizm-color-accent-fg) !important;
+}
+.st-key-complete_review button:hover,
+.st-key-add_submit button:hover { background: var(--prizm-color-accent-hover) !important; }
+
+/* Cards that are buttons in the design keep their own markup; an
+   invisible Streamlit button covers them so the whole card is the
+   click target, exactly as the design behaves.
+
+   That takes two rules, and both must list the same keys: the first lifts the
+   button out of flow and stretches it over the card, the second makes it
+   invisible. A key in only the second is an invisible control still in normal
+   flow — i.e. a dead card. `toast_dismiss` is deliberately absent from the
+   first: it is a 24px corner button, not a full-card overlay, and carries its
+   own geometry under "Chrome: header and toast". tests/test_screens.py asserts
+   the two lists agree. */
+[data-testid="stElementContainer"][class*="st-key-go_form"],
+[data-testid="stElementContainer"][class*="st-key-tile_btn_"],
+[data-testid="stElementContainer"][class*="st-key-doc_btn_"],
+[data-testid="stElementContainer"][class*="st-key-mode_btn_"],
+[data-testid="stElementContainer"][class*="st-key-add_btn"] {
+  /* the card underneath is the visible control; this is only the hit area */
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100%;
+  z-index: 2;
+}
+[class*="st-key-go_form"] [data-testid="stButton"],
+[class*="st-key-tile_btn_"] [data-testid="stButton"],
+[class*="st-key-doc_btn_"] [data-testid="stButton"],
+[class*="st-key-mode_btn_"] [data-testid="stButton"],
+[class*="st-key-add_btn"] [data-testid="stButton"],
+[class*="st-key-toast_dismiss"] [data-testid="stButton"],
+[class*="st-key-go_form"] button,
+[class*="st-key-tile_btn_"] button,
+[class*="st-key-doc_btn_"] button,
+[class*="st-key-mode_btn_"] button,
+[class*="st-key-add_btn"] button,
+[class*="st-key-toast_dismiss"] button {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  opacity: 0;
+  cursor: pointer;
+}
+
+
+/* ---------- 3c. Chrome: header and toast ------------------- */
+
+.st-key-mar_header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 56px;
+  min-height: 56px;
+  padding: 0 28px;
+  background: var(--prizm-color-surface);
+  border-bottom: 1px solid var(--prizm-color-border);
+}
+.st-key-mar_header > [data-testid="stElementContainer"] { width: auto; flex: none; }
+.st-key-mar_header > [data-testid="stElementContainer"]:first-of-type { margin-right: 32px; }
+.st-key-mar_header > [data-testid="stElementContainer"]:last-of-type { margin-left: auto; }
+.st-key-mar_nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  width: auto;
+  flex: none;
+}
+.st-key-mar_nav > [data-testid="stElementContainer"] { width: auto; }
+
+.st-key-mar_toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 80;
+  width: auto;
+  transform: translateX(-50%);
+}
+.st-key-mar_toast > [data-testid="stElementContainer"] { width: auto; }
+.st-key-toast_dismiss {
+  position: absolute !important;
+  right: 14px;
+  top: 50%;
+  margin-top: -12px;
+  width: 24px !important;
+  height: 24px;
+  z-index: 2;
+}
+
+
+
+/* ---------- 3d. Screens ------------------------------------ */
+
+/* <main> — the design's per-screen padding. */
+.st-key-main_home { flex: 1; padding: 36px 28px 72px; }
+.st-key-main_form,
+.st-key-main_add { flex: 1; padding: 28px 28px 120px; }
+.st-key-main_assets { flex: 1; padding: 36px 28px 96px; }
+
+.st-key-home_wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.st-key-review_wrap,
+.st-key-add_wrap {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.st-key-assets_wrap {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Home */
+.st-key-home_actions, .st-key-home_cats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.st-key-home_tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.st-key-home_action_card,
+[data-testid="stVerticalBlock"][class*="st-key-tile_"] { position: relative; }
+
+/* Record pager — "Line item 3 of 7" and the two controls beside it. These are
+   real, visible buttons, not the invisible card overlays above: there is no
+   card underneath them to click. */
+.st-key-record_pager {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 2px;
+}
+.st-key-record_pager > [data-testid="stElementContainer"] { width: auto; flex: none; }
+.st-key-record_pager_nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  flex: none;
+}
+.st-key-record_pager_nav > [data-testid="stElementContainer"] { width: auto; flex: none; }
+.st-key-record_pager_nav button {
+  height: 26px;
+  min-height: 26px;
+  padding: 0 10px !important;
+  font-size: 12px;
+  border: 1px solid var(--prizm-color-border) !important;
+  border-radius: 6px;
+  background: var(--prizm-color-surface) !important;
+  box-shadow: var(--prizm-shadow-sm) !important;
+}
+.st-key-record_pager_nav button:hover:not(:disabled) {
+  background: var(--prizm-color-bg-muted) !important;
+}
+.st-key-record_pager_nav button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Review — breadcrumb, body grid, card, sections */
+.st-key-review_crumbs,
+.st-key-add_crumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--prizm-color-fg-subtle);
+}
+.st-key-review_crumbs > [data-testid="stElementContainer"],
+.st-key-add_crumbs > [data-testid="stElementContainer"] { width: auto; }
+
+.st-key-review_body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 22px;
+  align-items: start;
+}
+.st-key-review_card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--prizm-color-border);
+  border-radius: 8px;
+  background: var(--prizm-color-surface);
+  box-shadow: var(--prizm-shadow-sm);
+}
+.st-key-sec_vendor, .st-key-sec_mindef, .st-key-sec_logistics, .st-key-sec_custody {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.st-key-sec_custody { gap: 14px; }
+
+.st-key-grid_vendor, .st-key-grid_mindef, .st-key-grid_logistics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+
+/* One field: label row, control, provenance chip — the design's 6px stack. */
+[class*="st-key-f_"][data-testid="stVerticalBlock"] {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.st-key-f_category { position: relative; }
+/* Streamlit makes every element container position:relative; the popover has
+   to resolve against the whole field, as it does in the design. */
+.st-key-f_category > [data-testid="stElementContainer"] { position: static; }
+
+/* Custodianship — the design's dashed system-default box. */
+.st-key-custody_box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 340px;
+  padding: 13px 14px;
+  border: 1px dashed var(--prizm-color-border-strong);
+  border-radius: 6px;
+  background: var(--prizm-color-bg-muted);
+}
+.st-key-custody_box [data-testid="stTextInputRootElement"] {
+  border-color: var(--prizm-color-border-strong) !important;
+}
+
+.st-key-review_footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--prizm-color-border);
+  background: var(--prizm-color-bg-subtle);
+  border-radius: 0 0 8px 8px;
+}
+.st-key-review_footer > [data-testid="stElementContainer"] { width: auto; }
+.st-key-review_actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  flex: none;
+}
+.st-key-review_actions > [data-testid="stElementContainer"] { width: auto; }
+
+/* Rail */
+.st-key-review_rail {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.st-key-rail_docs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--prizm-color-border);
+  border-radius: 8px;
+  background: var(--prizm-color-surface);
+  box-shadow: var(--prizm-shadow-sm);
+}
+.st-key-rail_doc_list { display: flex; flex-direction: column; gap: 8px; }
+[data-testid="stVerticalBlock"][class*="st-key-doc_"] { position: relative; }
+
+/* "Add document" — the bridge's dashed affordance, as a file uploader. */
+.st-key-rail_upload [data-testid="stFileUploaderDropzone"] {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px dashed var(--prizm-color-border-strong) !important;
+  border-radius: 6px;
+  background: transparent !important;
+  justify-content: center;
+}
+.st-key-rail_upload [data-testid="stFileUploaderDropzoneInstructions"] { display: none; }
+/* Streamlit hard-codes the dropzone button's text; the design's affordance
+   says "Add document", so swap the glyphs for the label. */
+.st-key-rail_upload [data-testid="stFileUploaderDropzone"] button {
+  height: 30px;
+  min-height: 30px;
+  width: 100%;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--prizm-color-fg-muted) !important;
+}
+.st-key-rail_upload [data-testid="stFileUploaderDropzone"] > span { width: 100%; }
+.st-key-rail_upload [data-testid="stFileUploaderDropzone"] button { font-size: 0; }
+.st-key-rail_upload [data-testid="stFileUploaderDropzone"] button::after {
+  content: "Add document";
+  font-size: 12px;
+  font-weight: 400;
+  font-family: var(--prizm-font-sans);
+}
+/* The label is a blank placeholder (the empty-label rule below hides it); an
+   upload in flight reports itself through the progress checklist instead. */
+.st-key-rail_upload label[data-testid="stWidgetLabel"] {
+  display: block !important;
+  margin-bottom: 6px;
+}
+.st-key-rail_upload label[data-testid="stWidgetLabel"] p {
+  font-size: 11px;
+  font-family: var(--prizm-font-mono);
+  color: var(--prizm-color-fg-subtle);
+  margin: 0;
+}
+.st-key-rail_upload label[data-testid="stWidgetLabel"]:has(p:empty) { display: none !important; }
+.st-key-rail_upload [data-testid="stFileUploaderFile"] { font-size: 11px; }
+
+/* Assets toolbar */
+.st-key-assets_toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.st-key-assets_toolbar > [data-testid="stElementContainer"]:last-of-type {
+  width: auto;
+  flex: none;
+}
+/* The Add button is a vertical block now (markup + an overlaid button), not an
+   element container, so the rule above no longer reaches the toolbar's last
+   child and the button would stretch across the row without this. */
+.st-key-assets_toolbar > [data-testid="stVerticalBlock"] {
+  width: auto;
+  flex: none;
+}
+.st-key-assets_add {
+  position: relative;
+  width: auto;
+  flex: none;
+}
+.st-key-assets_search {
+  flex: 1;
+  min-width: 240px;
+}
+.st-key-assets_search [data-testid="stTextInputRootElement"] {
+  height: 36px;
+  min-height: 36px;
+  box-shadow: var(--prizm-shadow-sm) !important;
+  /* the design's inset magnifier */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='1.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: 10px 10px !important;
+}
+.st-key-assets_search input { height: 34px; padding-left: 32px !important; }
+
+/* Assets table — component rows collapse and expand with no JavaScript:
+   a visually hidden checkbox sits beside the table and a
+   `#id:checked ~ table …` rule (emitted per row) drives both the rows and
+   the chevron. */
+.mar-exp {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.mar-chev {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  color: var(--prizm-color-fg-subtle);
+  cursor: pointer;
+  transition: transform 150ms ease-out;
+}
+tr.mar-child { display: none; }
+
+
+/* ---------- 3e. The design's JS behaviours, in CSS --------- */
+
+/* Info tooltips. The design positions a floating div with JS; the same
+   panel is drawn from the attribute itself. */
+[data-tip] { position: relative; }
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  width: max-content;
+  max-width: 260px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--prizm-color-fg);
+  color: var(--prizm-color-bg);
+  font: 400 12px/1.45 var(--prizm-font-sans);
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: var(--prizm-shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease-out;
+}
+[data-tip]:hover::after { opacity: 1; }
+
+/* The classification rationale popover. The design keeps it open while the
+   pointer travels from the WHY pill down to the panel by inspecting
+   relatedTarget; the same forgiveness here is a delay on the hide. */
+.mar-why-wrap { position: static; }
+[data-ai-pop] {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(3px);
+  transition: opacity 150ms ease-out 250ms, transform 150ms ease-out 250ms;
+}
+.mar-why-wrap:hover [data-ai-pop] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0ms;
+}
+
+/* style-hover="…" in the export, real hover rules here. */
+.mar-hover-muted:hover { background: var(--prizm-color-bg-muted); }
+.mar-hover-accent:hover { background: var(--prizm-color-accent-hover); }
+.mar-hover-fg:hover { color: var(--prizm-color-fg); }
+
+
+/* ---------- 3f. Document viewer ---------------------------- */
+
+[data-testid="stDialog"] div[role="dialog"] {
+  border: 1px solid var(--prizm-color-border-strong);
+  border-radius: 8px;
+  background: var(--prizm-color-surface);
+  box-shadow: var(--prizm-shadow-lg);
+}
+.st-key-doc_controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.st-key-doc_controls > [data-testid="stElementContainer"] { width: auto; }
+.st-key-doc_controls [data-testid="stSelectbox"] { width: 130px; }
+.st-key-doc_controls [data-testid="stNumberInput"] { width: 120px; }
+
+.st-key-doc_body {
+  max-height: 62vh;
+  overflow: auto;
+  padding: 16px 18px;
+  border: 1px solid var(--prizm-color-border);
+  border-radius: 8px;
+  background: var(--prizm-color-surface);
+  box-shadow: var(--prizm-shadow-sm);
+  margin-top: 8px;
+}
+.st-key-doc_body p, .st-key-doc_body li { font-size: 13px; line-height: 1.6; }
+.st-key-doc_body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: var(--prizm-font-mono);
+}
+.st-key-doc_body th, .st-key-doc_body td {
+  padding: 7px 9px;
+  border: 1px solid var(--prizm-color-border);
+  text-align: left;
+  vertical-align: top;
+}
+.st-key-doc_body th {
+  background: var(--prizm-color-bg-subtle);
+  font-weight: 600;
+  color: var(--prizm-color-fg-subtle);
+}
+
+.st-key-doc_close { margin-top: 14px; display: flex; justify-content: flex-end; }
+.st-key-doc_close > [data-testid="stElementContainer"] { width: auto; }
+.st-key-doc_close button {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--prizm-color-border) !important;
+  background: var(--prizm-color-surface) !important;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--prizm-color-fg) !important;
+}
+.st-key-doc_close button:hover { background: var(--prizm-color-bg-muted) !important; }
+
+/* On an empty register the same control sits under the home action card. */
+.st-key-home_actions .st-key-rail_upload { max-width: 320px; }
+
+
+/* --------------------------------------------------------------------------
+   Add asset
+   The registration card itself reuses the review screen's keys, so the only
+   new rules are this screen's own chrome.
+   -------------------------------------------------------------------------- */
+
+/* The two entry-mode cards, side by side. */
+.st-key-add_modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 14px 0 6px;
+}
+[data-testid="stVerticalBlock"][class*="st-key-mode_manual"],
+[data-testid="stVerticalBlock"][class*="st-key-mode_upload"] {
+  position: relative;
+}
+
+/* Manual entry has no source documents, so the card gets the full width;
+   the upload mode reuses the review screen's two-column grid. */
+.st-key-add_body_manual {
+  display: block;
+}
+.st-key-add_body_upload {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 22px;
+  align-items: start;
+}
+
+/* Where the invoice goes in, before there is a form to show. */
+.st-key-add_upload_panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 22px;
+  border: 1px solid var(--prizm-color-border);
+  border-radius: 8px;
+  background: var(--prizm-color-surface);
+  margin-top: 16px;
+}
+.st-key-add_upload_panel .st-key-rail_upload {
+  max-width: 460px;
+}

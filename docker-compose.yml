@@ -51,7 +51,22 @@ services:
     build: ./backend
     image: asset-backend:latest
     container_name: assets-api
-    environment: *backend-env
+    environment:
+      <<: *backend-env
+      # The exported design bundle is mounted read-only; GET /app injects the
+      # bridge script into the response, never into the file.
+      MAR_FRONTEND_DIR: "/frontend/My Assets Record (MAR)_Project Assets"
+    volumes:
+      - ./frontend:/frontend:ro
+      # The source, live over the image's copy — edit and uvicorn reloads, no
+      # rebuild. It must be ./backend/app over /app/app and NOT ./backend over
+      # /app: the image keeps its virtualenv at /app/.venv, which mounting over
+      # /app would hide, and every import would fail.
+      - ./backend/app:/app/app:ro
+    # Appended to the image's ENTRYPOINT (its CMD is null), so this ends up as
+    # `uvicorn app.main:app --host … --port … --reload --reload-dir /app/app`.
+    # The reload dir keeps watchfiles off the virtualenv.
+    command: ["--reload", "--reload-dir", "/app/app"]
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -67,11 +82,43 @@ services:
     image: asset-backend:latest
     container_name: assets-pipeline
     environment: *backend-env
-    entrypoint: ["uv", "run", "python", "-m", "src.stage1_extractor"]
+    entrypoint: ["uv", "run", "python", "-m", "app.pipeline.consumer"]
+    volumes:
+      # The same live source as the API (and the same /app/app rule — see
+      # there). No reloader: this is a BRPOP loop rather than a server, so it
+      # picks an edit up on `docker compose restart pipeline`.
+      - ./backend/app:/app/app:ro
     depends_on:
       db:
         condition: service_healthy
       redis:
+        condition: service_healthy
+
+  # Operator front end — a Streamlit port of the exported design bundle.
+  # It renders server-side and calls the API by service name over this
+  # network, so the browser only ever talks to this container and CORS never
+  # comes into it.
+  frontend:
+    build: ./frontend/streamlit_app
+    image: mar-frontend:latest
+    container_name: assets-frontend
+    environment:
+      API_BASE: http://api:8000
+      # Rerun the script on a change instead of showing Streamlit's "Source
+      # file changed / Rerun" prompt.
+      STREAMLIT_SERVER_RUN_ON_SAVE: "true"
+      # watchdog is not installed and inotify does not fire reliably across a
+      # bind mount, so poll the tree for changes instead.
+      STREAMLIT_SERVER_FILE_WATCHER_TYPE: poll
+    volumes:
+      # The source, live over the image's copy of it: edit a file on the host
+      # and the browser reloads, no rebuild. Read-only because nothing in the
+      # container writes here (Python just skips caching bytecode).
+      - ./frontend/streamlit_app:/app:ro
+    ports:
+      - "127.0.0.1:8501:8501"
+    depends_on:
+      api:
         condition: service_healthy
 
   # One-off loader for the data/sow + data/po documents (tables sow, po).

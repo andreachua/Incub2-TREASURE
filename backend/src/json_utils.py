@@ -52,19 +52,27 @@ def _extract_span(text: str, open_ch: str, close_ch: str) -> str | None:
     return None
 
 
-def extract_json(text: str) -> Any:
+def extract_json(text: str, prefer: str = "array") -> Any:
     """Parse JSON from a possibly-noisy string.
 
-    Tries, in order: the whole (de-fenced) string, the first balanced array,
-    then the first balanced object. Raises ValueError if nothing parses.
+    Tries the whole (de-fenced) string first, then the first balanced array and
+    the first balanced object — in whichever order ``prefer`` asks for. Raises
+    ValueError if nothing parses.
+
+    ``prefer`` matters whenever the wanted shape is an object that *contains* an
+    array. Stage 1 asks the VLM for ``{"po_ref": …, "items": [...]}``; if the
+    model wraps that in a sentence the whole-string parse fails, and searching
+    for an array first finds the ``items`` list nested inside the object. The
+    caller then sees a bare list and loses po_ref, invoice_no, vendor and do_no
+    — which silently disables the entire PO/SOW crawl. Callers that want an
+    object pass ``prefer="object"``.
     """
     cleaned = _strip_fences(text)
+    spans = (_extract_span(cleaned, "{", "}"), _extract_span(cleaned, "[", "]")) \
+        if prefer == "object" else \
+        (_extract_span(cleaned, "[", "]"), _extract_span(cleaned, "{", "}"))
 
-    for candidate in (
-        cleaned,
-        _extract_span(cleaned, "[", "]"),
-        _extract_span(cleaned, "{", "}"),
-    ):
+    for candidate in (cleaned, *spans):
         if not candidate:
             continue
         try:

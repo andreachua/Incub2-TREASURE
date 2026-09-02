@@ -78,6 +78,10 @@ class Settings(BaseModel):
     redis_url: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     redis_job_queue: str = os.getenv("REDIS_JOB_QUEUE", "object-categorization")
     redis_result_prefix: str = os.getenv("REDIS_RESULT_PREFIX", "assets:result:")
+    # Which stage a job is at while it runs, for the upload poll to report. Set
+    # by the consumer, read by /api/jobs/{id}/status, and expired by the same
+    # TTL as the result it precedes.
+    redis_progress_prefix: str = os.getenv("REDIS_PROGRESS_PREFIX", "assets:progress:")
     redis_results_channel: str = os.getenv("REDIS_RESULTS_CHANNEL", "assets:results")
     redis_result_ttl: int = int(os.getenv("REDIS_RESULT_TTL", "3600"))
 
