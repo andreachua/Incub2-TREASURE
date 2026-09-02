@@ -1,0 +1,469 @@
+/* ============================================================
+   PRIZM 4.0 — colors and type
+   ------------------------------------------------------------
+   Single-file CSS distribution of PRIZM's tokens, suitable for
+   plain HTML files (no Tailwind, no Next.js). Lifted from the
+   upstream PRIZM repo and merged:
+
+     styles/tokens/baseline.css        (raw OKLCH palettes)
+     styles/tokens/c3-light.css        (C3 light semantics)
+     styles/tokens/c3-dark.css         (C3 dark semantics)
+     styles/tokens/enterprise-light.css
+     styles/tokens/enterprise-dark.css
+     styles/fonts.css                  (the @font-face block below)
+
+   Apply a theme by setting two data attributes on <html>:
+
+     <html data-zone="c3"          data-mode="dark">   — operator default
+     <html data-zone="c3"          data-mode="light">  — daylight / briefing
+     <html data-zone="enterprise"  data-mode="light">  — overall default
+     <html data-zone="enterprise"  data-mode="dark">
+
+   :root falls back to enterprise-light.
+
+   Fonts are self-hosted from fonts/ — air-gap safe.
+   ============================================================ */
+
+
+/* ============================================================
+   @FONT-FACE — self-hosted, air-gap safe
+   ------------------------------------------------------------
+   Inter (18pt optical size) is registered as the "Inter" family
+   across all nine weights + italic counterparts. The 18pt cut
+   is tuned for ≤20px UI text; PRIZM's headings cap at 60px so
+   18pt is acceptable site-wide. To swap in the 28pt cut for
+   hero-scale headings, register an "Inter Display" family and
+   apply selectively (see fonts/README.md for the recipe).
+
+   JetBrains Mono is registered across eight weights + italics.
+   ============================================================ */
+
+/* Inter — roman */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("app/static/fonts/Inter_18pt-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("app/static/fonts/Inter_18pt-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("app/static/fonts/Inter_18pt-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("app/static/fonts/Inter_18pt-Bold.ttf") format("truetype"); }
+
+/* Inter — italic */
+
+/* Inter Display — 28pt cut for hero text (≥36px). Opt-in via font-family. */
+
+/* JetBrains Mono — roman */
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("app/static/fonts/JetBrainsMono-Regular.ttf") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url("app/static/fonts/JetBrainsMono-Medium.ttf") format("truetype"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 600; font-display: swap; src: url("app/static/fonts/JetBrainsMono-SemiBold.ttf") format("truetype"); }
+
+/* JetBrains Mono — italic */
+
+
+/* ============================================================
+   BASELINE — raw OKLCH palettes
+   ============================================================ */
+
+:root {
+  /* Neutral scale (slate) */
+  --prizm-slate-50:  oklch(98.5% 0.002 247.84);
+  --prizm-slate-100: oklch(96.8% 0.007 247.9);
+  --prizm-slate-200: oklch(92.9% 0.013 255.51);
+  --prizm-slate-300: oklch(86.9% 0.022 252.89);
+  --prizm-slate-400: oklch(70.4% 0.04  256.79);
+  --prizm-slate-500: oklch(55.4% 0.046 257.42);
+  --prizm-slate-600: oklch(44.6% 0.043 257.28);
+  --prizm-slate-700: oklch(37.2% 0.044 257.29);
+  --prizm-slate-800: oklch(27.9% 0.041 260.03);
+  --prizm-slate-900: oklch(20.8% 0.042 265.75);
+  --prizm-slate-950: oklch(12.9% 0.042 264.7);
+
+  /* Accent — cyan (C3 product family) */
+  --prizm-cyan-50:  oklch(98.4% 0.019 200.87);
+  --prizm-cyan-100: oklch(95.7% 0.045 203.18);
+  --prizm-cyan-200: oklch(91.7% 0.08  205.04);
+  --prizm-cyan-300: oklch(86.5% 0.127 207.08);
+  --prizm-cyan-400: oklch(78.9% 0.154 211.53);
+  --prizm-cyan-500: oklch(71.5% 0.143 215.22);
+  --prizm-cyan-600: oklch(60.9% 0.126 221.72);
+  --prizm-cyan-700: oklch(52.0% 0.105 223.13);
+  --prizm-cyan-800: oklch(45.0% 0.085 224.28);
+  --prizm-cyan-900: oklch(39.8% 0.07  227.39);
+  --prizm-cyan-950: oklch(30.2% 0.056 229.69);
+
+  /* Accent — blue (Enterprise product family) */
+  --prizm-blue-50:  oklch(97.0% 0.014 254.6);
+  --prizm-blue-100: oklch(93.2% 0.032 255.59);
+  --prizm-blue-200: oklch(88.2% 0.059 254.1);
+  --prizm-blue-300: oklch(80.9% 0.105 251.81);
+  --prizm-blue-400: oklch(70.7% 0.165 254.62);
+  --prizm-blue-500: oklch(62.3% 0.214 259.81);
+  --prizm-blue-600: oklch(54.6% 0.245 262.88);
+  --prizm-blue-700: oklch(48.8% 0.243 264.38);
+  --prizm-blue-800: oklch(42.4% 0.199 265.64);
+  --prizm-blue-900: oklch(37.9% 0.146 265.52);
+  --prizm-blue-950: oklch(28.2% 0.091 267.93);
+
+  /* Semantic non-neutral hues — 500 / 600 / 700 steps.
+     Light themes prefer 700 for text/edge; dark themes prefer 500. */
+  --prizm-red-500:   oklch(63.7% 0.237 25.33);
+  --prizm-red-600:   oklch(57.7% 0.245 27.32);
+  --prizm-red-700:   oklch(50.5% 0.213 27.52);
+  --prizm-green-500: oklch(72.3% 0.219 149.58);
+  --prizm-green-600: oklch(62.7% 0.194 149.21);
+  --prizm-green-700: oklch(52.7% 0.154 150.07);
+  --prizm-amber-500: oklch(76.9% 0.188 70.08);
+  --prizm-amber-600: oklch(66.6% 0.179 58.32);
+  --prizm-amber-700: oklch(55.5% 0.163 49.0);
+  --prizm-sky-500:   oklch(68.5% 0.169 237.32);
+  --prizm-sky-600:   oklch(58.8% 0.158 241.97);
+  --prizm-sky-700:   oklch(50.0% 0.134 242.75);
+
+  /* Radii — xs through xl */
+  --prizm-radius-xs: 0.125rem;  /*  2px */
+  --prizm-radius-sm: 0.25rem;   /*  4px */
+  --prizm-radius-md: 0.375rem;  /*  6px */
+  --prizm-radius-lg: 0.5rem;    /*  8px */
+  --prizm-radius-xl: 0.75rem;   /* 12px */
+
+  /* Shadows — sm/md/lg, tuned to read on light and dark surfaces */
+  --prizm-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --prizm-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --prizm-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ------------------------------------------------------------
+   Two families. Inter is the system sans (UI, body, headings);
+   JetBrains Mono is the monospace (code, kbd, tabular numerics
+   in tickers, time labels, callsigns). There is no display or
+   serif family — PRIZM is intentionally one-sans.
+
+   Sizes follow Tailwind's default scale; PRIZM doesn't introduce
+   its own. Headings reach 4xl (text-4xl, 2.25rem) on landing
+   pages — anything larger is one-off and inline.
+   ============================================================ */
+
+:root {
+  --prizm-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --prizm-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (rem, Tailwind default — unmodified) */
+  --prizm-text-xs:   0.75rem;    /* 12px / 16px — metadata, badges, kbd, code annotations */
+  --prizm-text-sm:   0.875rem;   /* 14px / 20px — secondary text, table cells, form labels */
+  --prizm-text-base: 1rem;       /* 16px / 24px — body, default */
+  --prizm-text-lg:   1.125rem;   /* 18px / 28px — lead paragraph */
+  --prizm-text-xl:   1.25rem;    /* 20px / 28px — card title */
+  --prizm-text-2xl:  1.5rem;     /* 24px / 32px — subsection heading */
+  --prizm-text-3xl:  1.875rem;   /* 30px / 36px — section heading */
+  --prizm-text-4xl:  2.25rem;    /* 36px / 40px — page title */
+  --prizm-text-5xl:  3rem;       /* 48px / 1    — display headline (largest in practice) */
+
+  /* Line heights — paired with each size, never standalone */
+  --prizm-leading-tight:   1.25;   /* headings (default) */
+  --prizm-leading-snug:    1.375;
+  --prizm-leading-normal:  1.5;    /* body */
+  --prizm-leading-relaxed: 1.625;  /* prose, alert body */
+
+  /* Letter-spacing — PRIZM leans on tight tracking for headings */
+  --prizm-tracking-tighter: -0.05em;
+  --prizm-tracking-tight:   -0.025em;  /* heading default */
+  --prizm-tracking-normal:  0;
+  --prizm-tracking-wide:    0.025em;
+  --prizm-tracking-wider:   0.05em;    /* eyebrow uppercase */
+  --prizm-tracking-widest:  0.1em;     /* eyebrow uppercase (looser) */
+
+  /* Font weights */
+  --prizm-font-normal:    400;
+  --prizm-font-medium:    500;
+  --prizm-font-semibold:  600;  /* heading + button + table-head default */
+  --prizm-font-bold:      700;
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — Enterprise light (the :root default)
+   ============================================================ */
+
+:root,
+[data-zone="enterprise"][data-mode="light"] {
+  color-scheme: light;
+
+  --prizm-color-bg:               var(--prizm-slate-50);
+  --prizm-color-bg-subtle:        oklch(99.5% 0.002 247.84);
+  --prizm-color-bg-muted:         var(--prizm-slate-100);
+  --prizm-color-surface:          oklch(100% 0 0);
+  --prizm-color-surface-elevated: oklch(100% 0 0);
+
+  --prizm-color-border:           var(--prizm-slate-200);
+  --prizm-color-border-strong:    var(--prizm-slate-300);
+
+  --prizm-color-fg:        var(--prizm-slate-900);
+  --prizm-color-fg-muted:  var(--prizm-slate-600);
+  --prizm-color-fg-subtle: var(--prizm-slate-500);
+
+  --prizm-color-accent:       var(--prizm-blue-600);
+  --prizm-color-accent-fg:    oklch(100% 0 0);
+  --prizm-color-accent-hover: var(--prizm-blue-700);
+
+  --prizm-color-danger:    var(--prizm-red-700);
+  --prizm-color-danger-fg: oklch(100% 0 0);
+  --prizm-color-success:   var(--prizm-green-700);
+  --prizm-color-warning:   var(--prizm-amber-700);
+  --prizm-color-info:      var(--prizm-sky-700);
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — Enterprise dark
+   ============================================================ */
+
+[data-zone="enterprise"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --prizm-color-bg:               var(--prizm-slate-950);
+  --prizm-color-bg-subtle:        oklch(10.4% 0.04 264.7);
+  --prizm-color-bg-muted:         oklch(16.5% 0.04 265.75);
+  --prizm-color-surface:          var(--prizm-slate-900);
+  --prizm-color-surface-elevated: var(--prizm-slate-800);
+
+  --prizm-color-border:           var(--prizm-slate-800);
+  --prizm-color-border-strong:    var(--prizm-slate-700);
+
+  --prizm-color-fg:        var(--prizm-slate-50);
+  --prizm-color-fg-muted:  var(--prizm-slate-300);
+  --prizm-color-fg-subtle: var(--prizm-slate-400);
+
+  --prizm-color-accent:       var(--prizm-blue-500);
+  --prizm-color-accent-fg:    var(--prizm-slate-950);
+  --prizm-color-accent-hover: var(--prizm-blue-400);
+
+  --prizm-color-danger:    var(--prizm-red-600);
+  --prizm-color-danger-fg: var(--prizm-slate-50);
+  --prizm-color-success:   var(--prizm-green-500);
+  --prizm-color-warning:   var(--prizm-amber-500);
+  --prizm-color-info:      var(--prizm-sky-500);
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — C3 light
+   (denser, more saturated, tactical; cyan accent)
+   ============================================================ */
+
+[data-zone="c3"][data-mode="light"] {
+  color-scheme: light;
+
+  --prizm-color-bg:               oklch(97.4% 0.005 247.84);
+  --prizm-color-bg-subtle:        var(--prizm-slate-50);
+  --prizm-color-bg-muted:         var(--prizm-slate-100);
+  --prizm-color-surface:          oklch(100% 0 0);
+  --prizm-color-surface-elevated: oklch(100% 0 0);
+
+  --prizm-color-border:           var(--prizm-slate-300);
+  --prizm-color-border-strong:    var(--prizm-slate-400);
+
+  --prizm-color-fg:        var(--prizm-slate-950);
+  --prizm-color-fg-muted:  var(--prizm-slate-700);
+  --prizm-color-fg-subtle: var(--prizm-slate-600);
+
+  --prizm-color-accent:       var(--prizm-cyan-700);
+  --prizm-color-accent-fg:    oklch(100% 0 0);
+  --prizm-color-accent-hover: var(--prizm-cyan-800);
+
+  --prizm-color-danger:    var(--prizm-red-700);
+  --prizm-color-danger-fg: oklch(100% 0 0);
+  --prizm-color-success:   var(--prizm-green-700);
+  --prizm-color-warning:   var(--prizm-amber-700);
+  --prizm-color-info:      var(--prizm-sky-700);
+
+  /* Liquid glass — darker tint over bright backdrop */
+  --prizm-glass-chrome-bg:        oklch(20% 0.025 240 / 0.06);
+  --prizm-glass-chrome-border:    oklch(0% 0 0 / 0.08);
+  --prizm-glass-chrome-blur:      8px;
+  --prizm-glass-chrome-saturate:  180%;
+  --prizm-glass-chrome-shadow:    inset 0 1px 0 oklch(100% 0 0 / 0.25);
+
+  --prizm-glass-panel-bg:         oklch(20% 0.025 240 / 0.1);
+  --prizm-glass-panel-border:     oklch(0% 0 0 / 0.1);
+  --prizm-glass-panel-blur:       12px;
+  --prizm-glass-panel-saturate:   180%;
+  --prizm-glass-panel-shadow:     inset 0 1px 0 oklch(100% 0 0 / 0.3), 0 8px 24px oklch(0% 0 0 / 0.08);
+  --prizm-glass-noise-opacity:    0.05; /* @kind other */
+}
+
+
+/* ============================================================
+   SEMANTIC TOKENS — C3 dark
+   (operator default; very dark surfaces, high contrast, cyan)
+   ============================================================ */
+
+[data-zone="c3"][data-mode="dark"] {
+  color-scheme: dark;
+
+  --prizm-color-bg:               oklch(9.8%  0.03  264.7);
+  --prizm-color-bg-subtle:        var(--prizm-slate-950);
+  --prizm-color-bg-muted:         oklch(15.5% 0.04  264.7);
+  --prizm-color-surface:          var(--prizm-slate-900);
+  --prizm-color-surface-elevated: var(--prizm-slate-800);
+
+  --prizm-color-border:           var(--prizm-slate-700);
+  --prizm-color-border-strong:    var(--prizm-slate-600);
+
+  --prizm-color-fg:        oklch(99.0% 0.002 247.84);
+  --prizm-color-fg-muted:  var(--prizm-slate-300);
+  --prizm-color-fg-subtle: var(--prizm-slate-400);
+
+  --prizm-color-accent:       var(--prizm-cyan-400);
+  --prizm-color-accent-fg:    var(--prizm-slate-950);
+  --prizm-color-accent-hover: var(--prizm-cyan-300);
+
+  --prizm-color-danger:    var(--prizm-red-600);
+  --prizm-color-danger-fg: var(--prizm-slate-50);
+  --prizm-color-success:   var(--prizm-green-500);
+  --prizm-color-warning:   var(--prizm-amber-500);
+  --prizm-color-info:      var(--prizm-sky-500);
+
+  /* Liquid glass — lighter tint over dark backdrop */
+  --prizm-glass-chrome-bg:        oklch(85% 0.015 220 / 0.06);
+  --prizm-glass-chrome-border:    oklch(100% 0 0 / 0.08);
+  --prizm-glass-chrome-blur:      8px;
+  --prizm-glass-chrome-saturate:  180%;
+  --prizm-glass-chrome-shadow:    inset 0 1px 0 oklch(100% 0 0 / 0.1);
+
+  --prizm-glass-panel-bg:         oklch(85% 0.015 220 / 0.1);
+  --prizm-glass-panel-border:     oklch(100% 0 0 / 0.1);
+  --prizm-glass-panel-blur:       12px;
+  --prizm-glass-panel-saturate:   180%;
+  --prizm-glass-panel-shadow:     inset 0 1px 0 oklch(100% 0 0 / 0.15), 0 12px 32px oklch(0% 0 0 / 0.5);
+  --prizm-glass-noise-opacity:    0.04; /* @kind other */
+}
+
+
+/* ============================================================
+   ELEMENT DEFAULTS
+   ------------------------------------------------------------
+   Sets sensible defaults on bare HTML so plain content (h1,
+   p, code, kbd) inherits PRIZM's typography without needing
+   utility classes everywhere. UI kits override locally where
+   they want different sizes.
+   ============================================================ */
+
+html {
+  font-family: var(--prizm-font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--prizm-color-bg);
+  color: var(--prizm-color-fg);
+  margin: 0;
+  line-height: var(--prizm-leading-normal);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--prizm-color-fg);
+  font-weight: var(--prizm-font-semibold);
+  letter-spacing: var(--prizm-tracking-tight);
+  line-height: var(--prizm-leading-tight);
+  margin: 0;
+}
+
+h1 { font-size: var(--prizm-text-4xl); }
+h2 { font-size: var(--prizm-text-2xl); }
+h3 { font-size: var(--prizm-text-xl); }
+h4 { font-size: var(--prizm-text-lg); }
+h5 { font-size: var(--prizm-text-base); }
+h6 { font-size: var(--prizm-text-sm); }
+
+p { margin: 0; color: var(--prizm-color-fg); }
+
+code, kbd, pre, samp {
+  font-family: var(--prizm-font-mono);
+  font-size: 0.9em;
+}
+
+/* PRIZM site-wide rule: lucide ships at stroke-width 2; PRIZM
+   prefers 1.5 for a crisper / precision feel. Inline SVGs that
+   set stroke-width on individual <path>s are unaffected. */
+svg {
+  stroke-width: 1.5;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--prizm-color-accent);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   LIQUID GLASS — C3-only surface treatment
+   ------------------------------------------------------------
+   Two tiers: chrome (lighter blur, app frame) and panel (heavier
+   blur, floating overlays). The driving tokens are only declared
+   under [data-zone="c3"], so applying these classes outside C3
+   has no effect.
+   ============================================================ */
+
+.surface-glass-chrome,
+.surface-glass-panel {
+  position: relative;
+  isolation: isolate;
+}
+
+.surface-glass-chrome {
+  background-color: var(--prizm-glass-chrome-bg, transparent);
+  border: 1px solid var(--prizm-glass-chrome-border, transparent);
+  box-shadow: var(--prizm-glass-chrome-shadow, none);
+}
+
+.surface-glass-panel {
+  background-color: var(--prizm-glass-panel-bg, transparent);
+  border: 1px solid var(--prizm-glass-panel-border, transparent);
+  box-shadow: var(--prizm-glass-panel-shadow, none);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .surface-glass-chrome {
+    -webkit-backdrop-filter: blur(var(--prizm-glass-chrome-blur, 8px)) saturate(var(--prizm-glass-chrome-saturate, 180%));
+            backdrop-filter: blur(var(--prizm-glass-chrome-blur, 8px)) saturate(var(--prizm-glass-chrome-saturate, 180%));
+  }
+  .surface-glass-panel {
+    -webkit-backdrop-filter: blur(var(--prizm-glass-panel-blur, 12px)) saturate(var(--prizm-glass-panel-saturate, 180%));
+            backdrop-filter: blur(var(--prizm-glass-panel-blur, 12px)) saturate(var(--prizm-glass-panel-saturate, 180%));
+  }
+}
+
+.surface-glass-chrome::before,
+.surface-glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("../assets/noise.svg");
+  background-size: 160px 160px;
+  opacity: var(--prizm-glass-noise-opacity, 0);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.surface-glass-chrome > *,
+.surface-glass-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ============================================================
+   UTILITY CLASSES — small, opt-in
+   ------------------------------------------------------------
+   The UI kits use Tailwind shape semantics in their JSX. For
+   plain HTML cards in preview/, this short list of utility
+   classes lets us style cards without pulling in all of Tailwind.
+   ============================================================ */
+
+.font-mono { font-family: var(--prizm-font-mono); }
+.tabular-nums { font-variant-numeric: tabular-nums; }

@@ -1,0 +1,5 @@
+# Regenerated from the design export by tools/extract_bundle.py.
+design/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml

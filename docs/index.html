@@ -8,7 +8,7 @@
   :root{
     --bg:#0f1420; --panel:#161d2e; --panel2:#1c2438; --ink:#e7ecf5; --muted:#9aa7bd;
     --line:#2a3550; --accent:#4fd1c5; --accent2:#7c9cff; --amber:#f6c453; --pink:#f78fb3;
-    --green:#7ee0a6; --code:#0b0f18;
+    --green:#7ee0a6; --purple:#b39ddb; --code:#0b0f18;
     --radius:14px;
   }
   *{box-sizing:border-box}
@@ -17,7 +17,7 @@
        font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
   a{color:var(--accent2);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
   header.hero{padding:64px 0 34px;border-bottom:1px solid var(--line)}
   .kicker{color:var(--accent);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
   h1{font-size:40px;line-height:1.15;margin:.35em 0 .2em}
@@ -27,13 +27,14 @@
   .muted{color:var(--muted)}
   nav.toc{position:sticky;top:0;z-index:5;background:rgba(15,20,32,.86);backdrop-filter:blur(8px);
           border-bottom:1px solid var(--line);margin-top:26px}
-  nav.toc .wrap{display:flex;gap:18px;flex-wrap:wrap;padding:12px 22px;font-size:14px}
+  nav.toc .wrap{display:flex;gap:16px;flex-wrap:wrap;padding:12px 22px;font-size:13.5px}
   nav.toc a{color:var(--muted)}
   section{padding:6px 0}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:820px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
   .chip{display:inline-block;background:var(--panel2);border:1px solid var(--line);color:#cdd7ea;
         border-radius:999px;padding:5px 12px;margin:4px 6px 4px 0;font-size:13px}
   .chip b{color:var(--accent)}
@@ -46,6 +47,7 @@
   .tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:6px}
   .t-recv{background:#1f3a44;color:var(--accent)}
   .t-inv{background:#33304a;color:var(--pink)}
+  .t-new{background:#2a2f4a;color:var(--purple)}
   .note{border-left:3px solid var(--amber);background:#1b2030;padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0}
 
   /* ---------- Flow diagram ---------- */
@@ -63,14 +65,51 @@
   .node.ext{border-left-color:var(--amber);background:var(--panel2)}
   .node.store{border-left-color:var(--green)}
   .node.brancher{border-left-color:var(--pink)}
+  .node.ui{border-left-color:var(--purple)}
   .sub{margin:0 0 0 26px;border-left:2px dashed var(--line);padding:8px 0 8px 20px;display:flex;flex-direction:column;gap:8px}
   .sub .node{border-left-width:4px;border-left-color:var(--pink)}
+  .sub .node.purp{border-left-color:var(--purple)}
   .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:8px}
   .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle}
   footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;color:var(--muted);font-size:14px}
   .pill{font-size:12px;color:var(--muted)}
   ul.tight li{margin:.2em 0}
+  .rung{display:flex;gap:12px;align-items:baseline;margin:6px 0}
+  .rung b{flex:0 0 56px;color:var(--accent)}
+  .mermaid{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+
+  /* ---------- Executive / presentation view ---------- */
+  .exec-hero{background:linear-gradient(135deg,#171f33,#141a2a);border:1px solid var(--line);
+        border-radius:20px;padding:30px 30px 26px}
+  .journey{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:22px 0 8px}
+  .jstep{flex:1 1 170px;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+        padding:22px 16px 18px;text-align:center;position:relative}
+  .jstep .jnum{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:26px;height:26px;
+        border-radius:50%;background:var(--accent);color:#0b1020;font-weight:800;font-size:13px;
+        display:grid;place-items:center;border:3px solid var(--bg)}
+  .jstep .jicon{font-size:34px;line-height:1;margin-top:4px}
+  .jstep h4{margin:12px 0 6px;font-size:15px;color:var(--ink)}
+  .jstep p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+  .jarrow{align-self:center;flex:0 0 auto;color:var(--accent2);font-size:26px;font-weight:700}
+  @media(max-width:900px){.jarrow{transform:rotate(90deg);align-self:center}}
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 6px}
+  @media(max-width:820px){.stat-row{grid-template-columns:1fr 1fr}}
+  .stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:18px 12px;text-align:center}
+  .stat .sicon{font-size:22px}
+  .stat .big{font-size:20px;font-weight:800;color:var(--accent);margin-top:4px}
+  .stat .lbl{color:var(--muted);font-size:12.5px;margin-top:4px;line-height:1.4}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 8px}
+  @media(max-width:760px){.compare{grid-template-columns:1fr}}
+  .compare .col{border-radius:16px;padding:20px 22px}
+  .compare .before{background:#241c1c;border:1px solid #4a2a2a}
+  .compare .after{background:#16241c;border:1px solid #2a4a3a}
+  .compare h4{margin:0 0 12px;font-size:16px}
+  .compare .before h4{color:var(--pink)}
+  .compare .after h4{color:var(--green)}
+  .compare ul{margin:0;padding-left:20px;color:#cdd7ea;font-size:14px}
+  .compare ul li{margin:.5em 0}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body>
 
@@ -79,10 +118,12 @@
     <div class="kicker">Technical Overview</div>
     <h1>Turning receipts &amp; invoices into a clean asset register — automatically</h1>
     <p class="lede">This system reads a photo or PDF of a purchase document, works out <em>what</em> was
-    bought, classifies each item, figures out a sensible price, and writes tidy rows into a database — with
-    no human re-typing. This page explains how, from the ground up.</p>
+    bought, matches it to the purchase order it belongs to, decomposes and prices every real item, classifies
+    each one, and writes tidy rows into a database — with a human reviewing rather than retyping. This page
+    explains how, from the ground up, as the pipeline is built today.</p>
     <div style="margin-top:18px">
-      <span class="chip"><b>FastAPI</b> upload API</span>
+      <span class="chip"><b>FastAPI</b> upload &amp; register API</span>
+      <span class="chip"><b>Streamlit</b> operator front end</span>
       <span class="chip"><b>Redis</b> job queue</span>
       <span class="chip"><b>PostgreSQL + pgvector</b> storage</span>
       <span class="chip"><b>Local vision LLM</b> (OpenAI-compatible)</span>
@@ -93,11 +134,14 @@
 </header>
 
 <nav class="toc"><div class="wrap">
+  <a href="#exec"><b>For leadership</b></a>
   <a href="#why">The problem</a>
   <a href="#glance">At a glance</a>
   <a href="#flow">Flow diagram</a>
+  <a href="#crawler">PO matching</a>
   <a href="#stages">Stage by stage</a>
   <a href="#workflows">Two workflows</a>
+  <a href="#frontend">The front end</a>
   <a href="#data">Data &amp; schema</a>
   <a href="#stack">Tech &amp; deployment</a>
   <a href="#decisions">Design choices</a>
@@ -105,50 +149,120 @@
 
 <main class="wrap">
 
+<section id="exec">
+  <div class="exec-hero">
+    <div class="kicker">For leadership — the story in one picture</div>
+    <h2 style="margin-top:.3em">From a photo of an invoice to a registered asset</h2>
+    <p class="lede">No system names, no code — just the journey a document takes, and where a person stays
+    in control of it.</p>
+
+    <div class="journey">
+      <div class="jstep"><div class="jnum">1</div><div class="jicon">📸</div>
+        <h4>Snap or scan it</h4>
+        <p>A photo or PDF of the receipt or invoice — no special scanner or template needed.</p></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jnum">2</div><div class="jicon">🧠</div>
+        <h4>AI reads it</h4>
+        <p>Works out what was bought and automatically finds the purchase order it belongs to.</p></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jnum">3</div><div class="jicon">🗂️</div>
+        <h4>AI sorts it</h4>
+        <p>Splits bundled charges into real items, works out a fair price for each, and files it under the
+        right category.</p></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jnum">4</div><div class="jicon">✅</div>
+        <h4>A person checks it</h4>
+        <p>Every item is reviewed side-by-side with the original document before anything is accepted — the
+        AI never gets the final word.</p></div>
+      <div class="jarrow">→</div>
+      <div class="jstep"><div class="jnum">5</div><div class="jicon">📊</div>
+        <h4>Register updates</h4>
+        <p>One clean, consistently-formatted record — ready for reporting and audit.</p></div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="sicon">⏱️</div><div class="big">Minutes</div>
+        <div class="lbl">to process a document, instead of manually re-typing every line</div></div>
+      <div class="stat"><div class="sicon">🎯</div><div class="big">Consistent</div>
+        <div class="lbl">the same rules are applied to every document, every time</div></div>
+      <div class="stat"><div class="sicon">🔒</div><div class="big">Kept in-house</div>
+        <div class="lbl">the AI runs on internal infrastructure — documents don't leave the building</div></div>
+      <div class="stat"><div class="sicon">👁️</div><div class="big">Human-approved</div>
+        <div class="lbl">nothing is written to the register without a person signing off</div></div>
+    </div>
+
+    <div class="compare">
+      <div class="col before">
+        <h4>Today — done by hand</h4>
+        <ul>
+          <li>Someone retypes every line from the invoice</li>
+          <li>Classification depends on who happens to be doing it</li>
+          <li>Bundled charges are rarely broken down into real items</li>
+          <li>Slow, and mistakes creep in under volume</li>
+        </ul>
+      </div>
+      <div class="col after">
+        <h4>With this system</h4>
+        <ul>
+          <li>The document is read and matched to its purchase order automatically</li>
+          <li>The same rules and categories are applied every time</li>
+          <li>Bundles are split and priced against the actual contract</li>
+          <li>A person reviews and approves in seconds — instead of transcribing for minutes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="why">
   <h2>1 · The problem it solves</h2>
   <p>Organisations buy a lot of equipment. Every purchase is supposed to be recorded in an
   <strong>asset register</strong> — a table listing each item, its category, quantity and price — so the
   organisation knows what it owns. Today someone does this <strong>by hand</strong>: they read a receipt or
-  invoice, decide what needs registering, type in the details, and try to classify everything consistently.
-  It is slow, error-prone, and inconsistent between people.</p>
-  <p>This project automates that clerical work. You upload the document; the system produces the register
-  rows. A person can review the output instead of transcribing it.</p>
+  invoice, work out which purchase order it belongs to, decide what needs registering, type in the details,
+  and try to classify everything consistently. It is slow, error-prone, and inconsistent between people.</p>
+  <p>This project automates the clerical part and leaves a human in charge of the judgement calls. You upload
+  the document; the system extracts, matches, decomposes and classifies; a reviewer checks the result on
+  screen — with the source invoice, PO and SOW right next to it — and confirms it into the register.</p>
   <div class="note"><strong>Concrete example.</strong> An invoice might contain a single vague line —
   <em>“Advance payment – equipment package … S$18,750”</em>. Recorded literally, that one row is useless as
-  an asset record. The system instead breaks it into the real items (workstation, monitor, UPS, software
-  licence …), each with its own category and a sensible price.</div>
+  an asset record. The system instead matches the invoice to its purchase order, breaks the line into the real
+  items (workstation, monitor, UPS, software licence …), prices each one, and presents them to a reviewer as
+  a linked set — not seven line items to retype.</div>
 </section>
 
 <section id="glance">
   <h2>2 · How it works, at a glance</h2>
   <div class="grid3">
-    <div class="card"><h3 style="margin-top:0">1. Upload</h3><p class="muted">A web request sends the file to
-      a small API. The file is stored in the database and a lightweight “job” message is placed on a queue.
-      The caller gets an immediate <code>201 Created</code>.</p></div>
+    <div class="card"><h3 style="margin-top:0">1. Upload</h3><p class="muted">The Streamlit front end sends the
+      file to a small FastAPI. The file is stored in Postgres and a lightweight “job” message is placed on a
+      Redis queue. The caller gets an immediate <code>201 Created</code>.</p></div>
     <div class="card"><h3 style="margin-top:0">2. Process</h3><p class="muted">A background worker picks up
-      the job, reads the document with a vision model, enriches and classifies the items, and writes the
-      results — all decoupled from the upload so the API stays fast.</p></div>
-    <div class="card"><h3 style="margin-top:0">3. Retrieve</h3><p class="muted">The worker publishes the
-      finished result back to the queue/database. The caller polls a results endpoint and gets the structured
-      rows that were written to the register.</p></div>
+      the job and runs it through extraction, PO/SOW matching, enrichment and categorization — reporting each
+      stage it enters so the upload screen can show a live checklist.</p></div>
+    <div class="card"><h3 style="margin-top:0">3. Review &amp; register</h3><p class="muted">The caller polls
+      the job status, then opens a review form pre-filled by the pipeline, tagged by where each field came
+      from. Confirming it writes the row(s) into the asset register.</p></div>
   </div>
-  <p>The whole thing runs <strong>locally and offline</strong> for the AI parts — extraction and reasoning use
-  a self-hosted, OpenAI-compatible vision LLM on the local network, so no document leaves the environment and
-  no external AI keys are needed. Only optional <em>price look-ups</em> touch the public internet.</p>
+  <p>The whole thing runs <strong>locally and offline</strong> for the AI parts — extraction, matching,
+  enrichment and categorization all use a self-hosted, OpenAI-compatible vision LLM on the local network, so
+  no document leaves the environment and no external AI keys are needed. Only optional <em>price
+  look-ups</em> touch the public internet.</p>
 </section>
 
 <section id="flow">
   <h2>3 · The process, as a flow diagram</h2>
-  <p class="muted">Green = data stores · Amber = external services · Pink = the invoice-only enrichment.</p>
+  <p class="muted">Purple = front end · Green = data stores · Amber = external services · Pink = invoice-only
+  enrichment steps.</p>
   <div class="flow">
 
-    <div class="node"><div class="n-h"><span class="badge">1</span> Frontend upload</div>
-      <p><code>POST /receipts</code> (a receipt) or <code>POST /invoice</code> (an invoice) — a multipart file
-      plus a <code>system</code> field (<code>oxn</code> or <code>ehab</code>, which selects the category set).</p></div>
+    <div class="node ui"><div class="n-h"><span class="badge">1</span> Streamlit upload screen</div>
+      <p>The operator front end (<code>frontend/streamlit_app</code>) posts the file to
+      <code>POST /invoice</code> or <code>POST /receipts</code> — a multipart file plus a
+      <code>system</code> field (<code>oxn</code> or <code>ehab</code>, which selects the category set).</p></div>
     <div class="arrow"></div>
 
-    <div class="node"><span class="svc">FastAPI · <code>api.py</code></span>
+    <div class="node"><span class="svc">FastAPI · <code>app/api/routers/uploads.py</code></span>
       <div class="n-h"><span class="badge">2</span> Upload API</div>
       <p>Stores the raw file in the <b>receipts</b> table and enqueues a small JSON job
       <code>{job_id, system, type, receipt_id}</code>. Returns <code>201</code> immediately (the heavy work is
@@ -156,72 +270,92 @@
       <span class="tag t-inv">invoice</span>.</p></div>
     <div class="arrow lbl" data-l="LPUSH  →  Redis list “object-categorization”"></div>
 
-    <div class="node brancher"><span class="svc">consumer · <code>stage1_extractor.py</code></span>
+    <div class="node brancher"><span class="svc">consumer · <code>app/pipeline/consumer.py</code></span>
       <div class="n-h"><span class="badge">3</span> Pipeline worker</div>
-      <p>A long-running consumer <code>BRPOP</code>s the queue, fetches the file back from the
-      <b>receipts</b> table by id, and branches on <code>type</code>.</p></div>
+      <p>A long-running consumer <code>BRPOP</code>s the queue and hands the message to
+      <code>process_job()</code> (<code>app/pipeline/orchestrator.py</code>), which fetches the file back from
+      the <b>receipts</b> table and branches on <code>type</code>. Each stage it enters is written to
+      <code>assets:progress:&lt;job_id&gt;</code> so the upload screen can render a live checklist.</p></div>
     <div class="arrow"></div>
 
-    <div class="node"><span class="svc">local vision LLM</span>
-      <div class="n-h"><span class="badge">4</span> Stage 1 — Extract</div>
+    <div class="node"><span class="svc">local vision LLM · <code>app/pipeline/extract.py</code></span>
+      <div class="n-h"><span class="badge">4</span> Stage — extract</div>
       <p>The document image (PDF pages are rasterised) is sent to the vision model, which returns the line
-      items <em>and</em> the Purchase-Order reference the document cites
-      (e.g. <code>po_ref = 1000672008</code>).</p></div>
-    <div class="arrow lbl" data-l="type = invoice  →  enrichment  (receipts skip this)"></div>
+      items, the invoice header (invoice/DO numbers, dates, vendor, payment event) and the PO reference the
+      document cites. Quantities are coerced to a whole unit count.</p></div>
+    <div class="arrow lbl" data-l="type = invoice  →  context + enrich  (receipts skip straight to categorize)"></div>
 
-    <div class="node brancher"><span class="svc">deepagents + LLM</span>
-      <div class="n-h"><span class="badge">5</span> Enrichment <span class="tag t-inv" style="margin-left:6px">invoice only</span></div>
-      <p>Runs only for invoices. Uses the matching <b>PO</b> and <b>SOW</b> (looked up by
-      <code>po_ref</code>) as ground truth:</p>
+    <div class="node brancher"><span class="svc">document crawler · <code>app/agents/document_crawler.py</code></span>
+      <div class="n-h"><span class="badge">5</span> Stage — context <span class="tag t-inv" style="margin-left:6px">invoice only</span></div>
+      <p>Resolves which <b>PO</b> and <b>SOW</b> the invoice belongs to — not just an exact match on the
+      digits the vision model read, but a five-rung confidence ladder (see §4 below). Then loads the matched
+      PO/SOW text and extracts the procurement header (vendor, contract, project) from the PO.</p></div>
+    <div class="arrow"></div>
+
+    <div class="node brancher"><span class="svc">deepagents + LLM · <code>app/pipeline/enrich.py</code></span>
+      <div class="n-h"><span class="badge">6</span> Stage — enrich <span class="tag t-inv" style="margin-left:6px">invoice only</span></div>
+      <p>Uses the matched PO/SOW text as ground truth to turn vague or bundled lines into real, individually
+      priced items:</p>
       <div class="sub">
-        <div class="node"><div class="n-h">5a · Detect &amp; decompose</div>
+        <div class="node"><div class="n-h">6a · Detect &amp; decompose</div>
           <p>A generic line with an implausibly large price (a bundle) is broken into its real items —
           checking the PO, then the SOW, then the web. <b>But</b> if the item already exists as an individual
           item in the SOW at a consistent price, it is kept as-is (no needless splitting).</p></div>
-        <div class="node"><div class="n-h">5b · Split composites</div>
+        <div class="node"><div class="n-h">6b · Split composites</div>
           <p>Explicit bundles like “Workstation + Enrolment Scanner” or “Bracket and Enclosure” are split into
           separate items (separators vary: <code>+ / , and &amp; with</code>).</p></div>
-        <div class="node"><div class="n-h">5c · Price</div>
+        <div class="node"><div class="n-h">6c · Price</div>
           <p>Each item’s unit price is resolved: <b>PO → SOW → </b><code>query_item_price</code> (a web search
           tool), retrying when a result is poor.</p></div>
-        <div class="node"><div class="n-h">5d · Cap</div>
+        <div class="node"><div class="n-h">6d · Cap</div>
           <p>The combined value of the parts is scaled so it never exceeds the invoice’s own line total —
           the pieces can’t be worth more than the whole.</p></div>
       </div></div>
     <div class="arrow"></div>
 
-    <div class="node"><span class="svc">deepagents + LLM</span>
-      <div class="n-h"><span class="badge">6</span> Stage 2 — Categorize</div>
+    <div class="node"><span class="svc">deepagents + LLM · <code>app/agents/categorizer.py</code></span>
+      <div class="n-h"><span class="badge">7</span> Stage — categorize</div>
       <p>Each item is assigned one <b>sub-category</b> from the selected system’s editable taxonomy; the
       <b>main group</b> (Assets / Inventories / Expenses) is derived from it, plus a one-line
       <b>reasoning</b>.</p></div>
     <div class="arrow"></div>
 
-    <div class="node store"><span class="svc">PostgreSQL</span>
-      <div class="n-h"><span class="badge">7</span> Stage 3 — Write to <code>mar</code></div>
-      <p>Validated rows are inserted into the <b>mar</b> asset-register table (name, description, quantity,
-      price, category, group, reasoning …).</p></div>
+    <div class="node store"><span class="svc">PostgreSQL · <code>app/pipeline/write.py</code></span>
+      <div class="n-h"><span class="badge">8</span> Stage — write to <code>mar</code></div>
+      <p>Document-level fields (invoice/PO/DO numbers, vendor, project, capitalisation date) are stamped onto
+      every record, then validated rows are inserted into the <b>mar</b> asset-register table.</p></div>
     <div class="arrow lbl" data-l="publish result  →  SET assets:result:{job_id} · PUBLISH · output/{job_id}.json"></div>
 
-    <div class="node"><div class="n-h"><span class="badge">8</span> Frontend retrieves</div>
-      <p><code>GET /results/{job_id}</code> returns the structured result once ready (status, count, records,
-      the new <code>mar</code> row ids).</p></div>
+    <div class="node ui"><div class="n-h"><span class="badge">9</span> Streamlit review screen</div>
+      <p>Polls <code>GET /api/jobs/{job_id}/status</code> for the live stage checklist, then
+      <code>GET /api/review/{job_id}</code> for a pre-filled review form — each field tagged
+      <code>ai</code> / <code>system</code> / <code>manual</code> — with the source invoice, PO and SOW in a
+      side rail. Confirming calls <code>POST /api/review/{job_id}/complete</code>.</p></div>
+
   </div>
 
   <div class="card" style="margin-top:20px">
     <h3 style="margin-top:0">Supporting data (loaded once)</h3>
-    <p class="muted">The enrichment’s “ground truth” comes from reference documents loaded ahead of time:</p>
+    <p class="muted">The context/enrichment stages’ “ground truth”, and the index the crawler searches, come
+    from reference documents loaded ahead of time:</p>
     <div class="flow" style="gap:0">
       <div class="node ext"><div class="n-h">data/po/*.md &nbsp;+&nbsp; data/sow/*.md</div>
-        <p>Government Purchase Orders and Statements of Work (markdown).</p></div>
+        <p>Government Purchase Orders and Statements of Work (markdown), loaded by the one-off
+        <code>loader</code> service (<code>scripts/load_documents.py</code>).</p></div>
       <div class="arrow lbl" data-l="loader (LLM extracts each PO’s ref no)"></div>
       <div class="node store"><div class="n-h">pgvector tables <b>po</b> &amp; <b>sow</b></div>
         <p><code>sow.ref_no</code> (from the filename) is the primary key; <code>po.ref_no</code> (LLM-extracted)
         is a foreign key to it — many POs → one SOW.</p></div>
+      <div class="arrow lbl" data-l="app/ingest/documents.py + parse.py (deterministic regex, no model)"></div>
+      <div class="node store"><div class="n-h">searchable index <b>po_index</b></div>
+        <p>~2.5&nbsp;KB of “cards” (ref, vendor, totals, payment events, item names) the crawler and its agent
+        read directly — nothing to search that it can't already see. Self-migrated by the consumer on
+        startup via <code>ensure_po_index()</code>.</p></div>
     </div>
   </div>
 
   <div class="legend">
+    <span><i style="background:var(--purple)"></i>front end</span>
     <span><i style="background:var(--accent2)"></i>pipeline stage</span>
     <span><i style="background:var(--green)"></i>data store (pgvector)</span>
     <span><i style="background:var(--amber)"></i>external / reference</span>
@@ -229,94 +363,182 @@
   </div>
 </section>
 
-<section id="stages">
-  <h2>4 · Stage by stage (the technical detail)</h2>
+<section id="crawler">
+  <h2>4 · Matching an invoice to its purchase order</h2>
+  <p><code>app/agents/document_crawler.py</code> answers “which contract is this invoice against?”. It used
+  to be one exact lookup on the digits the vision model read off the page — a single misread digit meant no
+  PO or SOW context at all, and pricing, bundle decomposition and the procurement header all quietly
+  degraded, with nothing in the logs to say why. It is now a ladder that gets more expensive as it goes,
+  and stops as soon as a rung is confident enough:</p>
+  <div class="card">
+    <div class="rung"><b>rung 0</b><span>the reference matches exactly — no model call at all</span></div>
+    <div class="rung"><b>rung 1</b><span>a deepagents agent with five narrow tools, reasoning over the whole PO index</span></div>
+    <div class="rung"><b>rung 2</b><span>one non-tool call with the whole index inlined — for models without tool-calling</span></div>
+    <div class="rung"><b>rung 3</b><span>pure-Python signal scoring: fuzzy reference + vendor + payment-event amount — no model involved</span></div>
+    <div class="rung"><b>rung 4</b><span>no match — the pipeline behaves as it did before context existed</span></div>
+  </div>
+  <p>Rung 0 covers the common case, so nothing that already worked got slower. <strong>Rung 3 is the
+  load-bearing one</strong> and was built first: fuzzy reference + vendor + payment-event amount identifies an
+  order in this corpus with no model involved.</p>
+  <p>The agent gets five narrow tools and never writes SQL — the whole corpus renders as ~2.5&nbsp;KB of cards,
+  so there is nothing to search that it cannot read, and no tool returns a document body (the agent picks a
+  reference; code loads the text). Any reference the model returns is checked against the database and
+  dropped if absent — this neutralises hallucination outright — and confidence is recomputed here from the
+  signals that actually verified, not taken from the model’s own certainty (that goes into a
+  <code>reasoning</code> field, nowhere else). Below <code>PO_CRAWLER_MIN_CONFIDENCE</code> the answer is “no
+  match”: a wrong purchase order is worse than none.</p>
+  <p class="muted"><code>PO_CRAWLER=off</code> restores the old exact-match-only behaviour;
+  <code>PO_CRAWLER=deterministic</code> skips both model rungs and uses rung 3 only.</p>
+</section>
 
-  <h3>Upload API — <code>api.py</code> (FastAPI)</h3>
+<section id="stages">
+  <h2>5 · Stage by stage (the technical detail)</h2>
+
+  <h3>Upload API — <code>app/api/routers/uploads.py</code> (FastAPI)</h3>
   <ul class="tight">
-    <li><code>POST /receipts</code> and <code>POST /invoice</code> share one handler that stores the file in
+    <li><code>POST /receipts</code> and <code>POST /invoice</code> share a handler that stores the file in
       <b>receipts</b> (a <code>BYTEA</code> blob) and enqueues the job stamped with its <code>type</code>.</li>
     <li>Returns <code>201 {job_id, receipt_id, system, type, status:"queued"}</code>. Invalid
       <code>system</code> → <code>422</code>.</li>
-    <li><code>GET /results/{job_id}</code> reads the published result; <code>GET /health</code> reports DB/Redis.</li>
+    <li><code>GET /results/{job_id}</code> and <code>GET /api/jobs/{job_id}/status</code> read the published
+      result / live stage (<code>app/api/routers/results.py</code>); <code>GET /health</code> reports DB/Redis.</li>
   </ul>
 
-  <h3>Queue &amp; worker — Redis + <code>stage1_extractor.py</code></h3>
+  <h3>Queue &amp; worker — Redis + <code>app/pipeline/consumer.py</code></h3>
   <p>The job travels through the Redis list <code>object-categorization</code> (the <em>claim-check</em>
   pattern: the big file stays in the database, only a small pointer goes on the queue). The consumer resolves
-  the file, runs the stages, and publishes the result three ways (a keyed value with TTL, a pub/sub channel,
-  and an <code>output/{job_id}.json</code> file). It never crashes on one bad message.</p>
+  the file, runs <code>process_job()</code>, and publishes the result three ways (a keyed value with TTL, a
+  pub/sub channel, and an <code>output/{job_id}.json</code> file). It never crashes on one bad message —
+  every failure comes back as a result with <code>status="error"</code>.</p>
 
-  <h3>Stage 1 — extraction (vision LLM)</h3>
+  <h3>Stage — extract (vision LLM, <code>app/pipeline/extract.py</code>)</h3>
   <p>The receipt/invoice image is base64-encoded and sent to a local <strong>OpenAI-compatible vision
   model</strong> with a strict JSON instruction. It returns each line item (<code>name, description,
-  quantity, price</code>) and the document’s PO reference number. PDFs are converted to page images first.</p>
+  quantity, price, serial_no</code>), the invoice header, and the document’s PO reference number. PDFs are
+  converted to page images first.</p>
 
-  <h3>Stage 2 — enrichment (invoice only, <code>enrichment.py</code>)</h3>
+  <h3>Stage — context (invoice only, <code>app/pipeline/enrich.py</code> + the crawler)</h3>
+  <p>Resolves the PO/SOW match (see §4), loads their text, and extracts the procurement header
+  (<code>vendor, project, period_contract, purchase_type</code>) from the matched PO — the ground truth used by
+  every step that follows.</p>
+
+  <h3>Stage — enrich (invoice only)</h3>
   <p>Three deepagents/LLM steps grounded in the matching PO &amp; SOW, followed by a deterministic cap:</p>
   <table>
     <tr><th>Step</th><th>What it does</th><th>How</th></tr>
     <tr><td><b>detect&nbsp;&amp;&nbsp;decompose</b></td>
         <td>Break a generic, implausibly-priced line into its real items — but keep an item untouched if it
         already matches an individual SOW item at a consistent price.</td>
-        <td>deepagents agent; expected price via PO → SOW → <code>query_item_price</code>; only lines above a
-        configurable <code>PRICE_SANITY_THRESHOLD</code> are checked.</td></tr>
+        <td><code>app/agents/decomposer.py</code>; expected price via PO → SOW →
+        <code>query_item_price</code>; only lines above a configurable <code>PRICE_SANITY_THRESHOLD</code>
+        are checked.</td></tr>
     <tr><td><b>split</b></td><td>Split explicit “A + B” composites into separate products.</td>
         <td>Single LLM call using the PO then SOW to name components.</td></tr>
     <tr><td><b>price</b></td><td>Resolve each item’s unit price.</td>
-        <td>deepagents agent: PO → SOW → <code>query_item_price</code> (DuckDuckGo), with retries.</td></tr>
+        <td><code>app/agents/pricer.py</code>: PO → SOW → <code>query_item_price</code> (DuckDuckGo via
+        <code>app/tools/web_price.py</code>), with retries.</td></tr>
     <tr><td><b>cap</b></td><td>Guarantee the parts don’t sum to more than the invoice line total.</td>
         <td>Proportional down-scaling of unit prices when the combined value exceeds the invoice total.</td></tr>
   </table>
   <p class="muted"><code>query_item_price(item_name)</code> searches DuckDuckGo and parses a currency price
   from the results (returns <code>0.0</code> if none found, prompting a retry with a more specific name).</p>
 
-  <h3>Stage 3 — categorize &amp; write</h3>
-  <p>A deepagents agent assigns each item exactly one category from the chosen system’s YAML taxonomy; the
-  main group is derived deterministically from that category, and a short reasoning is recorded. The final
-  rows are inserted into <b>mar</b>.</p>
+  <h3>Stage — categorize &amp; write</h3>
+  <p><code>app/agents/categorizer.py</code> assigns each item exactly one category from the chosen system’s
+  YAML taxonomy; the main group is derived deterministically from that category, and a short reasoning is
+  recorded. <code>app/pipeline/write.py</code> stamps document-level fields onto every record (invoice/PO/DO
+  numbers, vendor, project, a derived asset-capitalisation date, whether the group is taggable) and inserts
+  the final rows into <b>mar</b>.</p>
 </section>
 
 <section id="workflows">
-  <h2>5 · Two workflows, one pipeline</h2>
+  <h2>6 · Two workflows, one pipeline</h2>
   <div class="grid2">
     <div class="card">
       <span class="tag t-recv">receipt</span>
       <h3 style="margin-top:8px"><code>POST /receipts</code></h3>
       <p class="muted">Straightforward. Extract the line items and record them <em>wholesale</em>: extract →
-      categorize → write. No PO/SOW, no bundle breakdown, no web pricing.</p>
+      categorize → write. No PO/SOW context, no bundle breakdown, no web pricing.</p>
     </div>
     <div class="card">
       <span class="tag t-inv">invoice</span>
       <h3 style="margin-top:8px"><code>POST /invoice</code></h3>
-      <p class="muted">The full treatment. Extract → <strong>enrich</strong> (detect &amp; decompose, split,
-      price, cap) using the matching PO &amp; SOW and the web → categorize → write. This is where vague,
-      bundled, or oddly-priced lines get turned into real, individually-priced assets.</p>
+      <p class="muted">The full treatment. Extract → <strong>context</strong> (match PO/SOW) →
+      <strong>enrich</strong> (detect &amp; decompose, split, price, cap) → categorize → write. This is where
+      vague, bundled, or oddly-priced lines get turned into real, individually-priced assets.</p>
     </div>
   </div>
-  <p>The single <code>type</code> field on the job message is what routes each upload to the right behaviour.</p>
+  <p>The single <code>type</code> field on the job message is what routes each upload to the right behaviour;
+  <code>STAGES = ("extract", "context", "enrich", "categorize", "write")</code> in
+  <code>app/pipeline/orchestrator.py</code> is the full list a job can report — a receipt job simply never
+  reports <code>context</code> or <code>enrich</code>.</p>
+</section>
+
+<section id="frontend">
+  <h2>7 · The front end</h2>
+  <p>The operator-facing UI is a <strong>Streamlit</strong> app (<code>frontend/streamlit_app</code>) that
+  renders server-side and calls the API by Docker service name (<code>API_BASE=http://api:8000</code>), so the
+  browser only ever talks to the Streamlit container and CORS never comes into it.</p>
+  <div class="grid4">
+    <div class="card"><h3 style="margin-top:0">Home</h3><p class="muted">Register tiles from
+      <code>GET /api/summary</code> — per-category counts, pending count, last-updated.</p></div>
+    <div class="card"><h3 style="margin-top:0">Upload</h3><p class="muted">Posts the file, then polls
+      <code>/api/jobs/{job_id}/status</code> and renders the stage checklist live.</p></div>
+    <div class="card"><h3 style="margin-top:0">Review</h3><p class="muted">A pre-filled form from
+      <code>/api/review/{job_id}</code>; each field tagged <code>ai</code>/<code>system</code>/<code>manual</code>,
+      with source documents in a side rail.</p></div>
+    <div class="card"><h3 style="margin-top:0">Add asset</h3><p class="muted">A blank form
+      (<code>/api/review/blank</code>) for registering an item by hand, with no <code>job_id</code>.</p></div>
+  </div>
+  <p>Each <code>source_documents</code> entry in a review payload carries a <code>kind</code>
+  (<code>invoice</code>/<code>po</code>/<code>sow</code>/<code>do</code>) and the URL that serves it — served
+  by <code>app/api/routers/documents.py</code>, which rasterises a PDF page on request
+  (<code>?as=png&amp;page=N</code>) so the viewer never depends on a browser PDF plugin. A review payload also
+  carries <code>context_match</code> — which PO the crawler tied the invoice to, its confidence, and the
+  evidence — rendered under the PO entry in the rail.</p>
+  <p>Completing a review (<code>POST /api/review/{job_id}/complete</code>) turns the reviewed line item into
+  the asset (<code>status="Registered"</code>); the invoice’s other line items are linked to it as components
+  via <code>parent_no</code>.</p>
+  <div class="note"><strong>A second, legacy route.</strong> <code>GET /app</code> still serves the original
+  Claude-Design export from <code>frontend/</code>, with <code>static/bridge.js</code> injected into the
+  response (the exported HTML on disk is never modified). It is kept as-is; the Streamlit app is the front
+  end actually in use, ported off that export onto the same <code>/api/*</code> routes.</div>
 </section>
 
 <section id="data">
-  <h2>6 · Data model</h2>
+  <h2>8 · Data model</h2>
   <h3>The output — <code>mar</code> (the asset register)</h3>
   <table>
     <tr><th>Column</th><th>Meaning / source</th></tr>
     <tr><td><code>No</code></td><td>auto-increment row id</td></tr>
-    <tr><td><code>asset_model</code></td><td>the item name</td></tr>
-    <tr><td><code>description</code></td><td>specs/details</td></tr>
+    <tr><td><code>asset_model</code>, <code>description</code></td><td>item name and specs</td></tr>
     <tr><td><code>quantity</code>, <code>price</code></td><td>quantity and (enriched) unit price</td></tr>
-    <tr><td><code>main_category</code></td><td>group: Assets / Inventories / Expenses (derived)</td></tr>
-    <tr><td><code>sub_category</code></td><td>the specific category chosen by the agent</td></tr>
-    <tr><td><code>reasoning</code></td><td>one-line justification for the classification</td></tr>
-    <tr><td><code>asset_id, serial_no, location, status</code></td><td>reserved (not derivable from a receipt yet)</td></tr>
+    <tr><td><code>main_category</code>, <code>sub_category</code>, <code>reasoning</code></td>
+        <td>derived group, agent-assigned category, one-line justification</td></tr>
+    <tr><td><code>invoice_no</code>, <code>po_no</code>, <code>do_no</code>, <code>do_date</code>, <code>gl_date</code></td>
+        <td>document-level fields stamped from the invoice header / matched PO</td></tr>
+    <tr><td><code>vendor</code>, <code>project</code>, <code>period_contract</code>, <code>purchase_type</code></td>
+        <td>from the matched PO’s procurement header</td></tr>
+    <tr><td><code>serial_no</code>, <code>taggable</code>, <code>asset_capitalisation_date</code></td>
+        <td>per-item fields; capitalisation date derived from DO/invoice date</td></tr>
+    <tr><td><code>tag_no</code>, <code>custodian</code>, <code>mindef_cat</code>, <code>material_number</code>,
+        <code>receiving_plant</code>, <code>receiving_sloc</code></td>
+        <td>review-form fields filled in during reconciliation (manual/system provenance)</td></tr>
+    <tr><td><code>job_id</code>, <code>receipt_id</code>, <code>context_match</code></td>
+        <td>provenance: which job produced the row, which upload, and the PO match evidence</td></tr>
+    <tr><td><code>parent_no</code></td><td>links a decomposed line item to the asset it was reviewed as a
+        component of</td></tr>
+    <tr><td><code>status</code></td><td><code>Pending</code> until reviewed, then <code>Registered</code> /
+        <code>Linked</code></td></tr>
   </table>
 
-  <h3>Reference tables — <code>po</code> &amp; <code>sow</code></h3>
+  <h3>Reference tables — <code>po</code>, <code>sow</code> &amp; <code>po_index</code></h3>
   <p><code>sow.ref_no</code> (the number prefixing each SOW filename) is the primary key.
   <code>po.ref_no</code> — extracted from each PO’s text by an LLM — is a foreign key to it, modelling
-  <strong>many POs → one SOW</strong>. The invoice’s cited PO number is what links an upload to this ground
-  truth. Uploaded files live in <code>receipts</code>.</p>
+  <strong>many POs → one SOW</strong>. <code>po_index</code> is a compact, deterministic index
+  (<code>app/ingest/documents.py</code> + <code>app/ingest/parse.py</code>, regex-based, no model call) built
+  from <code>po.content</code>/<code>sow.content</code>, and is what the document crawler searches. Uploaded
+  files live in <code>receipts</code>.</p>
 
   <h3>Systems &amp; editable categories</h3>
   <p>Two classification systems ship: <code>oxn</code> (categories derived from the project’s policy document)
@@ -326,47 +548,131 @@
 </section>
 
 <section id="stack">
-  <h2>7 · Technology &amp; deployment</h2>
+  <h2>9 · Technology &amp; deployment</h2>
   <table>
     <tr><th>Concern</th><th>Choice</th></tr>
-    <tr><td>Upload API</td><td>FastAPI + Uvicorn</td></tr>
-    <tr><td>Queue</td><td>Redis list <code>object-categorization</code> (+ pub/sub for results)</td></tr>
+    <tr><td>Upload &amp; register API</td><td>FastAPI + Uvicorn (<code>app/main.py</code>, routers under <code>app/api/routers/</code>)</td></tr>
+    <tr><td>Operator front end</td><td>Streamlit (<code>frontend/streamlit_app</code>), calling the API by Docker service name</td></tr>
+    <tr><td>Queue</td><td>Redis list <code>object-categorization</code> (+ pub/sub and a progress key per job)</td></tr>
     <tr><td>Storage &amp; reference retrieval</td><td>PostgreSQL with the <code>pgvector</code> extension</td></tr>
-    <tr><td>Extraction &amp; reasoning</td><td>Local OpenAI-compatible <strong>vision LLM</strong> on the LAN (model id configurable)</td></tr>
-    <tr><td>Agents</td><td><code>deepagents</code> (LangChain) driving the local model with tools</td></tr>
-    <tr><td>Web price tool</td><td>DuckDuckGo via <code>ddgs</code></td></tr>
+    <tr><td>Extraction, matching &amp; reasoning</td><td>Local OpenAI-compatible <strong>vision LLM</strong> on the LAN (model id configurable)</td></tr>
+    <tr><td>Agents</td><td><code>deepagents</code> (LangChain) — categorizer, decomposer, pricer, document crawler — all driving the local model with tools</td></tr>
+    <tr><td>Web price tool</td><td>DuckDuckGo via <code>ddgs</code> (<code>app/tools/web_price.py</code>)</td></tr>
     <tr><td>PDF handling</td><td><code>pdf2image</code> + poppler</td></tr>
     <tr><td>Runtime / packaging</td><td>Python 3.12, <code>uv</code>, Docker</td></tr>
   </table>
-  <p>Everything is containerised. <code>docker compose</code> brings up five services from one image:
-  <b>db</b> (pgvector), <b>redis</b>, <b>api</b> (the FastAPI entrypoint), <b>pipeline</b> (the same image
-  running the consumer), and a one-off <b>loader</b> that ingests the PO/SOW reference documents.</p>
-<pre>frontend ──HTTP──▶  api  ──stores file──▶  pgvector(receipts)
-                     │
-                     └──enqueue job──▶  redis "object-categorization"
-                                              │
-                            pipeline consumer ─┘  ──▶  extract ▸ enrich ▸ categorize ▸ write(mar)
-                                              ▲                    │
-                              GET /results ◀──┴── publish result   └── reads po/sow (pgvector) + web</pre>
+  <p>Everything is containerised. <code>docker compose up -d --build</code> brings up five services from one
+  backend image: <b>db</b> (pgvector), <b>redis</b>, <b>api</b> (the FastAPI entrypoint), <b>pipeline</b>
+  (the same image running the consumer), and <b>frontend</b> (the Streamlit app, its own image) — plus a
+  one-off <b>loader</b> (profile <code>tools</code>) that ingests the PO/SOW reference documents on demand.</p>
+<pre class="mermaid">
+flowchart TD
+    subgraph UI["Front end"]
+        FE["Streamlit app"]
+    end
+
+    API["FastAPI upload / register API"]:::stage
+    RQ{{"Redis: object-categorization"}}:::queue
+
+    subgraph PIPE["Pipeline consumer — one job"]
+        direction TB
+        EX["extract"]:::stage
+        AVLM(["vision LLM"]):::agent
+        EX -.->|calls| AVLM
+
+        CTX["context — match PO / SOW"]:::stage
+        ACR(["document-crawler agent"]):::agent
+        CTX -.->|calls| ACR
+
+        ENR["enrich — decompose · split · price · cap"]:::stage
+        ADEC(["decomposer agent"]):::agent
+        APRI(["pricer agent"]):::agent
+        ENR -.->|calls| ADEC
+        ENR -.->|calls| APRI
+
+        CAT["categorize"]:::stage
+        ACAT(["categorizer agent"]):::agent
+        CAT -.->|calls| ACAT
+
+        WR["write"]:::stage
+
+        EX --> CTX --> ENR --> CAT --> WR
+    end
+
+    RECV[("pgvector: receipts")]:::store
+    POSOW[("pgvector: po / sow")]:::store
+    MAR[("pgvector: mar")]:::store
+    WEB[["DuckDuckGo web price"]]:::ext
+    PROG{{"assets:progress:{job_id}"}}:::queue
+    RESULT{{"result: redis key + pub/sub + json file"}}:::queue
+
+    FE -->|"POST /invoice or /receipts"| API
+    API -->|"store file"| RECV
+    API -->|"LPUSH job"| RQ
+    RQ -->|"BRPOP"| EX
+
+    POSOW -.->|reads| CTX
+    POSOW -.->|reads| ENR
+    WEB -.->|"price lookup"| APRI
+
+    PIPE -.->|"reports each stage"| PROG
+
+    WR --> MAR
+    WR --> RESULT
+    RESULT -->|"GET /api/jobs/{id}/status"| FE
+    FE -->|"GET /api/review/{id}"| RESULT
+    FE -->|"POST .../complete"| MAR
+
+    subgraph LEGEND["Legend"]
+        direction LR
+        L1["Front end"]:::ui
+        L2["Pipeline stage"]:::stage
+        L3(["Agent / LLM call"]):::agent
+        L4[("Data store")]:::store
+        L5[["External service"]]:::ext
+    end
+
+    class FE ui;
+
+    classDef ui fill:#241c33,stroke:#b39ddb,stroke-width:1.5px,color:#e7ecf5;
+    classDef stage fill:#1c2438,stroke:#7c9cff,stroke-width:1.5px,color:#e7ecf5;
+    classDef agent fill:#3a2f1c,stroke:#f6c453,stroke-width:2px,color:#f6c453,font-weight:bold;
+    classDef store fill:#16332a,stroke:#7ee0a6,stroke-width:1.5px,color:#e7ecf5;
+    classDef ext fill:#33222b,stroke:#f78fb3,stroke-width:1.5px,color:#e7ecf5;
+    classDef queue fill:#10182b,stroke:#7c9cff,stroke-width:1.5px,color:#e7ecf5,stroke-dasharray:3 3;
+</pre>
+<p class="muted" style="margin-top:10px">Gold, bold-bordered nodes are the four points where the pipeline
+calls out to an LLM-backed agent (<code>deepagents</code>) rather than running plain code — extraction is a
+direct vision-model call; matching, decomposition/pricing and categorization each go through their own agent.</p>
 </section>
 
 <section id="decisions">
-  <h2>8 · Notable design choices</h2>
+  <h2>10 · Notable design choices</h2>
   <ul class="tight">
     <li><strong>Async claim-check.</strong> The API returns instantly; the large file stays in the database
       and only a tiny pointer rides the queue — keeping Redis lean and the upload responsive.</li>
-    <li><strong>Local-first AI.</strong> Extraction and every agent run on a self-hosted vision LLM — private
-      and key-free. Only optional price look-ups reach the internet.</li>
+    <li><strong>Local-first AI.</strong> Extraction, matching and every agent run on a self-hosted vision LLM —
+      private and key-free. Only optional price look-ups reach the internet.</li>
+    <li><strong>The model never gets the last word.</strong> The document crawler checks any PO reference the
+      model returns against the database and drops it if absent; confidence is recomputed from signals that
+      actually verified, never taken from the model’s own stated certainty.</li>
+    <li><strong>A ladder, not a single lookup.</strong> PO matching escalates from a free exact match through
+      a deterministic scorer to an agent, only paying for a model call when the cheap rungs are not confident
+      enough — and refuses to match rather than guess wrong.</li>
     <li><strong>Ground the AI in real documents.</strong> Enrichment decisions (what an item is, what it
-      should cost) are anchored to the matching PO and SOW, not guessed.</li>
+      should cost) are anchored to the matched PO and SOW, not guessed.</li>
     <li><strong>Don’t over-split.</strong> An item that already exists as an individual SOW line at a
       consistent price is kept as-is; only genuinely generic/mispriced bundles are decomposed.</li>
     <li><strong>Conserve value.</strong> Decomposed parts are proportionally capped so they never sum to more
       than the invoice actually billed for that line.</li>
+    <li><strong>A human confirms, the pipeline doesn’t.</strong> Every job lands in a review screen with
+      field-level provenance (<code>ai</code>/<code>system</code>/<code>manual</code>) and the source
+      documents alongside it — nothing reaches the register unreviewed.</li>
     <li><strong>Editable, not hard-coded.</strong> Categories live in YAML; the classification “system”
       (oxn / ehab) is chosen per upload.</li>
-    <li><strong>Fail soft.</strong> Each stage degrades gracefully — a failed agent or web call falls back and
-      the pipeline still produces rows rather than crashing.</li>
+    <li><strong>Fail soft.</strong> Each stage degrades gracefully — a failed agent, web call, or PO match
+      falls back and the pipeline still produces rows rather than crashing; progress reporting itself can
+      never fail a job.</li>
   </ul>
 </section>
 
@@ -374,8 +680,29 @@
 
 <footer><div class="wrap">
   Asset Register Automation — technical overview. Generated documentation; reflects the current pipeline
-  (upload → extract → enrich → categorize → write). Open this file in any browser.
+  (upload → extract → context → enrich → categorize → write → review). Open this file in any browser.
 </div></footer>
 
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      background: '#0b0f18',
+      primaryColor: '#1c2438',
+      primaryTextColor: '#e7ecf5',
+      primaryBorderColor: '#2a3550',
+      lineColor: '#7c9cff',
+      secondaryColor: '#161d2e',
+      secondaryTextColor: '#e7ecf5',
+      secondaryBorderColor: '#2a3550',
+      tertiaryColor: '#1b2030',
+      tertiaryTextColor: '#e7ecf5',
+      tertiaryBorderColor: '#2a3550',
+      fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif',
+      fontSize: '14px'
+    }
+  });
+</script>
 </body>
 </html>

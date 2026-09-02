@@ -1,0 +1,71 @@
+# Serve static/ at /app/static/ so prizm.css can reference the self-hosted
+# PRIZM fonts (Inter, JetBrains Mono) — the design bundle is air-gap safe and
+# so is this app: no font CDN, no external stylesheet.
+[server]
+enableStaticServing = true
+headless = true
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = true
+
+# The design renders PRIZM's enterprise-light palette on Inter and JetBrains
+# Mono. Setting Streamlit's own theme to the same values keeps the widget
+# internals (dropdown popups, the spinner) from flashing the framework's
+# defaults, and — more importantly — makes Inter the inherited family, so text
+# the design leaves unstyled does not fall back to Streamlit's own font.
+[theme]
+base = "light"
+primaryColor = "#1447e6"
+backgroundColor = "#f8fafc"
+secondaryBackgroundColor = "#f1f5f9"
+textColor = "#0f172b"
+font = "Inter"
+codeFont = "JetBrains Mono"
+
+# Self-hosted from static/fonts/ — the same files the design bundle carries.
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/Inter_18pt-Regular.ttf"
+weight = "400"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/Inter_18pt-Medium.ttf"
+weight = "500"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/Inter_18pt-SemiBold.ttf"
+weight = "600"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/Inter_18pt-Bold.ttf"
+weight = "700"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "JetBrains Mono"
+url = "app/static/fonts/JetBrainsMono-Regular.ttf"
+weight = "400"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "JetBrains Mono"
+url = "app/static/fonts/JetBrainsMono-Medium.ttf"
+weight = "500"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "JetBrains Mono"
+url = "app/static/fonts/JetBrainsMono-SemiBold.ttf"
+weight = "600"
+style = "normal"

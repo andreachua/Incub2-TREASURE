@@ -69,11 +69,11 @@ services:
     command: ["--reload", "--reload-dir", "/app/app"]
     ports:
       - "127.0.0.1:8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
+    #   redis:
+    #     condition: service_healthy
 
   # Pipeline consumer — same image, entrypoint overridden to run the Stage 1
   # consumer that reads the "object-categorization" queue.
@@ -117,9 +117,9 @@ services:
       - ./frontend/streamlit_app:/app:ro
     ports:
       - "127.0.0.1:8501:8501"
-    depends_on:
-      api:
-        condition: service_healthy
+    # depends_on:
+    #   api:
+    #     condition: service_healthy
 
   # One-off loader for the data/sow + data/po documents (tables sow, po).
   # Run with:  docker compose run --rm loader
